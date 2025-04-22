@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2 class="main-title mb-4 text-start">Roles List
+    <a href="#" type="button" class="btn btn-success-light float-end mb-4" data-bs-toggle="modal" data-bs-target="#addRoleModal"><i class="bi bi-plus-circle"></i> Add Role</a></h2> 
+    
+    <!-- Card container for the page -->
+    <div class="card-dark shadow-sm p-4">
+        <div class="card-body position-relative">            
+            <!-- Table for displaying interviews -->
+                <table id="example" class="stripe row-border order-column nowrap" style="width: 100%">
+                    <thead>
+                        <tr class="users-table-info">
+                            <th></th>
+                            <th>Role ID</th>
+                            <th>Role Name</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Static Visa Inventory Row 1 -->
+                         {% for role in roles %}
+                        <tr>
+                            <td></td>
+                            <td>                   
+                                <span class="text-center fw-bold text-white"> ROLE-#100{{ role.id }} </span>                          
+                            </td>
+                            <td>{{ role.name }}</td>
+                            <td>{{ role.description }}</td>
+                            <td>
+                                <a
+                                  href=""
+                                  type="button"
+                                  class="btn btn-warning-light"
+                                  ><i class="bi bi-pencil-square"></i></a>
+                                <a
+                                  href=""
+                                  type="button"
+                                  class="btn btn-primary-light"
+                                  ><i class="bi bi-eye-fill"></i
+                                ></a>
+                                <a
+                                  href=""
+                                  type="button"
+                                  class="btn btn-danger-light"
+                                  onclick="return confirm('Are you sure you want to delete this job?');"
+                                  ><i class="bi bi-trash3-fill"></i
+                                ></a>
+                              </td>
+                        </tr>
+                        {% endfor %}
+                        <!-- More static rows can be added here -->
+                    </tbody>
+                </table>
+        </div>
+    </div>
+
+
+    <!--Add Role Modal -->
+    <div class="modal fade" id="addRoleModal" tabindex="-1" aria-labelledby="addRoleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">                    
+                    <div class="card-dark shadow-sm p-4">
+                        <div class="card-body">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addRoleModalLabel">Add New Role</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <!-- Role Add Form -->
+                            <form method="POST" action="/role-permission/role-add" enctype="multipart/form-data">
+                                {% csrf_token %}
+                
+                                <!-- First Row with 2 fields -->
+                                <div class="row mb-3 firstRow">
+                                    <div class="col-6">
+                                        <label for="name" class="form-label">Role Name</label>
+                                        <input type="text" class="form-control" placeholder="Role Name" id="name" name="name" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="description" class="form-label">Role Description</label>
+                                        <input type="text" class="form-control" placeholder="Role Description" id="description" name="description" required>
+                                    </div>
+                                </div>
+                                <br>
+                
+                                <div class="row btnrow">
+                                    <center>
+                                        <button type="submit" id="submit" class="btn btn-success-light ">
+                                            Submit
+                                        </button>
+                                    </center>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

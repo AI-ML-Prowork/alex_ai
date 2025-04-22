@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .badge-active, .badge-disabled, .badge-pending, .badge-success, .badge-trashed {
+        padding: 1px;
+        width: 120px;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 2.50;
+    }
+</style>
+
+
+<div class="container">
+    <h2 class="main-title mb-4 text-start">Roles Permissions
+    <a href="/role-permission/permission/assign" type="button" class="btn btn-success-light float-end mb-4" ><i class="bi bi-plus-circle"></i> Assign Role</a></h2> 
+    
+    <!-- Card container for the page -->
+    <div class="card-dark shadow-sm p-4">
+        <div class="card-body position-relative">            
+            <!-- Table for displaying interviews -->
+            <table id="example" class="stripe row-border order-column nowrap" style="width: 100%">
+                <thead>
+                    <tr class="users-table-info">
+                        <th></th>
+                        <th>ID</th>
+                        <th>Role Name</th>
+                        <th>Permissions</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for role, permissions in role_permissions.items %}
+                        <tr>
+                            <td></td>
+                            <td>URP-#{{ role.id }}</td>
+                            <td>{{ role.name }}</td>
+                            <td>
+                                <div class="permissions">
+                                    {% for permission in permissions %}
+                                        <span class="badge-active">{{ permission }}</span>
+                                    {% endfor %}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    <a href="/role-permission/permission/edit/{{ role.id }}" type="button" class="btn btn-success-light me-2"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="/role-permission/permission/delete/{{ role.id }}" type="button" class="btn btn-danger-light"><i class="bi bi-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <!-- Add CSS to ensure badges wrap correctly -->
+            <style>
+                .permissions {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 5px; /* Optional: Adjust gap between badges */
+                }
+            
+                .permissions .badge {
+                    margin-bottom: 5px; /* Optional: Add margin to separate rows if necessary */
+                }
+            </style>
+            
+        </div>
+    </div>
+</div>
+{% endblock content %}

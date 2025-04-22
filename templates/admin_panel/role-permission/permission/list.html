@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2 class="main-title mb-4 text-start">Permissions List
+    <a href="#" type="button" class="btn btn-success-light float-end mb-4" data-bs-toggle="modal" data-bs-target="#addpermissionModal"><i class="bi bi-plus-circle"></i> Add permission</a></h2> 
+    
+    <!-- Card container for the page -->
+    <div class="card-dark shadow-sm p-4">
+        <div class="card-body position-relative">            
+            <!-- Table for displaying interviews -->
+                <table id="example" class="stripe row-border order-column nowrap" style="width: 100%">
+                    <thead>
+                        <tr class="users-table-info">
+                            <th></th>
+                            <th>Permission ID</th>
+                            <th>Permission Name</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Static Visa Inventory Row 1 -->
+                         {% for permission in permissions %}
+                        <tr>
+                            <td></td>
+                            <td>                   
+                                <span class="text-center fw-bold text-white"> Perm-#100{{ permission.id }} </span>                          
+                            </td>
+                            <td>{{ permission.name }}</td>
+                            <td>{{ permission.code }}</td>
+                            <td>
+                                <a
+                                  href=""
+                                  type="button"
+                                  class="btn btn-warning-light"
+                                  ><i class="bi bi-pencil-square"></i></a>
+                                <a
+                                  href=""
+                                  type="button"
+                                  class="btn btn-primary-light"
+                                  ><i class="bi bi-eye-fill"></i
+                                ></a>
+                                <a
+                                  href=""
+                                  type="button"
+                                  class="btn btn-danger-light"
+                                  onclick="return confirm('Are you sure you want to delete this job?');"
+                                  ><i class="bi bi-trash3-fill"></i
+                                ></a>
+                              </td>
+                        </tr>
+                        {% endfor %}
+                        <!-- More static rows can be added here -->
+                    </tbody>
+                </table>
+        </div>
+    </div>
+
+
+    <!--Add permission Modal -->
+    <div class="modal fade" id="addpermissionModal" tabindex="-1" aria-labelledby="addpermissionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">                    
+                    <div class="card-dark shadow-sm p-4">
+                        <div class="card-body">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addpermissionModalLabel">Add New permission</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <!-- permission Add Form -->
+                            <form method="POST" action="/role-permission/permission-add" enctype="multipart/form-data">
+                                {% csrf_token %}
+                
+                                <!-- First Row with 2 fields -->
+                                <div class="row mb-3 firstRow">
+                                    <div class="col-4">
+                                        <label for="permission_name" class="form-label">Permission Name</label>
+                                        <input type="text" class="form-control" placeholder="Permission Name" id="permission_name" name="name" required>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="permission_description" class="form-label">Permission Code</label>
+                                        <input type="text" class="form-control" placeholder="Permission Code" id="permission_description" name="code" required>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="permission_description" class="form-label">Module Name</label>
+                                        <input type="text" class="form-control" placeholder="Module Name" id="permission_module" name="module" required>
+                                    </div>
+                                </div>
+                                <br>
+                
+                                <div class="row btnrow">
+                                    <center>
+                                        <button type="submit" id="submit" class="btn btn-success-light ">
+                                            Submit
+                                        </button>
+                                    </center>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

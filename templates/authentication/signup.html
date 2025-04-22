@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+  
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Discomb|Signup</title>
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.svg' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/remix/remixicon.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/main.min.css' %}">
+
+  </head>
+
+  <body class="login-bg">
+    <!-- Container starts 
+    <div class="container" style="max-width: 1000px;"> -->
+    <div class="container">
+      <!-- Auth wrapper starts -->
+      <div class="auth-wrapper">
+        <!-- Form starts -->
+        <form action="/user-register/" method="POST" class="d-flex justify-content-center">
+          <div class="auth-box">
+            <div class="d-flex align-items-center mb-4" >
+              <a href="/" class="auth-logo me-3"> 
+              <img src="{% static 'assets/images/logo.png' %}" alt="LOGO">
+              </a>
+              <h4 class="fw-bold text-white mb-0" align="center">Welcome to Discomb</h4>
+            </div>
+
+            <h4 class="mb-4 fw-bold text-white">Signup</h4>
+
+            <div class="row">         
+              <!-- Account Type -->
+              <div class="col-md-6 mb-3">
+              <label class="form-label text-white" for="account_type">Register as <span class="text-danger">*</span></label>
+              <select id="account_type" name="account_type" class="form-control" required>
+                <option value="" disabled selected>Select your account</option>
+                <option value="employer">Employer</option>
+                <option value="candidate">Candidate</option>
+              </select>
+              </div> 
+
+              <!-- Username -->
+              <div class="col-md-6 mb-3">
+              <label class="form-label text-white" for="username">Username <span class="text-danger">*</span></label>
+              <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
+              </div>
+            </div>  
+
+            <div class="row">
+              <!-- Email Input -->
+              <div class="col-md-6 mb-3">
+              <label class="form-label text-white" for="email">Email <span class="text-danger">*</span></label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+              </div>
+
+              <!-- Phone Number Input -->
+                <div class="col-md-6 mb-3">
+                <label class="form-label text-white" for="phone_number">Phone Number <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <select id="country_code" name="country_code" class="form-control" style="max-width: 70px;" required>
+                  <option value="+91">+91</option>
+                  <option value="+971">+971</option>
+                  </select>
+                  <input type="text" id="phone_number" name="phone_number" class="form-control" placeholder="Enter your phone number" required>
+                </div>
+                </div>
+            </div>
+
+            <div class="row">
+              <!-- Password Input -->
+              <div class="col-md-6 mb-2">
+                <label class="form-label text-white" for="password">Password <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <input type="password"  name="password" class="form-control" placeholder="Enter password" required>
+                  <button class="btn btn-outline-secondary" type="button" id="toggle-password">
+                  <i class="ri-eye-line text-primary"></i>
+                  </button>
+                </div>
+                <div class="form-text">
+                  Your password must be 8-20 characters long.
+                </div>
+              </div>
+
+              <!-- Confirm Password Input -->
+              <div class="col-md-6 mb-2">
+                <label class="form-label text-white" for="password2">Confirm Password <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <input type="password"  name="password2" class="form-control" placeholder="Confirm your password" required>
+                  <button class="btn btn-outline-secondary" type="button" id="toggle-password">
+                  <i class="ri-eye-line text-primary"></i>
+                  </button>
+                </div>
+                <div class="form-text">
+                  Your password must be 8-20 characters long.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3 d-grid gap-2">
+              <button type="submit" class="btn btn-primary">Signup</button>
+              <a href="/" class="text-white">Already have an account? Login</a>
+            </div>
+
+          </div>
+
+        </form>
+        <!-- Form ends -->
+
+        <script>
+          // Toggle password visibility
+          document.getElementById('toggle-password').addEventListener('click', function() {
+            const passwordField = document.getElementById('pwd');
+            const icon = this.querySelector('i');
+            if (passwordField.type === 'password') {
+              passwordField.type = 'text';
+              icon.classList.remove('ri-eye-line');
+              icon.classList.add('ri-eye-off-line');
+            } else {
+              passwordField.type = 'password';
+              icon.classList.remove('ri-eye-off-line');
+              icon.classList.add('ri-eye-line');
+            }
+          });
+        </script>
+
+      </div>
+      <!-- Auth wrapper ends -->
+
+    </div>
+    <!-- Container ends -->
+
+  </body>
+</html>

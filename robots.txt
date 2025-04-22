@@ -1,0 +1,18 @@
+# robots.txt for CFC Software
+
+User-agent: *
+# Allow all pages to be crawled
+Allow: /
+
+# Block specific pages or directories (if needed)
+# Example of blocking a specific page
+Disallow: /admin/
+Disallow: /checkout/
+Disallow: /user-dashboard/
+
+# You can also block other resources such as images or private sections
+# Example of blocking images
+Disallow: /images/
+
+# Sitemap location
+Sitemap: https://www.cfcsoftware.com/sitemap.xml

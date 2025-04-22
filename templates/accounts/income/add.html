@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+        <div class="qq bg-success">
+            <h3 class="heading">Add Income</h3>
+        </div>        
+        <div class="card-dark shadow-sm p-4">
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            <label for="source_type" class="form-label">Source Type <span class="text-danger">*</span></label>
+                            <select class="form-control" id="source_type" name="received_from" required>
+                                <option value="">Select Source Type</option>
+                                <option value="Employer">Employer</option>
+                                <option value="Candidate">Candidate</option>
+                            </select>
+                        </div>
+                        <div class="col-3" id="employer_fields" style="display: none;">
+                            <label for="employer_id" class="form-label">Employer ID <span class="text-danger">*</span></label>
+                            <select class="form-control" id="employer_id" name="user">
+                                <option value="">Select Employer</option>
+                                {% for employer in employer_data %}
+                                    <option value="{{ employer.id }}" data-username="{{ employer.username }}">
+                                        {{ employer.username }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-3" id="candidate_fields" style="display: none;">
+                            <label for="candidate_id" class="form-label">Candidate ID <span class="text-danger">*</span></label>
+                            <select class="form-control" id="candidate_id" name="user">
+                                <option value="">Select Candidate</option>
+                                {% for data in candidate_data %}
+                                    <option value="{{ data.id }}" data-username="{{ data.username }}">
+                                        {{ data.username }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                            <input type="text" placeholder="Name" class="form-control" id="name" name="name" required readonly>
+                        </div>
+                        <div class="col-3">
+                            <label for="payment_status" class="form-label">Payment Status</label>
+                            <select class="form-control" id="payment_status" name="payment_status">
+                                <option value="">Select Payment Status</option>
+                                <option value="Paid">Paid</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Failed">Failed</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <script>
+                        // Handling display logic for employer and candidate selection
+                        document.getElementById('source_type').addEventListener('change', function() {
+                            var selectedValue = this.value;
+                            var employerFields = document.getElementById('employer_fields');
+                            var candidateFields = document.getElementById('candidate_fields');
+                
+                            if (selectedValue === 'Employer') {
+                                employerFields.style.display = 'block';
+                                candidateFields.style.display = 'none';
+                                // Make employer field required when visible
+                                document.getElementById('employer_id').setAttribute('required', 'true');
+                                document.getElementById('candidate_id').removeAttribute('required');
+                            } else if (selectedValue === 'Candidate') {
+                                employerFields.style.display = 'none';
+                                candidateFields.style.display = 'block';
+                                // Make candidate field required when visible
+                                document.getElementById('candidate_id').setAttribute('required', 'true');
+                                document.getElementById('employer_id').removeAttribute('required');
+                            } else {
+                                employerFields.style.display = 'none';
+                                candidateFields.style.display = 'none';
+                                // Remove required attribute when neither option is selected
+                                document.getElementById('employer_id').removeAttribute('required');
+                                document.getElementById('candidate_id').removeAttribute('required');
+                            }
+                        });
+                
+                        // Update name and user ID fields based on selected option
+                        function updateFields(selectElement) {
+                            var selectedOption = selectElement.options[selectElement.selectedIndex];
+                            var username = selectedOption.getAttribute('data-username');
+                            var id = selectedOption.value;
+                
+                            // Populate the name field with the selected username
+                            document.getElementById('name').value = username ? username : '';
+                            
+                            // Set the user ID value in the user field
+                            document.getElementById('user').value = id;
+                        }
+                
+                        document.getElementById('employer_id').addEventListener('change', function() {
+                            updateFields(this);
+                        });
+                
+                        document.getElementById('candidate_id').addEventListener('change', function() {
+                            updateFields(this);
+                        });
+                    </script>
+                
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            <label for="date_of_income" class="form-label">Income Date<span class="text-danger">*</span></label>
+                            <input type="date" placeholder="Date of Income" class="form-control" id="date_of_income" name="date_of_income" required>
+                        </div>
+                        <div class="col-3">
+                            <label for="date_of_entry" class="form-label">Income Entry Date <span class="text-danger">*</span></label>
+                            <input type="date" placeholder="Date of Income" class="form-control" id="date_of_entry" name="date_of_entry" required>
+                        </div>
+                        <div class="col-3">
+                            <label for="category" class="form-label">Category <span class="text-danger">*</span></label>
+                            <input type="text" placeholder="Category" class="form-control" id="category" name="category" >
+                        </div>
+                        <div class="col-3">
+                            <label for="payment_method" class="form-label">Payment Method <span class="text-danger">*</span></label>
+                            <select class="form-control" id="payment_method" name="payment_method" required>
+                                <option value="">Select Payment Method</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Credit Card">Credit Card</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                                <option value="UPI">UPI</option>
+                                <option value="Debit Card">Debit Card</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label for="source_of_income" class="form-label">Source of Income</label>
+                            <input type="text" placeholder="Enter the Description of particulars" class="form-control" id="source_of_income" name="source_of_income">
+                        </div>
+                    </div>   
+
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            <label for="transaction_id" class="form-label">Transaction ID (Optional)</label>
+                            <input type="text" placeholder="Transaction ID" class="form-control" id="transaction_id" name="transaction_id">
+                        </div>
+                        <div class="col-3">
+                            <label for="invoice_receipt_upload" class="form-label">Invoice/Receipt Upload</label>
+                            <input type="file" class="form-control" id="invoice_receipt_upload" name="invoice_receipt_upload">
+                        </div>
+                
+                        <div class="col-3">
+                            <label for="notes_remarks" class="form-label">Notes/Remarks</label>
+                            <textarea placeholder="Notes/Remarks" class="form-control" id="notes_remarks" name="notes_remarks"></textarea>
+                        </div>
+                        <div class="col-3">
+                            <label for="amount" class="form-label">Amount <span class="text-danger">*</span></label>
+                            <input type="number" placeholder="Amount" class="form-control" id="amount" name="amount" required>
+                        </div>
+                    </div>              
+                
+                    <!-- Submit Button -->
+                    <div class="row btnrow">
+                        <center>
+                            <button type="submit" id="submit" class="btn btn-success btn-lg">
+                                Submit
+                            </button>
+                        </center>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+</div>
+
+{% endblock content %}

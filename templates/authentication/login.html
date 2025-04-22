@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discomb | Sign In</title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{% static 'assets/img/svg/logo.svg' %}" type="image/x-icon">
+
+  <link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  />
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+  />
+      <!-- Custom styles -->
+  <link rel="stylesheet" href="{% static 'assets/css/style.min.css' %}" />
+
+  <style>
+    .input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+      height: 44px;
+    }
+
+    .logo {
+    height: 75px;
+    }
+  </style>
+
+</head>
+
+
+<body>
+  <div class="layer"></div>
+  <main class="page-center">
+    <article class="sign-up">
+      <p class="sign-up__subtitle fw-bold">Sign in to your account</p>
+
+      <!-- Form starts -->
+      <form action="/user-login/" method="POST" class="sign-up-form form">
+        <div class="" id="logo" align="center">
+          <a href="/">
+            <img src="{% static 'assets/img/logo.png' %}" alt="Discomb logo" class="logo">
+          </a>        
+        </div>
+        {% csrf_token %}
+        <label class="form-label-wrapper">
+          <p class="form-label">Email</p>
+          <input class="form-input" type="email" id="email" name="email" placeholder="Enter your email" required>
+        </label>
+
+        <label class="form-label-wrapper">
+          <p class="form-label">Password</p>
+          <div class="input-group">
+            <input class="form-input" type="password" id="pwd" name="password" placeholder="Enter your password" required>
+            <button type="button" id="toggle-password" class="btn btn-primary-light"><i class="bi bi-eye-fill"></i></button>
+          </div>
+        </label>
+        <label class="form-checkbox-wrapper">
+          <input class="form-checkbox" type="checkbox" required>
+          <span class="form-checkbox-label">Remember me next time</span>
+        </label>
+
+        <div class="mb-3 d-grid gap-2">
+          <button type="submit" class="btn btn-success-light">Sign in</button>
+        </div> 
+
+        {% comment %} <!-- Sign up link -->
+        <div class="text-center">
+          <a href="/user/new-registeration" class="text-white">Not registered? Sign up</a>
+        </div> {% endcomment %}
+      </form>
+      <!-- Form ends -->
+    </article>
+  </main>
+
+  <!-- Chart library -->
+  <script src="{% static 'assets/plugins/chart.min.js' %}"></script>
+  <!-- Icons library -->
+  <script src="{% static 'assets/plugins/feather.min.js' %}"></script>
+  <!-- Custom scripts -->
+  <script src="{% static 'assets/js/script.js' %}"></script>
+
+  <script>
+    // Toggle password visibility
+    document.getElementById('toggle-password').addEventListener('click', function() {
+      const passwordField = document.getElementById('pwd');
+      const icon = this.querySelector('i');
+      if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        icon.classList.remove('ri-eye-line');
+        icon.classList.add('ri-eye-off-line');
+      } else {
+        passwordField.type = 'password';
+        icon.classList.remove('ri-eye-off-line');
+        icon.classList.add('ri-eye-line');
+      }
+    });
+  </script>
+</body>
+
+</html>

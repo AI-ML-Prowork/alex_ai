@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+        <div class="qq bg-success">
+            <h3 class="heading">Add Expense</h3>
+        </div>        
+        <div class="card-dark shadow-sm p-4">
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            <label for="expense_type" class="form-label">Source Type <span class="text-danger">*</span></label>
+                            <select class="form-control" id="expense_type" name="expense_type" required>
+                                <option value="">Select Source Type</option>
+                                <option value="Employees">Employees Salary</option>
+                                <option value="Benefits">Benefits</option>
+                                <option value="Training">Training</option>
+                                <option value="Office Rent">Office Rent</option>
+                                <option value="Utilities">Utilities</option>
+                                <option value="Travel">Travel</option>
+                                <option value="Equipment">Equipment</option>
+                                <option value="Miscellaneous">Miscellaneous</option>
+                            </select>
+                        </div>
+                        <div class="col-3" id="employer_fields" style="display: none;">
+                            <label for="employee_id" class="form-label">Employee ID <span class="text-danger">*</span></label>
+                            <select class="form-control" id="employee_id" name="user">
+                                <option value="">Select Employee</option>
+                                {% for employee in employees_data %}
+                                    <option value="{{ employee.id }}" data-username="{{ employee.username }}">
+                                        {{ employee.username }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label for="paid_to" class="form-label">Paid To <span class="text-danger">*</span></label>
+                            <input type="text" placeholder="Enter the name" class="form-control" id="paid_to" name="paid_to" required>
+                        </div>
+                        <div class="col-3">
+                            <label for="payment_status" class="form-label">Payment Status</label>
+                            <select class="form-control" id="payment_status" name="payment_status">
+                                <option value="">Select Payment Status</option>
+                                <option value="Paid">Paid</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Failed">Failed</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <script>
+                        // Handling display logic for employer and candidate selection
+                        document.getElementById('expense_type').addEventListener('change', function() {
+                            var selectedValue = this.value;
+                            var employerFields = document.getElementById('employer_fields');
+                
+                            if (selectedValue === 'Employees') {
+                                employerFields.style.display = 'block';
+                                candidateFields.style.display = 'none';
+                                // Make employer field required when visible
+                                document.getElementById('employee_id').setAttribute('required', 'true');
+                            } else {
+                                employerFields.style.display = 'none';
+                                candidateFields.style.display = 'none';
+                                // Remove required attribute when neither option is selected
+                                document.getElementById('employee_id').removeAttribute('required');
+                            }
+                        });
+                
+                        // Update name and id fields based on selected option
+                        function updateFields(selectElement) {
+                            var selectedOption = selectElement.options[selectElement.selectedIndex];
+                            var username = selectedOption.getAttribute('data-username');
+                            var id = selectedOption.value;
+                
+                            // Populate the fields with the selected data
+                            document.getElementById('paid_to').value = username ? username : '';
+                            document.getElementById('paid_to').setAttribute('data-id', id);
+                        }
+                
+                        document.getElementById('employee_id').addEventListener('change', function() {
+                            updateFields(this);
+                        });
+                    </script>
+                
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            <label for="date_of_expense" class="form-label">Expense Date<span class="text-danger">*</span></label>
+                            <input type="date" placeholder="Date of Income" class="form-control" id="date_of_expense" name="date_of_expense" required>
+                        </div>
+                        <!--                         <div class="col-3">
+                            <label for="date_of_entry" class="form-label">Expense Entry Date <span class="text-danger">*</span></label>
+                            <input type="date" placeholder="Date of Income" class="form-control" id="date_of_entry" name="date_of_entry" required>
+                        </div> -->
+
+                        <div class="col-3">
+                            <label for="bank_account_debited" class="form-label">Bank Account Debited <span class="text-danger">*</span></label>
+                            <select class="form-control" id="bank_account_debited" name="bank_account_debited" required>
+                                <option value="">Select Bank Account</option>
+                                <option value="A/c no. 121105000603 SHERLY RAJAN ROAD BRANCH Maharashtra,India IFSC Code : ICIC0001211 Swift Code : ICICINBBCTS">A/c no. 121105000603</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label for="payment_mode" class="form-label">Payment Method <span class="text-danger">*</span></label>
+                            <select class="form-control" id="payment_mode" name="payment_mode" required>
+                                <option value="">Select Payment Method</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Credit Card">Credit Card</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                                <option value="UPI">UPI</option>
+                                <option value="Debit Card">Debit Card</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label for="expense_details" class="form-label">Expense Details</label>
+                            <textarea placeholder="Enter the description of expense" class="form-control" id="expense_details" name="expense_details" rows="3"></textarea>
+                        </div>
+                    </div> 
+
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            <label for="transaction_id" class="form-label">Transaction ID (Optional)</label>
+                            <input type="text" placeholder="Transaction ID" class="form-control" id="transaction_id" name="transaction_id">
+                        </div>
+                        <div class="col-3">
+                            <label for="invoice_receipt_upload" class="form-label">Invoice/Receipt Upload</label>
+                            <input type="file" class="form-control" id="invoice_receipt_upload" name="invoice_receipt_upload">
+                        </div>
+                
+                        <div class="col-3">
+                            <label for="notes_justification" class="form-label">Notes/Remarks</label>
+                            <textarea placeholder="Notes/Remarks" class="form-control" id="notes_justification" name="notes_justification"></textarea>
+                        </div>
+                        <div class="col-3">
+                            <label for="amount" class="form-label">Amount <span class="text-danger">*</span></label>
+                            <input type="number" placeholder="Amount" class="form-control" id="amount" name="amount" required>
+                        </div>
+                    </div>              
+                
+                    <!-- Submit Button -->
+                    <div class="row btnrow">
+                        <center>
+                            <button type="submit" id="submit" class="btn btn-success btn-lg">
+                                Submit
+                            </button>
+                        </center>
+                    </div>
+                </form>                
+            </div>
+        </div>
+</div>
+
+{% endblock content %}

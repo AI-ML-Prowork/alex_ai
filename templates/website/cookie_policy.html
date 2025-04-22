@@ -1,0 +1,67 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block content %}
+
+<main class="main">
+
+  <!-- Page Title -->
+  <div class="page-title">
+    <div class="container d-lg-flex justify-content-between align-items-center">
+      <h1 class="mb-2 mb-lg-0">Cookie Policy</h1>
+      <nav class="breadcrumbs">
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li class="current">Cookie Policy</li>
+        </ol>
+      </nav>
+    </div>
+  </div><!-- End Page Title -->
+
+  <!-- Cookie Policy Section -->
+  <section id="cookie-policy" class="cookie-policy section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <span>Cookie Policy</span>
+      <h2>Our Cookie Policy</h2>
+      <p>At CFC Software, we value your privacy and are committed to being transparent about the use of cookies on our website (cfcsoftware.com).</p>
+    </div><!-- End Section Title -->
+
+    <div class="container" data-aos="fade-up">
+      <h3>What are cookies?</h3>
+      <p>Cookies are small text files stored on your device when you visit our website. They help us remember your preferences, understand how you interact with our content, and improve your user experience.</p>
+      
+      <h3>How we use cookies</h3>
+      <p>We use cookies to:</p>
+      <ul>
+        <li>Enhance user experience by remembering your settings and preferences.</li>
+        <li>Analyze website traffic and usage to improve our services.</li>
+        <li>Provide personalized content and advertising based on your interests.</li>
+      </ul>
+
+      <h3>Types of cookies we use</h3>
+      <p>We use the following types of cookies:</p>
+      <ul>
+        <li><strong>Essential cookies:</strong> These are necessary for the functioning of our website. They allow basic features like page navigation and access to secure areas.</li>
+        <li><strong>Performance cookies:</strong> These cookies help us understand how visitors interact with our website, allowing us to improve performance and functionality.</li>
+        <li><strong>Functional cookies:</strong> These cookies remember your preferences and choices to provide a personalized browsing experience.</li>
+        <li><strong>Targeting cookies:</strong> These cookies track your browsing habits to show you relevant ads and content.</li>
+      </ul>
+
+      <h3>Your consent</h3>
+      <p>By using our website, you consent to the use of cookies in accordance with this Cookie Policy. You can control or disable cookies in your browser settings at any time, though this may affect your experience on our website.</p>
+
+      <h3>Managing cookies</h3>
+      <p>If you wish to manage or delete cookies, you can do so through your browser settings. For more information on how to manage cookies, please visit <a href="https://www.allaboutcookies.org/manage-cookies">www.allaboutcookies.org</a>.</p>
+
+      <h3>Changes to this Cookie Policy</h3>
+      <p>We may update this Cookie Policy from time to time. Any changes will be posted on this page with an updated "Last Revised" date.</p>
+
+      <p>Last Revised:-  {% now "M j, Y" %}</p>
+    </div>
+
+  </section><!-- /Cookie Policy Section -->
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,352 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container">
+  <div class="qq bg-success">
+    <h2 class="heading">Theme Settings</h2>
+  </div>
+
+  <!-- Card container for the page -->
+  <div class="card-dark shadow-sm p-4">
+    <div class="card-body">
+      <form method="POST" action="" enctype="multipart/form-data">
+        <div class="row">
+          <div class="col-lg-6 pe-lg-4">
+            <div class="row mb-4 g-2">
+              <div class="col-12">
+                <h6 class="mb-1 text-white">Sidebar Settings</h6>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-0">
+                  <div class="card-header p-1 bg-secondary border-0">
+                    <label
+                      for="sidebarBg"
+                      class="form-label text-white lh-base mb-0 w-100 text-center"
+                      >Background Color</label
+                    >
+                  </div>
+                  <div class="card-body p-0 border-0">
+                    <input
+                      type="color"
+                      class="form-control color-picker"
+                      id="sidebarBg"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-0">
+                  <div class="card-header p-1 bg-secondary border-0">
+                    <label
+                      for="sidebarFont"
+                      class="form-label text-white lh-base mb-0 w-100 text-center"
+                      >Font Color</label
+                    >
+                  </div>
+                  <div class="card-body p-0 border-0">
+                    <input
+                      type="color"
+                      class="form-control color-picker"
+                      id="sidebarFont"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-0">
+                  <div class="card-header p-1 bg-secondary border-0">
+                    <label
+                      for="sidebarFontHover"
+                      class="form-label text-white lh-base mb-0 w-100 text-center"
+                      >Hover Color</label
+                    >
+                  </div>
+                  <div class="card-body p-0 border-0">
+                    <input
+                      type="color"
+                      class="form-control color-picker"
+                      id="sidebarFontHover"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 ps-lg-4">
+            <div class="row mb-4 g-2">
+              <div class="col-12">
+                <h6 class="mb-1 text-white">Header Settings</h6>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-0">
+                  <div class="card-header p-1 bg-secondary border-0">
+                    <label
+                      for="headerBg"
+                      class="form-label text-white lh-base mb-0 w-100 text-center"
+                      >Background Color</label
+                    >
+                  </div>
+                  <div class="card-body p-0 border-0">
+                    <input
+                      type="color"
+                      class="form-control color-picker"
+                      id="headerBg"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-0">
+                  <div class="card-header p-1 bg-secondary border-0">
+                    <label
+                      for="headerFont"
+                      class="form-label text-white lh-base mb-0 w-100 text-center"
+                      >Font Color</label
+                    >
+                  </div>
+                  <div class="card-body p-0 border-0">
+                    <input
+                      type="color"
+                      class="form-control color-picker"
+                      id="headerFont"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-0">
+                  <div class="card-header p-1 bg-secondary border-0">
+                    <label
+                      for="headerFontHover"
+                      class="form-label text-white lh-base mb-0 w-100 text-center"
+                      >Hover Color</label
+                    >
+                  </div>
+                  <div class="card-body p-0 border-0">
+                    <input
+                      type="color"
+                      class="form-control color-picker"
+                      id="headerFontHover"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 pe-lg-4">
+            <div class="row mb-4 g-2">
+              <div class="col-12">
+                <h6 class="mb-1 text-white">Footer Settings</h6>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-0">
+                  <div class="card-header p-1 bg-secondary border-0">
+                    <label
+                      for="footerBg"
+                      class="form-label text-white lh-base mb-0 w-100 text-center"
+                      >Background Color</label
+                    >
+                  </div>
+                  <div class="card-body p-0 border-0">
+                    <input
+                      type="color"
+                      class="form-control color-picker"
+                      id="footerBg"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-0">
+                  <div class="card-header p-1 bg-secondary border-0">
+                    <label
+                      for="footerFont"
+                      class="form-label text-white lh-base mb-0 w-100 text-center"
+                      >Font Color</label
+                    >
+                  </div>
+                  <div class="card-body p-0 border-0">
+                    <input
+                      type="color"
+                      class="form-control color-picker"
+                      id="footerFont"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 ps-lg-4">
+            <div class="row mb-4 g-2">
+              <div class="col-12">
+                <h6 class="mb-1 text-white">Buttton Settings</h6>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-0">
+                  <div class="card-header p-1 bg-secondary border-0">
+                    <label
+                      for="buttonBg"
+                      class="form-label text-white lh-base mb-0 w-100 text-center"
+                      >Background Color</label
+                    >
+                  </div>
+                  <div class="card-body p-0 border-0">
+                    <input
+                      type="color"
+                      class="form-control color-picker"
+                      id="buttonBg"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-0">
+                  <div class="card-header p-1 bg-secondary border-0">
+                    <label
+                      for="buttonFont"
+                      class="form-label text-white lh-base mb-0 w-100 text-center"
+                      >Font Color</label
+                    >
+                  </div>
+                  <div class="card-body p-0 border-0">
+                    <input
+                      type="color"
+                      class="form-control color-picker"
+                      id="buttonFont"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-0">
+                  <div class="card-header p-1 bg-secondary border-0">
+                    <label
+                      for="buttonFontHover"
+                      class="form-label text-white lh-base mb-0 w-100 text-center"
+                      >Hover Color</label
+                    >
+                  </div>
+                  <div class="card-body p-0 border-0">
+                    <input
+                      type="color"
+                      class="form-control color-picker"
+                      id="buttonFontHover"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 pe-lg-4">
+            <div class="row mb-4 g-2">
+              <div class="col-12">
+                <h6 class="mb-1 text-white">Card Style</h6>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-0">
+                  <div class="card-header p-1 bg-secondary border-0">
+                    <label
+                      for="tableBg"
+                      class="form-label text-white lh-base mb-0 w-100 text-center"
+                      >Background Color</label
+                    >
+                  </div>
+                  <div class="card-body p-0 border-0">
+                    <input
+                      type="color"
+                      class="form-control color-picker"
+                      id="cardBg"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-0">
+                  <div class="card-header p-1 bg-secondary border-0">
+                    <label
+                      for="tableFont"
+                      class="form-label text-white lh-base mb-0 w-100 text-center"
+                      >Font Color</label
+                    >
+                  </div>
+                  <div class="card-body p-0 border-0">
+                    <input
+                      type="color"
+                      class="form-control color-picker"
+                      id="tableFont"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 ps-lg-4">
+            <div class="row mb-4 g-2">
+              <div class="col-12">
+                <h6 class="mb-1 text-white">Body Style</h6>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-0">
+                  <div class="card-header p-1 bg-secondary border-0">
+                    <label
+                      for="bodyBg"
+                      class="form-label text-white lh-base mb-0 w-100 text-center"
+                      >Background Color</label
+                    >
+                  </div>
+                  <div class="card-body p-0 border-0">
+                    <input
+                      type="color"
+                      class="form-control color-picker"
+                      id="bodyBg"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-0">
+                  <div class="card-header p-1 bg-secondary border-0">
+                    <label
+                      for="bodyFont"
+                      class="form-label text-white lh-base mb-0 w-100 text-center"
+                      >Font Color</label
+                    >
+                  </div>
+                  <div class="card-body p-0 border-0">
+                    <input
+                      type="color"
+                      class="form-control color-picker"
+                      id="bodyFont"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 text-center mt-4">
+            <button id="reset-button"
+              class="btn btn-success-light"> Reset Settings </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

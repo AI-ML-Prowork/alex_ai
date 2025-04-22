@@ -1,0 +1,58 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container">
+  <h2 class="main-title mb-4 text-start">Expense List</h2>
+
+  <!-- Card container for the page -->
+  <div class="card-dark shadow-sm p-4">
+    <div class="card-body position-relative">
+      <table
+        id="example"
+        class="stripe row-border order-column nowrap"
+        style="width: 100%"
+      >
+        <thead>
+          <tr class="users-table-info">
+            <th></th>
+            <th>ID</th>
+            <th>Expense Type</th>
+            <th>Bill To</th>
+            <th>Expense Amount (Rupees)</th>
+            <th>Expense Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- Static iob Row 1 -->
+          {% for i in expenses %}
+          <tr>
+            <td></td>
+            <td class="text-center">EXP1000{{i.id}}</td>
+            <td class="text-center">{{i.expense_type}}</td>
+            <td>{{i.paid_to}}</td>
+            <td class="text-center">{{i.amount}}</td>
+            <td class="text-center">{{i.date_of_expense}}</td>
+            <td class="text-center">{{i.payment_status}}</td>
+            <td>
+              <a
+                href="/accounts/edit-expense/{{i.id}}"
+                type="button"
+                class="btn btn-warning-light"
+                ><i class="bi bi-pencil-square"></i></a>
+              <a
+                href="/accounts/delete-expense/{{i.id}}"
+                type="button"
+                class="btn btn-danger-light"
+                onclick="return confirm('Are you sure you want to delete this job?');"
+                ><i class="bi bi-trash3-fill"></i
+              ></a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock content %}

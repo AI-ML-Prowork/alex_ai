@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+        <div class="qq bg-success">
+            <h3 class="heading">Update Income</h3>
+        </div>        
+        <div class="card-dark shadow-sm p-4">
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            <label for="source_type" class="form-label">Source Type <span class="text-danger">*</span></label>
+                            <select class="form-control" id="source_type" name="received_from" required>
+                                <option value="">Select Source Type</option>
+                                <option value="Employer" {% if income_data.received_from == 'Employer' %}selected{% endif %}>Employer</option>
+                                <option value="Candidate" {% if income_data.received_from == 'Candidate' %}selected{% endif %}>Candidate</option>
+                            </select>
+                        </div>
+                        <div class="col-3" id="employer_fields" style="display: {% if income_data.received_from == 'Employer' %}block{% else %}none{% endif %};">
+                            <label for="employer_id" class="form-label">Employer ID <span class="text-danger">*</span></label>
+                            <select class="form-control" id="employer_id" name="user" {% if income_data.received_from != 'Employer' %}disabled{% endif %}>
+                                <option value="">Select Employer</option>
+                                {% for employer in employer_data %}
+                                    <option value="{{ employer.id }}" 
+                                            data-username="{{ employer.username }}"
+                                            {% if employer.id == income_data.user %}selected{% endif %}>
+                                        {{ employer.username }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-3" id="candidate_fields" style="display: {% if income_data.received_from == 'Candidate' %}block{% else %}none{% endif %};">
+                            <label for="candidate_id" class="form-label">Candidate ID <span class="text-danger">*</span></label>
+                            <select class="form-control" id="candidate_id" name="user" {% if income_data.received_from != 'Candidate' %}disabled{% endif %}>
+                                <option value="">Select Candidate</option>
+                                {% for data in candidate_data %}
+                                    <option value="{{ data.id }}"
+                                            data-username="{{ data.username }}"
+                                            {% if data.id == income_data.user %}selected{% endif %}>
+                                        {{ data.username }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                            <input type="text" placeholder="Name" class="form-control" id="name" name="name" value="{{ income_data.name }}" required readonly>
+                        </div>
+                        <div class="col-3">
+                            <label for="payment_status" class="form-label">Payment Status</label>
+                            <select class="form-control" id="payment_status" name="payment_status">
+                                <option value="">Select Payment Status</option>
+                                <option value="Paid" {% if income_data.payment_status == 'Paid' %}selected{% endif %}>Paid</option>
+                                <option value="Pending" {% if income_data.payment_status == 'Pending' %}selected{% endif %}>Pending</option>
+                                <option value="Failed" {% if income_data.payment_status == 'Failed' %}selected{% endif %}>Failed</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <script>
+                        // Handling display logic for employer and candidate selection
+                        document.getElementById('source_type').addEventListener('change', function() {
+                            var selectedValue = this.value;
+                            var employerFields = document.getElementById('employer_fields');
+                            var candidateFields = document.getElementById('candidate_fields');
+                
+                            if (selectedValue === 'Employer') {
+                                employerFields.style.display = 'block';
+                                candidateFields.style.display = 'none';
+                                // Make employer field required when visible
+                                document.getElementById('employer_id').setAttribute('required', 'true');
+                                document.getElementById('candidate_id').removeAttribute('required');
+                            } else if (selectedValue === 'Candidate') {
+                                employerFields.style.display = 'none';
+                                candidateFields.style.display = 'block';
+                                // Make candidate field required when visible
+                                document.getElementById('candidate_id').setAttribute('required', 'true');
+                                document.getElementById('employer_id').removeAttribute('required');
+                            } else {
+                                employerFields.style.display = 'none';
+                                candidateFields.style.display = 'none';
+                                // Remove required attribute when neither option is selected
+                                document.getElementById('employer_id').removeAttribute('required');
+                                document.getElementById('candidate_id').removeAttribute('required');
+                            }
+                        });
+                
+                        // Update name and id fields based on selected option
+                        function updateFields(selectElement) {
+                            var selectedOption = selectElement.options[selectElement.selectedIndex];
+                            var username = selectedOption.getAttribute('data-username');
+                            var id = selectedOption.value;
+                
+                            // Populate the fields with the selected data
+                            document.getElementById('name').value = username ? username : '';
+                            document.getElementById('name').setAttribute('data-id', id);
+                        }
+                
+                        document.getElementById('employer_id').addEventListener('change', function() {
+                            updateFields(this);
+                        });
+                
+                        document.getElementById('candidate_id').addEventListener('change', function() {
+                            updateFields(this);
+                        });
+                    </script>
+                
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            <label for="date_of_income" class="form-label">Income Date<span class="text-danger">*</span></label>
+                            <input type="date" placeholder="Date of Income" class="form-control" id="date_of_income" name="date_of_income" value="{{ income_data.date_of_income }}" required>
+                        </div>
+                        <div class="col-3">
+                            <label for="date_of_entry" class="form-label">Income Entry Date <span class="text-danger">*</span></label>
+                            <input type="date" placeholder="Date of Income" class="form-control" id="date_of_entry" name="date_of_entry" value="{{ income_data.date_of_entry }}" required>
+                        </div>
+                        <div class="col-3">
+                            <label for="category" class="form-label">Category <span class="text-danger">*</span></label>
+                            <input type="text" placeholder="Category" class="form-control" id="category" name="category" value="{{ income_data.category }}" >
+                        </div>
+                        <div class="col-3">
+                            <label for="payment_method" class="form-label">Payment Method <span class="text-danger">*</span></label>
+                            <select class="form-control" id="payment_method" name="payment_method" required>
+                                <option value="">Select Payment Method</option>
+                                <option value="Cash" {% if income_data.payment_method == 'Cash' %}selected{% endif %}>Cash</option>
+                                <option value="Credit Card" {% if income_data.payment_method == 'Credit Card' %}selected{% endif %}>Credit Card</option>
+                                <option value="Bank Transfer" {% if income_data.payment_method == 'Bank Transfer' %}selected{% endif %}>Bank Transfer</option>
+                                <option value="UPI" {% if income_data.payment_method == 'UPI' %}selected{% endif %}>UPI</option>
+                                <option value="Debit Card" {% if income_data.payment_method == 'Debit Card' %}selected{% endif %}>Debit Card</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label for="source_of_income" class="form-label">Source of Income</label>
+                            <input type="text" placeholder="Enter the Description of particulars" class="form-control" id="source_of_income" value="{{ income_data.source_of_income }}" name="source_of_income">
+                        </div>
+                    </div> 
+                
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            <label for="transaction_id" class="form-label">Transaction ID (Optional)</label>
+                            <input type="text" placeholder="Transaction ID" class="form-control" id="transaction_id" name="transaction_id" value="{{ income_data.transaction_id }}">
+                        </div>
+                        <div class="col-3">
+                            <label for="invoice_receipt_upload" class="form-label">Invoice/Receipt Upload</label>
+                            <input type="file" class="form-control" id="invoice_receipt_upload" name="invoice_receipt_upload">
+                        </div>
+                
+                        <div class="col-3">
+                            <label for="notes_remarks" class="form-label">Notes/Remarks</label>
+                            <textarea placeholder="Notes/Remarks" class="form-control" id="notes_remarks" name="notes_remarks">{{ income_data.notes_remarks }}</textarea>
+                        </div>
+                        <div class="col-3">
+                            <label for="amount" class="form-label">Amount <span class="text-danger">*</span></label>
+                            <input type="number" placeholder="Amount" class="form-control" id="amount" name="amount" value="{{ income_data.amount }}" required>
+                        </div>
+                    </div>
+                
+                    <!-- Submit Button -->
+                    <div class="row btnrow">
+                        <center>
+                            <button type="submit" id="submit" class="btn btn-success btn-lg">
+                                Submit
+                            </button>
+                        </center>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+</div>
+
+{% endblock content %}

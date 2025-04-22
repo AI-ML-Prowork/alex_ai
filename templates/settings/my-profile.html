@@ -1,0 +1,870 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="col-12">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-body-tertiary rounded-3 p-3 mb-4 bg-dark">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">User</a></li>
+        <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+      </ol>
+      <div class="d-flex justify-content-end mt-2">
+        <a href="#" class="btn btn-success">
+          <i class="fas fa-edit"></i> Edit Profile
+        </a>
+      </div>
+    </nav>
+  </div>
+</div>
+
+
+
+{% if request.session.user_info.account_type == "candidate" %}
+<section style="background-color: rgb(22 22 36);">
+    <div class="container py-5">  
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4 bg-dark">
+            <div class="card-body text-center text-white">
+              {% if user.candidate.profile_image %}
+              <img src="{{user.candidate.profile_image}}" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+              {% else %}
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+              {% endif %}
+              <h5 class="my-3">{{user.candidate.full_name}}</h5>
+              <p class="mb-1">{{user.candidate.current_position}}</p>
+
+            </div>
+          </div>
+          <div class="card mb-4 mb-lg-0 bg-dark">
+            <div class="card-body text-white ">
+              <h5 class="mb-3">Change Password</h5>
+              <form method="post" action="/settings/profile/change-password">
+                {% csrf_token %}
+
+                <div class="form-group mb-3">
+                  <label for="new_password1">New Password</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="new_password1" name="new_password" required>
+                    <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('new_password1')">Show</button>
+                  </div>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="new_password2">Confirm New Password</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="new_password2" name="confirm_password" required>
+                    <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('new_password2')">Show</button>
+                  </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success-light">Change Password</button>
+                </div>
+              </form>
+
+              <script>
+                function togglePassword(id) {
+                  var input = document.getElementById(id);
+                  if (input.type === "password") {
+                    input.type = "text";
+                  } else {
+                    input.type = "password";
+                  }
+                }
+              </script>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4 bg-dark">
+            <div class="card-body   text-white">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Full Name</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{request.user.username}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{request.user.email}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Primary Contact</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{request.user.phone_number}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Secondary Contact</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{user.candidate.secondary_phone_number}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Address</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{user.candidate.street_address}}, <br> {{user.candidate.address2}}, <br> {{user.candidate.city}}, {{user.candidate.state}}, {{user.candidate.zip}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Country</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{user.candidate.country}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- First Card -->
+            <div class="col-md-12">
+              <div class="card mb-4 mb-md-0 bg-dark">
+                <div class="card-body text-white">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Additional Information</span></p>          
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-1" style="font-size: .77rem;">Signature: 
+                      {% if user.candidate.signature %}
+                        <img src="{{ user.candidate.signature }}" alt="Signature" style="width: 150px;">
+                      {% else %}
+                        Not Provided
+                      {% endif %}
+                    </p>  
+                    <p class="mb-1" style="font-size: .77rem;">Resume: <a class="text-primary font-italic me-1" href="{{ user.candidate.resume }}" target="_blank">Download Resume</a></p>        
+                    <p class="mb-1" style="font-size: .77rem;">
+                      Created At: {{ user.candidate.created_at|slice:":10" }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>       
+          </div>        
+        </div>
+        <hr>
+        <!-- candidate details Card -->  
+        <div class="col-lg-12">
+          <div class="card mb-4 mb-md-0 bg-dark">
+            <div class="card-body text-white">
+              <p class="mb-4"><span class="text-center fw-bold me-1">Candidate Profile Information</span></p>      
+              
+              <!-- Personal Information Section -->
+              <div class="row mb-3">                
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Passport Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Passport No: {{ user.candidate.passport_no }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Place of Issue: {{ user.candidate.place_of_issue }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Date of Issue: {{ user.candidate.date_of_issue }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Date of Expiry: {{ user.candidate.date_of_expiry }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">ECR Status: {{ user.candidate.ecr_status }}</li>                  
+                </div>
+                
+
+                <!-- Professional Information Section -->
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Current Job Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Current Position: {{ user.candidate.current_position }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Previous Position: {{ user.candidate.previous_position }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">International Experience: {{ user.candidate.international_experience }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Domestic Experience: {{ user.candidate.domestic_experience }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Highest Qualification: {{ user.candidate.highest_qualification }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Total Experience: {{ user.candidate.total_experience }} years</li>
+                  <li class="mb-1" style="font-size: .77rem;">Skills: {{ user.candidate.skills }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">LinkedIn Link: <a class="text-primary font-italic me-1" href="{{ user.candidate.linkedin_link }}" target="_blank">{{ user.candidate.linkedin_link }}</a></li>
+                  <li class="mb-1" style="font-size: .77rem;">Duration: {{ user.candidate.duration }} years</li>
+                  <li class="mb-1" style="font-size: .77rem;">Languages: 
+                    <span style="display: inline-block; margin-right: 10px;">• {{ user.candidate.language_1 }}</span>
+                    <span style="display: inline-block; margin-right: 10px;">• {{ user.candidate.language_2 }}</span>
+                    <span style="display: inline-block; margin-right: 10px;">• {{ user.candidate.language_3 }}</span>
+                  </li>
+                  </li>
+                </div>
+              </div>
+
+              <div class="row mb-3">                
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Extra Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Date of Birth: {{ user.candidate.date_of_birth }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Gender: {{ user.candidate.gender }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Age: {{ user.candidate.age }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Place of Birth: {{ user.candidate.place_of_birth }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Nationality: {{ user.candidate.nationality }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Marital Status: {{ user.candidate.marital_status }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Number of Dependents: {{ user.candidate.no_of_dependents }}</li>
+                </div>
+                
+
+                <!-- Professional Information Section -->
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Application Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Career Objective: {{ user.candidate.career_objective }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Country Applied For: {{ user.candidate.country_applied_for }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Job Applied For: {{ user.candidate.job_applied_for }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Position Applied For: {{ user.candidate.position_applied_for }}</li>                  <li class="mb-1" style="font-size: .77rem;">Company Name: {{ user.candidate.company_name }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Position: {{ user.candidate.position }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Duration: {{ user.candidate.duration }} years</li>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+{% elif request.session.user_info.account_type == 'employer' %}
+<section style="background-color: rgb(22 22 36);">
+    <div class="container py-5">  
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4 bg-dark">
+            <div class="card-body text-center text-white">
+              {% if user.candidate.profile_image %}
+              <img src="{{user.candidate.profile_image}}" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+              {% else %}
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+              {% endif %}
+              <h5 class="my-3">{{user.candidate.full_name}}</h5>
+              <p class="mb-1">{{user.candidate.current_position}}</p>
+
+            </div>
+          </div>
+          <div class="card mb-4 mb-lg-0 bg-dark">
+            <div class="card-body text-white ">
+              <h5 class="mb-3">Change Password</h5>
+              <form method="post" action="/settings/profile/change-password">
+                {% csrf_token %}
+
+                <div class="form-group mb-3">
+                  <label for="new_password1">New Password</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="new_password1" name="new_password" required>
+                    <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('new_password1')">Show</button>
+                  </div>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="new_password2">Confirm New Password</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="new_password2" name="confirm_password" required>
+                    <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('new_password2')">Show</button>
+                  </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success-light">Change Password</button>
+                </div>
+              </form>
+
+              <script>
+                function togglePassword(id) {
+                  var input = document.getElementById(id);
+                  if (input.type === "password") {
+                    input.type = "text";
+                  } else {
+                    input.type = "password";
+                  }
+                }
+              </script>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4 bg-dark">
+            <div class="card-body   text-white">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Full Name</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{request.user.username}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{request.user.email}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Primary Contact</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{request.user.phone_number}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Secondary Contact</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{user.candidate.secondary_phone_number}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Address</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{user.candidate.street_address}}, <br> {{user.candidate.address2}}, <br> {{user.candidate.city}}, {{user.candidate.state}}, {{user.candidate.zip}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Country</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{user.candidate.country}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- First Card -->
+            <div class="col-md-12">
+              <div class="card mb-4 mb-md-0 bg-dark">
+                <div class="card-body text-white">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Additional Information</span></p>          
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-1" style="font-size: .77rem;">Signature: 
+                      {% if user.candidate.signature %}
+                        <img src="{{ user.candidate.signature }}" alt="Signature" style="width: 150px;">
+                      {% else %}
+                        Not Provided
+                      {% endif %}
+                    </p>  
+                    <p class="mb-1" style="font-size: .77rem;">Resume: <a class="text-primary font-italic me-1" href="{{ user.candidate.resume }}" target="_blank">Download Resume</a></p>        
+                    <p class="mb-1" style="font-size: .77rem;">
+                      Created At: {{ user.candidate.created_at|slice:":10" }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>       
+          </div>        
+        </div>
+        <hr>
+        <!-- candidate details Card -->  
+        <div class="col-lg-12">
+          <div class="card mb-4 mb-md-0 bg-dark">
+            <div class="card-body text-white">
+              <p class="mb-4"><span class="text-center fw-bold me-1">Candidate Profile Information</span></p>      
+              
+              <!-- Personal Information Section -->
+              <div class="row mb-3">                
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Passport Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Passport No: {{ user.candidate.passport_no }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Place of Issue: {{ user.candidate.place_of_issue }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Date of Issue: {{ user.candidate.date_of_issue }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Date of Expiry: {{ user.candidate.date_of_expiry }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">ECR Status: {{ user.candidate.ecr_status }}</li>                  
+                </div>
+                
+
+                <!-- Professional Information Section -->
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Current Job Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Current Position: {{ user.candidate.current_position }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Previous Position: {{ user.candidate.previous_position }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">International Experience: {{ user.candidate.international_experience }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Domestic Experience: {{ user.candidate.domestic_experience }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Highest Qualification: {{ user.candidate.highest_qualification }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Total Experience: {{ user.candidate.total_experience }} years</li>
+                  <li class="mb-1" style="font-size: .77rem;">Skills: {{ user.candidate.skills }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">LinkedIn Link: <a class="text-primary font-italic me-1" href="{{ user.candidate.linkedin_link }}" target="_blank">{{ user.candidate.linkedin_link }}</a></li>
+                  <li class="mb-1" style="font-size: .77rem;">Duration: {{ user.candidate.duration }} years</li>
+                  <li class="mb-1" style="font-size: .77rem;">Languages: 
+                    <span style="display: inline-block; margin-right: 10px;">• {{ user.candidate.language_1 }}</span>
+                    <span style="display: inline-block; margin-right: 10px;">• {{ user.candidate.language_2 }}</span>
+                    <span style="display: inline-block; margin-right: 10px;">• {{ user.candidate.language_3 }}</span>
+                  </li>
+                  </li>
+                </div>
+              </div>
+
+              <div class="row mb-3">                
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Extra Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Date of Birth: {{ user.candidate.date_of_birth }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Gender: {{ user.candidate.gender }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Age: {{ user.candidate.age }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Place of Birth: {{ user.candidate.place_of_birth }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Nationality: {{ user.candidate.nationality }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Marital Status: {{ user.candidate.marital_status }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Number of Dependents: {{ user.candidate.no_of_dependents }}</li>
+                </div>
+                
+
+                <!-- Professional Information Section -->
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Application Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Career Objective: {{ user.candidate.career_objective }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Country Applied For: {{ user.candidate.country_applied_for }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Job Applied For: {{ user.candidate.job_applied_for }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Position Applied For: {{ user.candidate.position_applied_for }}</li>                  <li class="mb-1" style="font-size: .77rem;">Company Name: {{ user.candidate.company_name }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Position: {{ user.candidate.position }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Duration: {{ user.candidate.duration }} years</li>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+{% elif request.session.user_info.account_type == 'staff' %}
+<section style="background-color: rgb(22 22 36);">
+    <div class="container py-5">  
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4 bg-dark">
+            <div class="card-body text-center text-white">
+              {% if user.candidate.profile_image %}
+              <img src="{{user.candidate.profile_image}}" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+              {% else %}
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+              {% endif %}
+              <h5 class="my-3">{{user.candidate.full_name}}</h5>
+              <p class="mb-1">{{user.candidate.current_position}}</p>
+
+            </div>
+          </div>
+          <div class="card mb-4 mb-lg-0 bg-dark">
+            <div class="card-body text-white ">
+              <h5 class="mb-3">Change Password</h5>
+              <form method="post" action="/settings/profile/change-password">
+                {% csrf_token %}
+
+                <div class="form-group mb-3">
+                  <label for="new_password1">New Password</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="new_password1" name="new_password" required>
+                    <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('new_password1')">Show</button>
+                  </div>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="new_password2">Confirm New Password</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="new_password2" name="confirm_password" required>
+                    <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('new_password2')">Show</button>
+                  </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success-light">Change Password</button>
+                </div>
+              </form>
+
+              <script>
+                function togglePassword(id) {
+                  var input = document.getElementById(id);
+                  if (input.type === "password") {
+                    input.type = "text";
+                  } else {
+                    input.type = "password";
+                  }
+                }
+              </script>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4 bg-dark">
+            <div class="card-body   text-white">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Full Name</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{request.user.username}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{request.user.email}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Primary Contact</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{request.user.phone_number}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Secondary Contact</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{user.candidate.secondary_phone_number}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Address</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{user.candidate.street_address}}, <br> {{user.candidate.address2}}, <br> {{user.candidate.city}}, {{user.candidate.state}}, {{user.candidate.zip}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Country</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{user.candidate.country}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- First Card -->
+            <div class="col-md-12">
+              <div class="card mb-4 mb-md-0 bg-dark">
+                <div class="card-body text-white">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Additional Information</span></p>          
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-1" style="font-size: .77rem;">Signature: 
+                      {% if user.candidate.signature %}
+                        <img src="{{ user.candidate.signature }}" alt="Signature" style="width: 150px;">
+                      {% else %}
+                        Not Provided
+                      {% endif %}
+                    </p>  
+                    <p class="mb-1" style="font-size: .77rem;">Resume: <a class="text-primary font-italic me-1" href="{{ user.candidate.resume }}" target="_blank">Download Resume</a></p>        
+                    <p class="mb-1" style="font-size: .77rem;">
+                      Created At: {{ user.candidate.created_at|slice:":10" }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>       
+          </div>        
+        </div>
+        <hr>
+        <!-- candidate details Card -->  
+        <div class="col-lg-12">
+          <div class="card mb-4 mb-md-0 bg-dark">
+            <div class="card-body text-white">
+              <p class="mb-4"><span class="text-center fw-bold me-1">Candidate Profile Information</span></p>      
+              
+              <!-- Personal Information Section -->
+              <div class="row mb-3">                
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Passport Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Passport No: {{ user.candidate.passport_no }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Place of Issue: {{ user.candidate.place_of_issue }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Date of Issue: {{ user.candidate.date_of_issue }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Date of Expiry: {{ user.candidate.date_of_expiry }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">ECR Status: {{ user.candidate.ecr_status }}</li>                  
+                </div>
+                
+
+                <!-- Professional Information Section -->
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Current Job Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Current Position: {{ user.candidate.current_position }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Previous Position: {{ user.candidate.previous_position }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">International Experience: {{ user.candidate.international_experience }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Domestic Experience: {{ user.candidate.domestic_experience }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Highest Qualification: {{ user.candidate.highest_qualification }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Total Experience: {{ user.candidate.total_experience }} years</li>
+                  <li class="mb-1" style="font-size: .77rem;">Skills: {{ user.candidate.skills }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">LinkedIn Link: <a class="text-primary font-italic me-1" href="{{ user.candidate.linkedin_link }}" target="_blank">{{ user.candidate.linkedin_link }}</a></li>
+                  <li class="mb-1" style="font-size: .77rem;">Duration: {{ user.candidate.duration }} years</li>
+                  <li class="mb-1" style="font-size: .77rem;">Languages: 
+                    <span style="display: inline-block; margin-right: 10px;">• {{ user.candidate.language_1 }}</span>
+                    <span style="display: inline-block; margin-right: 10px;">• {{ user.candidate.language_2 }}</span>
+                    <span style="display: inline-block; margin-right: 10px;">• {{ user.candidate.language_3 }}</span>
+                  </li>
+                  </li>
+                </div>
+              </div>
+
+              <div class="row mb-3">                
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Extra Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Date of Birth: {{ user.candidate.date_of_birth }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Gender: {{ user.candidate.gender }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Age: {{ user.candidate.age }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Place of Birth: {{ user.candidate.place_of_birth }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Nationality: {{ user.candidate.nationality }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Marital Status: {{ user.candidate.marital_status }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Number of Dependents: {{ user.candidate.no_of_dependents }}</li>
+                </div>
+                
+
+                <!-- Professional Information Section -->
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Application Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Career Objective: {{ user.candidate.career_objective }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Country Applied For: {{ user.candidate.country_applied_for }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Job Applied For: {{ user.candidate.job_applied_for }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Position Applied For: {{ user.candidate.position_applied_for }}</li>                  <li class="mb-1" style="font-size: .77rem;">Company Name: {{ user.candidate.company_name }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Position: {{ user.candidate.position }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Duration: {{ user.candidate.duration }} years</li>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+{% else %}
+<section style="background-color: rgb(22 22 36);">
+    <div class="container py-5">  
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4 bg-dark">
+            <div class="card-body text-center text-white">
+              {% if user.candidate.profile_image %}
+              <img src="{{user.candidate.profile_image}}" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+              {% else %}
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+              {% endif %}
+              <h5 class="my-3">{{user.candidate.full_name}}</h5>
+              <p class="mb-1">{{user.candidate.current_position}}</p>
+
+            </div>
+          </div>
+          <div class="card mb-4 mb-lg-0 bg-dark">
+            <div class="card-body text-white ">
+              <h5 class="mb-3">Change Password</h5>
+              <form method="post" action="/settings/profile/change-password">
+                {% csrf_token %}
+
+                <div class="form-group mb-3">
+                  <label for="new_password1">New Password</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="new_password1" name="new_password" required>
+                    <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('new_password1')">Show</button>
+                  </div>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="new_password2">Confirm New Password</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="new_password2" name="confirm_password" required>
+                    <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('new_password2')">Show</button>
+                  </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success-light">Change Password</button>
+                </div>
+              </form>
+
+              <script>
+                function togglePassword(id) {
+                  var input = document.getElementById(id);
+                  if (input.type === "password") {
+                    input.type = "text";
+                  } else {
+                    input.type = "password";
+                  }
+                }
+              </script>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4 bg-dark">
+            <div class="card-body   text-white">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Full Name</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{request.user.username}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{request.user.email}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Primary Contact</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{request.user.phone_number}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Secondary Contact</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{user.candidate.secondary_phone_number}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Address</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{user.candidate.street_address}}, <br> {{user.candidate.address2}}, <br> {{user.candidate.city}}, {{user.candidate.state}}, {{user.candidate.zip}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Country</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{user.candidate.country}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- First Card -->
+            <div class="col-md-12">
+              <div class="card mb-4 mb-md-0 bg-dark">
+                <div class="card-body text-white">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Additional Information</span></p>          
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-1" style="font-size: .77rem;">Signature: 
+                      {% if user.candidate.signature %}
+                        <img src="{{ user.candidate.signature }}" alt="Signature" style="width: 150px;">
+                      {% else %}
+                        Not Provided
+                      {% endif %}
+                    </p>  
+                    <p class="mb-1" style="font-size: .77rem;">Resume: <a class="text-primary font-italic me-1" href="{{ user.candidate.resume }}" target="_blank">Download Resume</a></p>        
+                    <p class="mb-1" style="font-size: .77rem;">
+                      Created At: {{ user.candidate.created_at|slice:":10" }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>       
+          </div>        
+        </div>
+        <hr>
+        <!-- candidate details Card -->  
+        <div class="col-lg-12">
+          <div class="card mb-4 mb-md-0 bg-dark">
+            <div class="card-body text-white">
+              <p class="mb-4"><span class="text-center fw-bold me-1">Candidate Profile Information</span></p>      
+              
+              <!-- Personal Information Section -->
+              <div class="row mb-3">                
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Passport Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Passport No: {{ user.candidate.passport_no }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Place of Issue: {{ user.candidate.place_of_issue }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Date of Issue: {{ user.candidate.date_of_issue }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Date of Expiry: {{ user.candidate.date_of_expiry }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">ECR Status: {{ user.candidate.ecr_status }}</li>                  
+                </div>
+                
+
+                <!-- Professional Information Section -->
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Current Job Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Current Position: {{ user.candidate.current_position }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Previous Position: {{ user.candidate.previous_position }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">International Experience: {{ user.candidate.international_experience }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Domestic Experience: {{ user.candidate.domestic_experience }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Highest Qualification: {{ user.candidate.highest_qualification }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Total Experience: {{ user.candidate.total_experience }} years</li>
+                  <li class="mb-1" style="font-size: .77rem;">Skills: {{ user.candidate.skills }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">LinkedIn Link: <a class="text-primary font-italic me-1" href="{{ user.candidate.linkedin_link }}" target="_blank">{{ user.candidate.linkedin_link }}</a></li>
+                  <li class="mb-1" style="font-size: .77rem;">Duration: {{ user.candidate.duration }} years</li>
+                  <li class="mb-1" style="font-size: .77rem;">Languages: 
+                    <span style="display: inline-block; margin-right: 10px;">• {{ user.candidate.language_1 }}</span>
+                    <span style="display: inline-block; margin-right: 10px;">• {{ user.candidate.language_2 }}</span>
+                    <span style="display: inline-block; margin-right: 10px;">• {{ user.candidate.language_3 }}</span>
+                  </li>
+                  </li>
+                </div>
+              </div>
+
+              <div class="row mb-3">                
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Extra Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Date of Birth: {{ user.candidate.date_of_birth }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Gender: {{ user.candidate.gender }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Age: {{ user.candidate.age }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Place of Birth: {{ user.candidate.place_of_birth }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Nationality: {{ user.candidate.nationality }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Marital Status: {{ user.candidate.marital_status }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Number of Dependents: {{ user.candidate.no_of_dependents }}</li>
+                </div>
+                
+
+                <!-- Professional Information Section -->
+                <div class="col-sm-6">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">Application Details</span></p> 
+                  <li class="mb-1" style="font-size: .77rem;">Career Objective: {{ user.candidate.career_objective }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Country Applied For: {{ user.candidate.country_applied_for }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Job Applied For: {{ user.candidate.job_applied_for }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Position Applied For: {{ user.candidate.position_applied_for }}</li>                  <li class="mb-1" style="font-size: .77rem;">Company Name: {{ user.candidate.company_name }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Position: {{ user.candidate.position }}</li>
+                  <li class="mb-1" style="font-size: .77rem;">Duration: {{ user.candidate.duration }} years</li>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+{% endif %}
+
+
+{% endblock %}

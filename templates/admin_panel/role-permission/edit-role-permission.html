@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <h2 class="main-title mb-4 text-start">Roles Permissions Edit</h2>
+    <!-- Card container for the page -->
+    <div class="card-dark shadow-sm p-4">
+        <div class="card-body position-relative">
+            <div class="row">
+                <div class="col-12">
+                    <form action="#" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="role" class="form-label fw-bold">Select Role <span class="text-danger">*</span></label>
+                                    <select name="role" id="role" class="form-select">
+                                        <option value="{{ role.id }}">{{ role.name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="mb-2 float-end">
+                                    <!-- Button to select all permissions for all modules -->
+                                    <label>
+                                        <input type="checkbox" class="select-all" id="selectAllModules"> Select all Modules
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+        
+                        <table id="roletable" class="stripe row-border order-column nowrap" style="width: 100%">
+                            <thead>
+                                <tr class="users-table-info">
+                                    <th>Sr.No.</th>
+                                    <th>Module Name</th>
+                                    <th>Permissions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for module, permissions in permissions.items %}
+                                    <tr>
+                                        <td>URA-#100{{ forloop.counter }}</td>
+                                        <td>{{ module }}</td>
+                                        <td>
+                                            <!-- "Select all" checkbox for the current module -->
+                                            <label>
+                                                <input type="checkbox" class="select-all" data-module="{{ module }}"> Select all
+                                            </label>
+                                            <br>
+        
+                                            <!-- Individual permission checkboxes for the current module -->
+                                            {% for permission in permissions %}
+                                                <label>
+                                                    <input type="checkbox" class="permission-checkbox {{ module }}" name="permissions" value="{{ permission.code }}" {% if permission.code in assigned_permission_codes %} checked {% endif %}> {{ permission.name }}
+                                                </label>
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <hr>
+        
+                        <button type="submit" class="btn btn-primary-light float-end">Assign</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<!-- Add JavaScript to handle "Select All" functionality for all modules -->
+<script>
+    // Function to toggle "Select all" checkbox for each module
+    document.querySelectorAll('.select-all').forEach(selectAllCheckbox => {
+        selectAllCheckbox.addEventListener('change', function() {
+            const module = this.getAttribute('data-module'); 
+            const checkboxes = document.querySelectorAll(`.permission-checkbox.${module}`);
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+    });
+
+    // Function to handle "Select All Modules Permissions" checkbox
+    document.getElementById('selectAllModules').addEventListener('change', function() {
+        // Select or deselect all permission checkboxes for every module
+        const allCheckboxes = document.querySelectorAll('.permission-checkbox');
+        allCheckboxes.forEach(checkbox => {
+            checkbox.checked = this.checked; // Set all to checked or unchecked based on the master checkbox
+        });
+
+        // Optionally, set the "Select all" checkboxes for each module as checked or unchecked
+        document.querySelectorAll('.select-all').forEach(selectAllCheckbox => {
+            selectAllCheckbox.checked = this.checked;
+        });
+    });
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+        <div class="qq bg-success">
+            <h3 class="heading">Update Expense</h3>
+        </div>        
+        <div class="card-dark shadow-sm p-4">
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data"> 
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            <label for="expense_type" class="form-label">Source Type <span class="text-danger">*</span></label>
+                            <select class="form-control" id="expense_type" name="expense_type" required>
+                                <option value="">Select Source Type</option>
+                                <option value="Employees" {% if expense_data.expense_type == "Employees" %}selected{% endif %}>Employees Salary</option>
+                                <option value="Benefits" {% if expense_data.expense_type == "Benefits" %}selected{% endif %}>Benefits</option>
+                                <option value="Training" {% if expense_data.expense_type == "Training" %}selected{% endif %}>Training</option>
+                                <option value="Office Rent" {% if expense_data.expense_type == "Office Rent" %}selected{% endif %}>Office Rent</option>
+                                <option value="Utilities" {% if expense_data.expense_type == "Utilities" %}selected{% endif %}>Utilities</option>
+                                <option value="Travel" {% if expense_data.expense_type == "Travel" %}selected{% endif %}>Travel</option>
+                                <option value="Equipment" {% if expense_data.expense_type == "Equipment" %}selected{% endif %}>Equipment</option>
+                                <option value="Miscellaneous" {% if expense_data.expense_type == "Miscellaneous" %}selected{% endif %}>Miscellaneous</option>
+                            </select>
+                        </div>
+                
+                        <div class="col-3" id="employer_fields" style="display: {% if expense_data.expense_type == 'Employees' %}block{% else %}none{% endif %};">
+                            <label for="employee_id" class="form-label">Employee ID <span class="text-danger">*</span></label>
+                            <select class="form-control" id="employee_id" name="user">
+                                <option value="">Select Employee</option>
+                                {% for employee in employees_data %}
+                                    <option value="{{ employee.id }}" data-username="{{ employee.username }}" {% if employee.id == expense_data.user %}selected{% endif %}>
+                                        {{ employee.username }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                
+                        <div class="col-3">
+                            <label for="paid_to" class="form-label">Paid To <span class="text-danger">*</span></label>
+                            <input type="text" placeholder="Enter the name" class="form-control" id="paid_to" name="paid_to" value="{{ expense_data.paid_to }}" required>
+                        </div>
+                
+                        <div class="col-3">
+                            <label for="payment_status" class="form-label">Payment Status</label>
+                            <select class="form-control" id="payment_status" name="payment_status">
+                                <option value="" {% if not expense_data.payment_status %}selected{% endif %}>Select Payment Status</option>
+                                <option value="Paid" {% if expense_data.payment_status == "Paid" %}selected{% endif %}>Paid</option>
+                                <option value="Pending" {% if expense_data.payment_status == "Pending" %}selected{% endif %}>Pending</option>
+                                <option value="Failed" {% if expense_data.payment_status == "Failed" %}selected{% endif %}>Failed</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <script>
+                        // Handling display logic for employer fields based on expense type
+                        document.getElementById('expense_type').addEventListener('change', function() {
+                            var selectedValue = this.value;
+                            var employerFields = document.getElementById('employer_fields');
+                            var employeeField = document.getElementById('employee_id');
+                            var paidToField = document.getElementById('paid_to');
+                
+                            if (selectedValue === 'Employees') {
+                                employerFields.style.display = 'block';
+                                paidToField.setAttribute('readonly', true); // Disable paid_to field
+                                employeeField.setAttribute('required', 'true');
+                            } else {
+                                employerFields.style.display = 'none';
+                                paidToField.removeAttribute('readonly');
+                                employeeField.removeAttribute('required');
+                            }
+                        });
+                
+                        // Update the 'Paid To' name and ID fields dynamically based on employee selection
+                        function updateFields(selectElement) {
+                            var selectedOption = selectElement.options[selectElement.selectedIndex];
+                            var username = selectedOption.getAttribute('data-username');
+                            var id = selectedOption.value;
+                            document.getElementById('paid_to').value = username ? username : '';
+                            document.getElementById('paid_to').setAttribute('data-id', id);
+                        }
+                
+                        document.getElementById('employee_id').addEventListener('change', function() {
+                            updateFields(this);
+                        });
+                
+                        // Initialize the 'Paid To' field on page load if employee ID is pre-selected
+                        {% if expense_data.user %}
+                            var employeeSelect = document.getElementById('employee_id');
+                            var selectedEmployee = employeeSelect.querySelector('option[value="{{ expense_data.user }}"]');
+                            updateFields(selectedEmployee);
+                        {% endif %}
+                    </script>
+                
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            <label for="date_of_expense" class="form-label">Expense Date <span class="text-danger">*</span></label>
+                            <input type="date" placeholder="Date of Income" class="form-control" id="date_of_expense" name="date_of_expense" value="{{ expense_data.date_of_expense }}" required>
+                        </div>
+                
+                        <div class="col-3">
+                            <label for="bank_account_debited" class="form-label">Bank Account Debited <span class="text-danger">*</span></label>
+                            <select class="form-control" id="bank_account_debited" name="bank_account_debited" required>
+                                <option value="" {% if not expense_data.bank_account_debited %}selected{% endif %}>Select Bank Account</option>
+                                <option value="A/c no. 121105000603 SHERLY RAJAN ROAD BRANCH Maharashtra,India IFSC Code : ICIC0001211 Swift Code : ICICINBBCTS" {% if expense_data.bank_account_debited == "A/c no. 121105000603 SHERLY RAJAN ROAD BRANCH Maharashtra,India IFSC Code : ICIC0001211 Swift Code : ICICINBBCTS" %}selected{% endif %}>A/c no. 121105000603</option>
+                            </select>
+                        </div>
+                
+                        <div class="col-3">
+                            <label for="payment_mode" class="form-label">Payment Method <span class="text-danger">*</span></label>
+                            <select class="form-control" id="payment_mode" name="payment_mode" required>
+                                <option value="" {% if not expense_data.payment_mode %}selected{% endif %}>Select Payment Method</option>
+                                <option value="Cash" {% if expense_data.payment_mode == "Cash" %}selected{% endif %}>Cash</option>
+                                <option value="Credit Card" {% if expense_data.payment_mode == "Credit Card" %}selected{% endif %}>Credit Card</option>
+                                <option value="Bank Transfer" {% if expense_data.payment_mode == "Bank Transfer" %}selected{% endif %}>Bank Transfer</option>
+                                <option value="UPI" {% if expense_data.payment_mode == "UPI" %}selected{% endif %}>UPI</option>
+                                <option value="Debit Card" {% if expense_data.payment_mode == "Debit Card" %}selected{% endif %}>Debit Card</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label for="expense_details" class="form-label">Expense Details</label>
+                            <textarea placeholder="Enter the description of expense" class="form-control" id="expense_details" name="expense_details" rows="3">{{ expense_data.expense_details }}</textarea>
+                        </div>
+                    </div>
+                
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            <label for="transaction_id" class="form-label">Transaction ID (Optional)</label>
+                            <input type="text" placeholder="Transaction ID" class="form-control" id="transaction_id" value="{{ expense_data.transaction_id }}" name="transaction_id">
+                        </div>
+                        <div class="col-3">
+                            <label for="invoice_receipt_upload" class="form-label">Invoice/Receipt Upload</label>
+                            <input type="file" class="form-control" id="invoice_receipt_upload" name="invoice_receipt_upload" accept=".pdf,.jpg,.jpeg,.png" value="{{ expense_data.invoice_receipt_upload }}">
+                        </div>
+                
+                        <div class="col-3">
+                            <label for="notes_justification" class="form-label">Notes/Remarks</label>
+                            <textarea placeholder="Notes/Remarks" class="form-control" id="notes_justification" name="notes_justification">{{ expense_data.notes_justification }}</textarea>
+                        </div>
+                        <div class="col-3">
+                            <label for="amount" class="form-label">Amount <span class="text-danger">*</span></label>
+                            <input type="number" placeholder="Amount" class="form-control" id="amount" name="amount" value="{{ expense_data.amount }}" required>
+                        </div>
+                    </div>              
+                
+                    <!-- Submit Button -->
+                    <div class="row btnrow">
+                        <center>
+                            <button type="submit" id="submit" class="btn btn-success btn-lg">
+                                Submit
+                            </button>
+                        </center>
+                    </div>
+                </form>
+                               
+            </div>
+        </div>
+</div>
+
+{% endblock content %}

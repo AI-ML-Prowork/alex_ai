@@ -1,0 +1,70 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block content %}
+
+<main class="main">
+
+  <!-- Page Title -->
+  <div class="page-title">
+    <div class="container d-lg-flex justify-content-between align-items-center">
+      <h1 class="mb-2 mb-lg-0">Terms and Conditions</h1>
+      <nav class="breadcrumbs">
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li class="current">Terms and Conditions</li>
+        </ol>
+      </nav>
+    </div>
+  </div><!-- End Page Title -->
+
+  <!-- Terms and Conditions Section -->
+  <section id="terms-conditions" class="terms-conditions section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <span>Terms and Conditions</span>
+      <h2>Terms and Conditions</h2>
+      <p>Welcome to CFC Software. These terms and conditions outline the rules and regulations for the use of our website (cfcsoftware.com).</p>
+    </div><!-- End Section Title -->
+
+    <div class="container" data-aos="fade-up">
+      <h3>Acceptance of Terms</h3>
+      <p>By accessing and using the services provided by CFC Software through the website, you agree to comply with and be bound by these Terms and Conditions. If you disagree with any part of these terms, please do not use our website.</p>
+
+      <h3>Intellectual Property Rights</h3>
+      <p>All content on our website, including but not limited to text, images, logos, graphics, and software, is owned by CFC Software and protected by copyright laws. You may not reproduce, distribute, or use any of the content for commercial purposes without prior written consent from CFC Software.</p>
+
+      <h3>Use of Website</h3>
+      <p>You are permitted to use our website for lawful purposes only. You must not use the site in any way that may damage or disrupt its functionality or interfere with other users' access to the website.</p>
+
+      <h3>Limitation of Liability</h3>
+      <p>In no event shall CFC Software be liable for any direct, indirect, incidental, special, or consequential damages arising from the use of or inability to use the website, even if we have been advised of the possibility of such damages.</p>
+
+      <h3>Links to Third-Party Websites</h3>
+      <p>Our website may contain links to third-party websites. These links are provided for your convenience. CFC Software does not endorse or control the content of these external websites and is not responsible for any damages or issues arising from your use of third-party websites.</p>
+
+      <h3>Privacy Policy</h3>
+      <p>Your use of our website is also governed by our Privacy Policy, which can be found on a separate page. Please review our Privacy Policy to understand how we collect, use, and protect your personal information.</p>
+
+      <h3>Changes to Terms and Conditions</h3>
+      <p>CFC Software reserves the right to modify or update these Terms and Conditions at any time. Any changes will be posted on this page with an updated "Last Revised" date. By continuing to use the website after changes are made, you agree to the revised Terms and Conditions.</p>
+
+      <h3>Governing Law</h3>
+      <p>These Terms and Conditions are governed by and construed in accordance with the laws of India (or the applicable jurisdiction). Any disputes arising from the use of this website shall be subject to the exclusive jurisdiction of the courts in [Your Location].</p>
+
+      <h3>Contact Information</h3>
+      <p>If you have any questions or concerns about these Terms and Conditions, please contact us at:</p>
+      <ul>
+        <li>Email: <a href="mailto:contact@cfcsoftware.com">contact@cfcsoftware.com</a></li>
+        <li>Phone: +1 555 123 4567</li>
+      </ul>
+
+      <p>Last Revised: {% now "M j, Y" %}</p>
+
+    </div><!-- End Terms and Conditions Section -->
+
+  </section><!-- /Terms and Conditions Section -->
+
+</main>
+
+{% endblock %}

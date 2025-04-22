@@ -1,0 +1,86 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<main class="main">
+
+  <!-- Page Title -->
+  <div class="page-title">
+    <div class="container d-lg-flex justify-content-between align-items-center">
+      <h1 class="mb-2 mb-lg-0">Service Details</h1>
+      <nav class="breadcrumbs">
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li class="current">Service Details</li>
+        </ol>
+      </nav>
+    </div>
+  </div><!-- End Page Title -->
+
+  <!-- Service Details Section -->
+  <section id="service-details" class="service-details section">
+
+    <div class="container">
+
+      <div class="row gy-5">
+
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="service-box">
+            <h4>Our Services</h4>
+            <div class="services-list">
+              <a href="#" class="active"><i class="bi bi-arrow-right-circle"></i><span>Candidate Recruitment</span></a>
+              <a href="#"><i class="bi bi-arrow-right-circle"></i><span>Employer Registration</span></a>
+              <a href="#"><i class="bi bi-arrow-right-circle"></i><span>Interview Scheduling</span></a>
+              <a href="#"><i class="bi bi-arrow-right-circle"></i><span>Emigration Handling</span></a>
+              <a href="#"><i class="bi bi-arrow-right-circle"></i><span>Visa & Documentation</span></a>
+            </div>
+          </div><!-- End Services List -->
+
+          <div class="service-box">
+            <h4>Download Information</h4>
+            <div class="download-catalog">
+              <a href="#"><i class="bi bi-filetype-pdf"></i><span>HRMS Service Catalog PDF</span></a>
+              <a href="#"><i class="bi bi-file-earmark-word"></i><span>Service Details DOC</span></a>
+            </div>
+          </div><!-- End Download Catalog -->
+
+          <div class="help-box d-flex flex-column justify-content-center align-items-center">
+            <i class="bi bi-headset help-icon"></i>
+            <h4>Have a Question?</h4>
+            <p class="d-flex align-items-center mt-2 mb-0"><i class="bi bi-telephone me-2"></i> <span>+91 1234 5678</span></p>
+            <p class="d-flex align-items-center mt-1 mb-0"><i class="bi bi-envelope me-2"></i> <a href="mailto:support@yourcompany.com">support@yourcompany.com</a></p>
+          </div>
+
+        </div>
+
+        <div class="col-lg-8 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
+          <img src="assets/img/services.jpg" alt="HRMS Services" class="img-fluid services-img">
+          <h3>Efficient Recruitment & Emigration Services</h3>
+          <p>
+            We provide complete recruitment solutions for employers looking to hire skilled professionals for any profession in India or overseas. Our services are designed to streamline the hiring process and ensure a smooth transition for candidates.
+          </p>
+          <ul>
+            <li><i class="bi bi-check-circle"></i> <span>Recruitment services for various industries.</span></li>
+            <li><i class="bi bi-check-circle"></i> <span>Tailored employer registration and job matching.</span></li>
+            <li><i class="bi bi-check-circle"></i> <span>Full emigration handling, including visa and documentation.</span></li>
+          </ul>
+          <p>
+            We handle everything from employer registration to scheduling interviews and ensuring all emigration requirements are met. Our goal is to simplify the process for both employers and candidates, ensuring a seamless experience from start to finish.
+          </p>
+          <p>
+            Whether you're an employer seeking qualified professionals or a candidate looking for opportunities abroad, our dedicated team is here to assist every step of the way. Join us to get started on your recruitment journey today!
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section><!-- /Service Details Section -->
+
+</main>
+
+
+{% endblock %}
