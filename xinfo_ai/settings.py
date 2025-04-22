@@ -29,7 +29,7 @@ SECRET_KEY = "django-insecure-y^ei23wz$%cf04!xbg1x90v1t=+bxr*d9af=lh^vza9f#!eajn
 
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
