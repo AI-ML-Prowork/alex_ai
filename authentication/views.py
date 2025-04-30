@@ -102,19 +102,65 @@ def user_logout(request):
     ic(request.session.get('user_info'))
     ic(request.session.get('access_token'))
     ic(request.session.get('refresh_token'))
-    logout(request)
-    request.session.flush()
+    logout(request)            
+    request.session.flush() 
     ic("logout success")
     if request.GET.get('api') == 'true':
-        return JsonResponse({"status": "success", "message": "Logout successful"}, status=status.HTTP_200_OK)
-    return redirect("/")
+        return JsonResponse(
+            {"status": "success", "message": "Logout successful"},
+            status=status.HTTP_200_OK
+        )
+    return redirect("/") 
 
 
 
-@csrf_exempt
-def user_list(request):
-    clients = Clients.objects.all()
-    clients_data = ClientSerializer(clients, many=True).data
-    if request.GET.get('api') == 'true':
-        return JsonResponse({"status": "success", "data": clients_data}, status=status.HTTP_200_OK)
-    return TemplateResponse(request, "admin_panel/all_users.html", {"clients": clients_data})
+
+
+from dj_rest_auth.registration.views import SocialLoginView
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.models import SocialAccount
+from django.contrib.auth import get_user_model
+from rest_framework.response import Response
+from rest_framework import status
+
+User = get_user_model()
+
+class CustomGoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
+
+    def post(self, request, *args, **kwargs):
+        # Call parent to get tokens and user
+        response = super().post(request, *args, **kwargs)
+
+        user = self.user  # this is the logged-in user
+        social_account = SocialAccount.objects.filter(user=user, provider="google").first()
+
+        if social_account:
+            extra_data = social_account.extra_data
+            user.email = user.email or extra_data.get("email")
+            user.username = user.username or extra_data.get("name") or extra_data.get("given_name")
+            user.full_name = user.full_name or extra_data.get("name")
+            user.profile_img = user.profile_img or extra_data.get("picture")
+
+            # You can also set account_type or anything else here
+            if not user.account_type:
+                user.account_type = "Google"
+
+            user.save()
+
+        # Optional: attach custom user data to response
+        return Response({
+            "refresh": response.data.get("refresh"),
+            "access": response.data.get("access"),
+            "user": {
+                "id": user.id,
+                "email": user.email,
+                "username": user.username,
+                "full_name": user.full_name,
+                "profile_img": user.profile_img,
+                "account_type": user.account_type,
+                "is_active": user.is_active,
+                "is_staff": user.is_staff,
+                "is_superuser": user.is_superuser
+            }
+        }, status=status.HTTP_200_OK)

@@ -7,9 +7,7 @@ urlpatterns = [
     path("user-login/", UserLoginView.as_view(), name="login"),
     path("user-logout/", user_logout, name="user_logout"),
 
-
-    # Get all users
-    path("user/list", user_list, name = "user_list"),
-
+    # Google login
+    path('google-login/', CustomGoogleLogin.as_view(), name='google_login'),
 
 ]

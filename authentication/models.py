@@ -41,6 +41,9 @@ class CustomUser(AbstractUser):
     date_joined = models.DateTimeField(default=timezone.now)
     account_type = models.CharField(max_length=255, blank=True, null=True)  # optional
 
+    profile_img = models.CharField(max_length=20, blank=True, null=True)
+    full_name = models.CharField(max_length=255, blank=True, null=True)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []  # No additional required fields
 

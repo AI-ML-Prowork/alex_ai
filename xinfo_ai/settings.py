@@ -46,16 +46,20 @@ INSTALLED_APPS = [
     "admin_panel",
     "user_panel",
     'rest_framework',
+    # for google auth system 
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'social_django',
+    'dj_rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'django.contrib.sites',
     # 'django_filters',
     # 'corsheaders',
-    # 'rest_framework.authtoken',
     # 'drf_yasg',
     # 'django_extensions',
-    # 'django.contrib.sites',
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.twitter',
     # 'allauth.socialaccount.providers.linkedin',
@@ -95,24 +99,54 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "xinfo_ai.urls"
+# custom middleware for gogole auth 
+MIDDLEWARE += [
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 
-TEMPLATES = [
-    {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-            ],
-        },
-    },
 ]
 
-WSGI_APPLICATION = "xinfo_ai.wsgi.application"
+# custom auth_backend for gogole auth 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# google oauth config
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+    }
+}
+
+SITE_ID = 1  # Required for django-allauth
+
+REST_USE_JWT = True
+
+# Redirect URL after login
+LOGIN_REDIRECT_URL = "/admin-panel/"
+
+# gogole oauth JWT settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+# gogole oauth settings
+REST_AUTH = {
+    'SIGNUP_FIELDS': {
+        'email': {'required': True},
+        'username': {'required': False},
+    }
+}
+
+
 AUTH_USER_MODEL = 'authentication.CustomUser'
 
 # JWT settings
@@ -200,6 +234,27 @@ DATABASES = {
         "ATOMIC_REQUESTS": True
     }
 }
+
+
+
+ROOT_URLCONF = "xinfo_ai.urls"
+
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ],
+        },
+    },
+]
+
+WSGI_APPLICATION = "xinfo_ai.wsgi.application"
 
 
 # Password validation

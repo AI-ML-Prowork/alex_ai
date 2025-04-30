@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div>
+  <div class="row">
+    <div class="col-md-12">
+      <h5 class="mb-2 text-titlecase mb-4">User Details</h5>
+      <div class="card">
+        <div class="table-responsive pt-3">
+          <table class="table table-striped project-orders-table">
+            <thead>
+              <tr>
+                <th class="ml-5">ID</th>
+                <th>Name</th>
+                <th>Account Type</th>
+                <th>Last Login</th>
+                <th>Contact</th>
+                <th>Created On</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for client in clients %}
+              <tr>
+                <td>{{ client. }}</td>
+                <td>{{ client.name }}</td>
+                <td>{{ client.account_type }}</td>
+                <td>{{ client.last_login }}</td>
+                <td>{{ client.contact }}</td>
+                <td>{{ client.created_on }}</td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
+                      Edit
+                      <i class="typcn typcn-edit btn-icon-append"></i>                          
+                    </button>
+                    <button type="button" class="btn btn-primary btn-sm btn-icon-text mr-3">
+                      View
+                      <i class="typcn typcn-eye btn-icon-append"></i>                          
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm btn-icon-text">
+                      Delete
+                      <i class="typcn typcn-delete-outline btn-icon-append"></i>                          
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

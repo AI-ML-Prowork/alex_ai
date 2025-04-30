@@ -30,6 +30,7 @@ urlpatterns = [
     path("",include("website.urls")),
     path("admin_panel/",include("admin_panel.urls")),
     path("user/",include("user_panel.urls")),
+    path('accounts/', include('allauth.urls')),  # for google auth
 
 
 
@@ -42,3 +43,15 @@ urlpatterns = [
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+# from dj_rest_auth.registration.views import SocialLoginView
+# from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+
+
+# class GoogleLogin(SocialLoginView):
+#     adapter_class = GoogleOAuth2Adapter
+
+# urlpatterns += [
+#     path("google-login/", GoogleLogin.as_view(), name="google_login"),
+# ]
