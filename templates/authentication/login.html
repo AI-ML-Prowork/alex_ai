@@ -3,104 +3,234 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Discomb | Sign In</title>
-  <!-- Favicon -->
-  <link rel="shortcut icon" href="{% static 'assets/img/svg/logo.svg' %}" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Login - Alex-AI Admin</title>
+  <link rel="stylesheet" href="{% static 'assets/vendors/typicons/typicons.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/vendors/css/vendor.bundle.base.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/vertical-layout-light/style.css' %}">
+  <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" />
 
-  <link
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-  rel="stylesheet"
-  />
-  <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-  />
-      <!-- Custom styles -->
-  <link rel="stylesheet" href="{% static 'assets/css/style.min.css' %}" />
 
+  
   <style>
-    .input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-      height: 44px;
+    body {
+      transition: background-color 0.4s, color 0.4s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+  
+    .light-mode {
+      background-color: #f9f9f9;
+      color: #000;
+    }
+  
+    .dark-mode {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+  
+    .theme-toggle {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      z-index: 1000;
+    }
+  
+    .theme-toggle button {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+  
+    .dark-mode .theme-toggle button {
+      background-color: #333;
+      color: #fff;
+      border-color: #666;
+    }
+  
+    .card {
+      border-radius: 15px;
+      transition: background-color 0.4s, color 0.4s;
+    }
+  
+    .light-mode .card {
+      background-color: #ffffff;
+      color: #000;
+    }
+  
+    .dark-mode .card {
+      background-color: #1f1f1f;
+      color: #e0e0e0;
+    }
+  
+    .form-label {
+      font-weight: 500;
+    }
+  
+    .form-control {
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+  
+    .light-mode .form-control {
+      background-color: #fff;
+      color: #000;
+      border: 1px solid #ccc;
+    }
+  
+    .dark-mode .form-control {
+      background-color: #2c2c2c;
+      color: #fff;
+      border: 1px solid #555;
+    }
+  
+    .btn-google {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      padding: 10px 20px;
+      transition: background 0.3s;
+    }
+  
+    .btn-google:hover {
+      background-color: #f1f1f1;
+    }
+  
+    .dark-mode .btn-google {
+      background-color: #2c2c2c;
+      border-color: #555;
+      color: #fff;
+    }
+  
+    .google-logo {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+    }
+  
+    a.text-primary {
+      transition: color 0.3s;
+    }
+  
+    .dark-mode a.text-primary {
+      color: #90caf9;
     }
 
-    .logo {
-    height: 75px;
+    /* Background for full page wrapper */
+    .light-mode .full-page-wrapper {
+      background: linear-gradient(to right, #e3f2fd, #ffffff);
     }
+
+    .dark-mode .full-page-wrapper {
+      background: linear-gradient(to right, #000000, #2c2c2c);
+    }
+    .form-control {
+      border-radius: 10px !important;
+      padding-right: 2.5rem;
+    }
+    
   </style>
 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  
 </head>
 
+<body class="light-mode">
+  <!-- Theme Toggle -->
+  <div class="theme-toggle">
+    <button id="toggle-mode">🌙 Dark Mode</button>
+  </div>
 
-<body>
-  <div class="layer"></div>
-  <main class="page-center">
-    <article class="sign-up">
-      <p class="sign-up__subtitle fw-bold">Sign in to your account</p>
-
-      <!-- Form starts -->
-      <form action="/user-login/" method="POST" class="sign-up-form form">
-        <div class="" id="logo" align="center">
-          <a href="/">
-            <img src="{% static 'assets/img/logo.png' %}" alt="Discomb logo" class="logo">
-          </a>        
-        </div>
-        {% csrf_token %}
-        <label class="form-label-wrapper">
-          <p class="form-label">Email</p>
-          <input class="form-input" type="email" id="email" name="email" placeholder="Enter your email" required>
-        </label>
-
-        <label class="form-label-wrapper">
-          <p class="form-label">Password</p>
-          <div class="input-group">
-            <input class="form-input" type="password" id="pwd" name="password" placeholder="Enter your password" required>
-            <button type="button" id="toggle-password" class="btn btn-primary-light"><i class="bi bi-eye-fill"></i></button>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth theme-one">
+        <div class="row flex-grow">
+          <div class="col-lg-4 col-md-6 col-sm-12 mx-auto">
+            <div class="card shadow-lg border-0">
+              <div class="card-body p-5">
+                <h4 class="card-title text-center mb-4" style="color: #4A90E2;">Welcome to Alex-AI</h4>
+                <div class="d-flex justify-content-center mb-4">
+                  <button class="btn btn-google d-flex align-items-center shadow-sm" onclick="loginWithGoogle()">
+                    <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Logo" class="google-logo"></button>
+                </div>
+                <div class="text-center my-3">
+                  <span class="text-muted">OR</span>
+                </div>
+                <hr>
+                <form method="POST">
+                  {% csrf_token %}
+                  <div class="form-group mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="text" class="form-control form-control-lg" id="email" name="email" placeholder="Enter your email" required>
+                  </div>
+                  <div class="form-group mb-4 position-relative">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control form-control-lg rounded-pill pr-5" id="password" name="password" placeholder="Enter your password" required>
+                    <i id="togglePassword" class="bi bi-eye-slash position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                  </div>
+                  <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary btn-lg shadow-sm" style="width: 40%; height: 50px;">Login</button>
+                  </div>
+                </form>
+                <div class="text-center mt-4">
+                  <a href="#" class="text-decoration-none text-primary">Forgot password?</a>
+                </div>
+              </div>
+            </div>
           </div>
-        </label>
-        <label class="form-checkbox-wrapper">
-          <input class="form-checkbox" type="checkbox" required>
-          <span class="form-checkbox-label">Remember me next time</span>
-        </label>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        <div class="mb-3 d-grid gap-2">
-          <button type="submit" class="btn btn-success-light">Sign in</button>
-        </div> 
-
-        {% comment %} <!-- Sign up link -->
-        <div class="text-center">
-          <a href="/user/new-registeration" class="text-white">Not registered? Sign up</a>
-        </div> {% endcomment %}
-      </form>
-      <!-- Form ends -->
-    </article>
-  </main>
-
-  <!-- Chart library -->
-  <script src="{% static 'assets/plugins/chart.min.js' %}"></script>
-  <!-- Icons library -->
-  <script src="{% static 'assets/plugins/feather.min.js' %}"></script>
-  <!-- Custom scripts -->
-  <script src="{% static 'assets/js/script.js' %}"></script>
-
+  <script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
+  <script src="{% static 'assets/js/off-canvas.js' %}"></script>
+  <script src="{% static 'assets/js/hoverable-collapse.js' %}"></script>
+  <script src="{% static 'assets/js/template.js' %}"></script>
   <script>
-    // Toggle password visibility
-    document.getElementById('toggle-password').addEventListener('click', function() {
-      const passwordField = document.getElementById('pwd');
-      const icon = this.querySelector('i');
-      if (passwordField.type === 'password') {
-        passwordField.type = 'text';
-        icon.classList.remove('ri-eye-line');
-        icon.classList.add('ri-eye-off-line');
-      } else {
-        passwordField.type = 'password';
-        icon.classList.remove('ri-eye-off-line');
-        icon.classList.add('ri-eye-line');
-      }
+    const toggleBtn = document.getElementById('toggle-mode');
+    const body = document.body;
+  
+    // Load saved theme preference on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      body.classList.add(savedTheme + '-mode');
+      toggleBtn.textContent = savedTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
     });
+  
+    // Toggle and save preference
+    toggleBtn.addEventListener('click', () => {
+      const isDark = body.classList.contains('dark-mode');
+      body.classList.toggle('dark-mode', !isDark);
+      body.classList.toggle('light-mode', isDark);
+      const newTheme = isDark ? 'light' : 'dark';
+      localStorage.setItem('theme', newTheme);
+      toggleBtn.textContent = newTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+    });
+  
+    function loginWithGoogle() {
+      // Replace with actual Google OAuth integration
+      alert('Google login functionality to be implemented.');
+    }
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('password');
+      const toggleIcon = document.getElementById('togglePassword');
+      const isPassword = passwordInput.type === 'password';
+    
+      passwordInput.type = isPassword ? 'text' : 'password';
+      toggleIcon.classList.toggle('bi-eye', isPassword);
+      toggleIcon.classList.toggle('bi-eye-slash', !isPassword);
+    }
+    
+    // Attach listener
+    document.getElementById('togglePassword').addEventListener('click', togglePasswordVisibility);
+    
   </script>
+  
 </body>
 
 </html>

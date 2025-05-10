@@ -50,6 +50,9 @@ class UserLoginView(generics.GenericAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []  # Disable CSRF check for this view
 
+    def get(self, request, *args, **kwargs):
+        return TemplateResponse(request, "authentication/login.html", {"error": "Invalid Credentials"})
+
     @csrf_exempt  # Exempt this view from CSRF verification
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -62,6 +65,7 @@ class UserLoginView(generics.GenericAPIView):
             if user:
                 # Log the user in (this attaches user to request.user)
                 login(request, user)
+                ic(user)
                 refresh = RefreshToken.for_user(user)
                 # Store tokens and user info in session
                 request.session["access_token"] = str(refresh.access_token)
@@ -77,6 +81,7 @@ class UserLoginView(generics.GenericAPIView):
                     "is_superuser": user.is_superuser,
                 }
                 request.session.modified = True  # Ensure session is saved
+                ic(request.session)
                 if request.GET.get('api') == 'true':
                     return JsonResponse(
                         {
@@ -86,7 +91,7 @@ class UserLoginView(generics.GenericAPIView):
                         },
                         status=status.HTTP_200_OK,
                     )
-                return redirect("/admin-panel/dashboard/")
+                return redirect("/admin_panel/dashboard/")
             messages.error(request, "Invalid Credentials")
             return redirect("/", {"error": "Invalid Credentials"})
 
