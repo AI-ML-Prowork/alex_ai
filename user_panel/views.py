@@ -147,23 +147,21 @@ def my_profile_update(request):
         return redirect('/user-login/')
     if request.method == 'POST':
         try:
-            data = json.loads(request.body)
-            first_name = data.get('first_name', '')
-            last_name = data.get('last_name', '')
-            phone_number = data.get('phone_number', '')
-            # profile_image = request.FILES.get('profile_image', None)
-            # if profile_image:
-            #     file_name = profile_image.name.replace(" ", "_")
-            #     folder = "clients_data"
-                # file_url = upload_file_to_vps(profile_image, file_name, folder)
-                # profile_image = file_url
-
-            # Clients.objects.filter(user=request.user.id).update(first_name=first_name, last_name=last_name, phone_number=phone_number, profile_image=profile_image)
-            Clients.objects.filter(user=request.user.id).update(first_name=first_name, last_name=last_name, phone_number=phone_number)
-            return JsonResponse({'message': 'Profile updated successfully'}, status=200)
+            data = request.POST
+            ic(data)
+            profile = Clients.objects.get(user=request.user.id)
+            serializer = ClientSerializer(profile, data=data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                if request.GET.get('api') == 'true':
+                    return JsonResponse({'message': 'Profile updated successfully', 'data': serializer.data}, status=200)
+            else:
+                return redirect('/user/profile/')
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        except Clients.DoesNotExist:
+            return JsonResponse({'error': 'Profile not found'}, status=404)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
     return JsonResponse({'error': 'Invalid request method'}, status=405)
