@@ -5,14 +5,77 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Alex AI - Reimagine Intelligence</title>
+  <meta name="description" content="Deploy next-gen AI agents & assistants for business — Predictive insights, real-time automation & intelligent support by Alex AI.">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body { font-family: 'Segoe UI', sans-serif; }
-    .hero { background: #f8f9fa; padding: 100px 0; text-align: center; }
-    .section-title { margin-bottom: 40px; }
-    .pricing-table td, .pricing-table th { vertical-align: middle; }
-    .feature-icon { font-size: 1.5rem; margin-right: 10px; }
-    footer { background: #f1f1f1; padding: 40px 0; text-align: center; }
+    .hero {
+      background: #f8f9fa;
+      padding: 100px 0;
+      text-align: center;
+      animation: fadeIn 1.5s ease-in;
+    }
+    .section-title {
+      margin-bottom: 40px;
+      animation: fadeUp 1s ease-in;
+    }
+    .pricing-table td, .pricing-table th {
+      vertical-align: middle;
+    }
+    .feature-icon {
+      font-size: 1.5rem;
+      margin-right: 10px;
+    }
+    footer {
+      background: #f1f1f1;
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animated-section {
+      animation: fadeUp 1s ease-in forwards;
+    }
+    .animated-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .animated-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+    }
+
+    .footer-links a {
+      color: #333;
+      text-decoration: none;
+      margin: 5px 0;
+      display: block;
+    }
+
+    .footer-links a:hover {
+      color: #007bff;
+    }
+
+    .footer-section {
+      background-color: #343a40;
+      color: #fff;
+      padding: 40px 0;
+    }
   </style>
 </head>
 <body>
@@ -28,7 +91,7 @@
 </section>
 
 <!-- About Section -->
-<section class="py-5">
+<section class="py-5 animated-section">
   <div class="container">
     <div class="text-center section-title">
       <h2>👋 About Alex AI — <em>Smarter AI, Simpler Future</em></h2>
@@ -47,7 +110,7 @@
 </section>
 
 <!-- What We Do -->
-<section class="bg-light py-5">
+<section class="bg-light py-5 animated-section">
   <div class="container">
     <div class="text-center section-title">
       <h2>🛠️ What We Do — <em>Built for Innovation</em></h2>
@@ -72,7 +135,6 @@
     </div>
   </div>
 </section>
-
 <!-- Core Features -->
 <section class="py-5">
   <div class="container">
@@ -125,50 +187,87 @@
   </div>
 </section>
 
-<!-- Pricing Plans -->
-<section class="py-5">
+<!-- Pricing Section -->
+<section class="py-5 animated-section">
   <div class="container">
     <div class="text-center section-title">
       <h2>💰 Pricing Plans — <em>Simple & Scalable</em></h2>
     </div>
-    <div class="table-responsive">
-      <table class="table table-striped pricing-table text-center">
-        <thead>
-          <tr>
-            <th>Plan</th>
-            <th>Best For</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>🌱 <strong>Starter</strong></td>
-            <td>Personal Projects</td>
-            <td>$0 / month</td>
-          </tr>
-          <tr>
-            <td>🚀 <strong>Pro</strong></td>
-            <td>Small Teams & Startups</td>
-            <td>$29 / month</td>
-          </tr>
-          <tr>
-            <td>🏢 <strong>Business</strong></td>
-            <td>Growing Businesses</td>
-            <td>$79 / month</td>
-          </tr>
-          <tr>
-            <td>🧠 <strong>Enterprise</strong></td>
-            <td>Fully Custom Solutions</td>
-            <td>Contact Us</td>
-          </tr>
-        </tbody>
-      </table>
-      <p class="text-center">✔️ No credit card required — try free for 14 days!</p>
+    <div class="row g-4">
+      <div class="col-md-3">
+        <div class="card pricing-card p-4">
+          <h5 class="card-title text-center">🌱 Starter</h5>
+          <p class="text-center">Personal Projects</p>
+          <h3 class="text-center">$0 / month</h3>
+          <a href="#" class="btn btn-primary w-100">Get Started</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card pricing-card p-4">
+          <h5 class="card-title text-center">🚀 Pro</h5>
+          <p class="text-center">Small Teams & Startups</p>
+          <h3 class="text-center">$29 / month</h3>
+          <a href="#" class="btn btn-primary w-100">Get Started</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card pricing-card p-4">
+          <h5 class="card-title text-center">🏢 Business</h5>
+          <p class="text-center">Growing Businesses</p>
+          <h3 class="text-center">$79 / month</h3>
+          <a href="#" class="btn btn-primary w-100">Get Started</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card pricing-card p-4">
+          <h5 class
+```
+
+
+\="card-title text-center">🔑 Enterprise</h5> <p class="text-center">Large Enterprises</p> <h3 class="text-center">\$199 / month</h3> <a href="#" class="btn btn-primary w-100">Get Started</a> </div> </div> </div>
+
+  </div>
+</section>
+
+  <!-- Blog Section -->
+<section class="bg-light py-5 animated-section">
+  <div class="container">
+    <div class="text-center section-title">
+      <h2>📰 Latest Blog Posts</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card h-100 animated-card">
+          <div class="card-body">
+            <h5 class="card-title">5 Ways AI is Revolutionizing Small Business</h5>
+            <p class="card-text">Discover how AI tools are helping startups automate operations and grow faster.</p>
+            <a href="#" class="btn btn-sm btn-outline-primary">Read More</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 animated-card">
+          <div class="card-body">
+            <h5 class="card-title">Top AI Trends to Watch in 2025</h5>
+            <p class="card-text">From self-learning models to autonomous agents, see what’s next in AI innovation.</p>
+            <a href="#" class="btn btn-sm btn-outline-primary">Read More</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 animated-card">
+          <div class="card-body">
+            <h5 class="card-title">How to Train an AI Agent in 10 Minutes</h5>
+            <p class="card-text">Step-by-step guide to build and launch your own smart assistant quickly.</p>
+            <a href="#" class="btn btn-sm btn-outline-primary">Read More</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FAQ Section -->
+  <!-- FAQ Section -->
 <section class="bg-light py-5">
   <div class="container">
     <div class="text-center section-title">
@@ -215,22 +314,46 @@
   </div>
 </section>
 
-<!-- Contact CTA -->
-<section class="py-5">
-  <div class="container text-center">
-    <h2>📞 Let’s Build the Future Together</h2>
-    <p class="lead">🚀 Want to deploy your first AI agent today? Let’s make it happen.</p>
-    <p>📧 <a href="mailto:hello@alexai.store">hello@alexai.store</a></p>
-    <a href="#" class="btn btn-primary me-2">Schedule a Demo</a>
-    <a href="#" class="btn btn-outline-secondary">Chat with Us</a>
-  </div>
-</section>
 
-<!-- Footer -->
+
+<!-- Footer Section -->
+
 <footer>
-  <p>&copy; 2025 Alex AI. All rights reserved.</p>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 footer-links">
+        <h5>About</h5>
+        <a href="#">Our Story</a>
+        <a href="#">Careers</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="col-md-3 footer-links">
+        <h5>Solutions</h5>
+        <a href="#">AI Agents</a>
+        <a href="#">Predictive Insights</a>
+        <a href="#">Business Consulting</a>
+        <a href="#">Content AI</a>
+      </div>
+      <div class="col-md-3 footer-links">
+        <h5>Support</h5>
+        <a href="#">FAQs</a>
+        <a href="#">Help Center</a>
+        <a href="#">Community</a>
+        <a href="#">Tutorials</a>
+      </div>
+      <div class="col-md-3 footer-links">
+        <h5>Legal</h5>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">GDPR Compliance</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
