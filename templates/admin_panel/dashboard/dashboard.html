@@ -2,144 +2,248 @@
 {% load static %}
 {% block content %}
 
+<style>
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card .card-body h1 {
+    font-size: 2.2rem;
+    font-weight: bold;
+  }
+  
+  .card .card-body p {
+    font-size: 1rem;
+    font-weight: 500;
+    opacity: 0.9;
+  }
+
+  .card-blue { background-color: #e3f2fd; }
+  .card-green { background-color: #e8f5e9; }
+  .card-orange { background-color: #fff3e0; }
+  .card-red { background-color: #ffebee; }
+
+  .dark-mode .card-blue { background-color: #1e2a38; }
+  .dark-mode .card-green { background-color: #1b2e23; }
+  .dark-mode .card-orange { background-color: #3b2a1a; }
+  .dark-mode .card-red { background-color: #2a1c1d; }
+
+  .dark-mode .card {
+    color: #e0e0e0;
+  }
+
+  .icon-blue { color: #2196f3; background-color: #bbdefb; }
+  .icon-green { color: #43a047; background-color: #c8e6c9; }
+  .icon-orange { color: #fb8c00; background-color: #ffe0b2; }
+  .icon-red { color: #e53935; background-color: #ffcdd2; }
+
+  .dark-mode .icon-blue { background-color: #0d47a1; }
+  .dark-mode .icon-green { background-color: #1b5e20; }
+  .dark-mode .icon-orange { background-color: #e65100; }
+  .dark-mode .icon-red { background-color: #b71c1c; }
+
+  /* Making the canvas responsive */
+  canvas {
+    width: 100% !important;
+    max-height: 80px;
+  }
+
+  .card {
+    min-height: 220px;  /* Ensures a minimum card height */
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-body {
+    flex: 1;  /* Ensures that content takes the available space */
+    padding: 20px;
+  }
+
+  .card-body > .d-flex {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-body h1 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  /* Center align icon and text */
+  .card-icon {
+    font-size: 2rem;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .card-body > .card-icon {
+    margin-left: 20px;
+  }
+
+  /* Ensuring responsive behavior */
+  @media (max-width: 768px) {
+    .card-body {
+      padding: 15px;
+    }
+  }
+</style>
+
+
+
 <div>
   <h5 class="mb-2 text-titlecase mb-4">Admin Dashboard</h5>
 
   <div class="row">
-    <div class="col-md-4 grid-margin stretch-card">
-      <div class="card">
+    <div class="col-md-3 grid-margin stretch-card">
+      <div class="card card-blue">
         <div class="card-body">
-          <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+          <div class="d-flex align-items-center justify-content-between mb-4">
             <div>
-              <p class="mb-2 text-md-center text-lg-left">Total Expenses</p>
-              <h1 class="mb-0">8742</h1>
+              <p>Total Users</p>
+              <h1>105</h1>
             </div>
-            <i class="typcn typcn-briefcase icon-xl text-secondary"></i>
+            <div class="card-icon icon-blue">
+              <i class="typcn typcn-group-outline"></i>
+            </div>
           </div>
           <canvas id="expense-chart" height="80"></canvas>
         </div>
       </div>
     </div>
-    <div class="col-md-4 grid-margin stretch-card">
-      <div class="card">
+  
+    <div class="col-md-3 grid-margin stretch-card">
+      <div class="card card-green">
         <div class="card-body">
-          <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+          <div class="d-flex align-items-center justify-content-between mb-4">
             <div>
-              <p class="mb-2 text-md-center text-lg-left">Total Budget</p>
-              <h1 class="mb-0">47,840</h1>
+              <p>Active Users</p>
+              <h1>50</h1>
             </div>
-            <i class="typcn typcn-chart-pie icon-xl text-secondary"></i>
+            <div class="card-icon icon-green">
+              <i class="typcn typcn-user-outline"></i>
+            </div>
           </div>
           <canvas id="budget-chart" height="80"></canvas>
         </div>
       </div>
     </div>
-    <div class="col-md-4 grid-margin stretch-card">
-      <div class="card">
+  
+    <div class="col-md-3 grid-margin stretch-card">
+      <div class="card card-orange">
         <div class="card-body">
-          <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+          <div class="d-flex align-items-center justify-content-between mb-4">
             <div>
-              <p class="mb-2 text-md-center text-lg-left">Total Balance</p>
-              <h1 class="mb-0">$7,243</h1>
+              <p>Blocked Users</p>
+              <h1>20</h1>
             </div>
-            <i class="typcn typcn-clipboard icon-xl text-secondary"></i>
+            <div class="card-icon icon-orange">
+              <i class="typcn typcn-lock-closed-outline"></i>
+            </div>
           </div>
           <canvas id="balance-chart" height="80"></canvas>
         </div>
       </div>
     </div>
+  
+    <div class="col-md-3 grid-margin stretch-card">
+      <div class="card card-red">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+              <p>Online Users</p>
+              <h1>15</h1>
+            </div>
+            <div class="card-icon icon-red">
+              <i class="typcn typcn-wi-fi"></i>
+            </div>
+          </div>
+          <canvas id="new-users-chart" height="80"></canvas>
+        </div>
+      </div>
+    </div>
   </div>
+  
   <div class="row">
-    <div class="col-xl-6 grid-margin stretch-card flex-column">
-        <h5 class="mb-2 text-titlecase mb-4">Stats</h5>
-      <div class="row">
-        <div class="col-md-6 grid-margin stretch-card">
-          <div class="card">
-            <div class="card-body d-flex flex-column justify-content-between">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <p class="mb-0 text-muted">Transactions</p>
-                <p class="mb-0 text-muted">+1.37%</p>
-              </div>
-              <h4>1352</h4>
-              <canvas id="transactions-chart" class="mt-auto" height="65"></canvas>
+    <div class="col-md-3 grid-margin stretch-card">
+      <div class="card card-green">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+              <p>Total Deposits</p>
+              <h1>105</h1>
+            </div>
+            <div class="card-icon icon-green">
+              <i class="typcn typcn-credit-card"></i>
             </div>
           </div>
-        </div>
-        <div class="col-md-6 grid-margin stretch-card">
-          <div class="card">
-            <div class="card-body d-flex flex-column justify-content-between">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <div>
-                  <p class="mb-2 text-muted">Sales</p>
-                  <h6 class="mb-0">563</h6>
-                </div>
-                <div>
-                  <p class="mb-2 text-muted">Orders</p>
-                  <h6 class="mb-0">720</h6>
-                </div>
-                <div>
-                  <p class="mb-2 text-muted">Revenue</p>
-                  <h6 class="mb-0">5900</h6>
-                </div>
-              </div>
-              <canvas id="sales-chart-a" class="mt-auto" height="65"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row h-100">
-        <div class="col-md-6 stretch-card grid-margin grid-margin-md-0">
-          <div class="card">
-            <div class="card-body d-flex flex-column justify-content-between">
-              <p class="text-muted">Sales Analytics</p>
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <h3 class="mb-">27632</h3>
-                <h3 class="mb-">78%</h3>
-              </div>
-              <canvas id="sales-chart-b" class="mt-auto" height="38"></canvas>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 stretch-card">
-          <div class="card">
-            <div class="card-body">
-              <div class="row h-100">
-                <div class="col-6 d-flex flex-column justify-content-between">
-                  <p class="text-muted">CPU</p>
-                  <h4>55%</h4>
-                  <canvas id="cpu-chart" class="mt-auto"></canvas>
-                </div>
-                <div class="col-6 d-flex flex-column justify-content-between">
-                  <p class="text-muted">Memory</p>
-                  <h4>123,65</h4>
-                  <canvas id="memory-chart" class="mt-auto"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
+          <canvas id="deposits-chart" height="80"></canvas>
         </div>
       </div>
     </div>
-    <div class="col-xl-6 grid-margin stretch-card flex-column">
-      <h5 class="mb-2 text-titlecase mb-4">Income statistics</h5>
-      <div class="row h-100">
-        <div class="col-md-12 stretch-card">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start flex-wrap">
-                <div>
-                  <p class="mb-3">Monthly Increase</p>
-                  <h3>67842</h3>
-                </div>
-                <div id="income-chart-legend" class="d-flex flex-wrap mt-1 mt-md-0"></div>
-              </div>
-              <canvas id="income-chart"></canvas>
+  
+    <div class="col-md-3 grid-margin stretch-card">
+      <div class="card card-blue">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+              <p>Total Orders</p>
+              <h1>50</h1>
+            </div>
+            <div class="card-icon icon-blue">
+              <i class="typcn typcn-shopping-cart"></i>
             </div>
           </div>
+          <canvas id="orders-chart" height="80"></canvas>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-md-3 grid-margin stretch-card">
+      <div class="card card-orange">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+              <p>Pending Orders</p>
+              <h1>20</h1>
+            </div>
+            <div class="card-icon icon-orange">
+              <i class="typcn typcn-time"></i>
+            </div>
+          </div>
+          <canvas id="pending-orders-chart" height="80"></canvas>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-md-3 grid-margin stretch-card">
+      <div class="card card-red">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+              <p>Completed Orders</p>
+              <h1>15</h1>
+            </div>
+            <div class="card-icon icon-red">
+              <i class="typcn typcn-tick"></i>
+            </div>
+          </div>
+          <canvas id="completed-orders-chart" height="80"></canvas>
         </div>
       </div>
     </div>
   </div>
+  
+  
 
 
   

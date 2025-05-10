@@ -24,7 +24,7 @@ User = get_user_model()
 
 from authentication.models import CustomUser
 from user_panel.models import Clients
-
+from authentication.searilizers import UserSerializer
 
 
 from authentication.searilizers import UserSignupSerializer

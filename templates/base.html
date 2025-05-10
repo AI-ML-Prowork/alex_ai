@@ -24,6 +24,10 @@
 />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+{% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"> {% endcomment %}
+
+
 </head>
 <body>
 
@@ -47,16 +51,6 @@
               <img src="{{ user.profile.image|default:"https://img.freepik.com/free-psd/contact-icon-illustration-isolated_23-2151903337.jpg?t=st=1745986690~exp=1745990290~hmac=e8ead49e66b05d3548c4753495720c210ea9b40870580e90211908df0684ab43&w=826"}}" alt="profile"/>
               <span class="nav-profile-name">{% if user.is_authenticated %}{{ user.username }}{% endif %}</span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item">
-                <i class="typcn typcn-cog-outline text-primary"></i>
-                Settings
-              </a>
-              <a class="dropdown-item">
-                <i class="typcn typcn-eject text-primary"></i>
-                Logout
-              </a>
-            </div>
           </li>
           <li class="nav-item nav-user-status dropdown">
               <p class="mb-0">Last login was {{ user.last_login }}</p>
@@ -133,7 +127,7 @@
               <span class="count"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="userDropdown">
-              <a class="dropdown-item preview-item" href="/setting/my-profile/">
+              <a class="dropdown-item preview-item" href="/user/profile/">
                 <div class="preview-item-content flex-grow">
                   <h6 class="preview-subject ellipsis font-weight-normal">My Profile</h6>
                 </div>
@@ -323,6 +317,7 @@
       </div>
       <!-- partial -->
       <!-- partial:partials/_sidebar.html -->
+      {% if request.user.is_superuser %}
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
@@ -360,6 +355,44 @@
           </li>
         </ul>
       </nav>
+
+      {% else %}
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/user/alex-ai/explore/">
+              <i class="bi bi-search menu-icon"></i>
+              <span class="menu-title">Explore</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/user/alex-ai/video-generatation/">
+              <i class="bi bi-camera-video-fill menu-icon"></i>
+              <span class="menu-title">Create Video</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/user/alex-ai/image-generatation/">
+              <i class="bi bi-image-fill menu-icon"></i>
+              <span class="menu-title">Create Image</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/user/alex-ai/assets/">
+              <i class="bi bi-archive-fill menu-icon"></i>
+              <span class="menu-title">Assets</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/user/alex-ai/gallery/">
+              <i class="bi bi-images menu-icon"></i>
+              <span class="menu-title">Gallery</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      {% endif %}
+      
 
       <div class="main-panel">
         <div class="content-wrapper">

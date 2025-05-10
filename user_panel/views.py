@@ -66,7 +66,7 @@ def register_user(request):
                             )
                         else:
                             messages.success(request, "Candidate added successfully.")
-                            return redirect('/candidates/candidate/list/')
+                            return redirect('/user-login/')
                     else:
                         user.delete() 
                         return JsonResponse({"error": clients_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
@@ -116,3 +116,131 @@ def alex_ai(request):
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
     return JsonResponse({'error': 'User is not authenticated'}, status=401)
+
+
+
+
+
+
+def my_profile(request):
+    if not request.user.is_authenticated:
+        return redirect('/user-login/')
+    if request.method == 'GET':
+        ic(request.session.get('user_info'))
+        ic(request.user)
+        ic(request.user.is_authenticated)
+        ic(request.user.id)
+        # ic(dict(request.user))
+        profile = Clients.objects.get(user=request.user.id)
+        profile_data = ClientSerializer(profile).data
+        ic(profile_data)
+        return TemplateResponse(request,'user_panel/profile/my_profile.html', {"profile": profile_data})
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+    
+
+
+
+@csrf_exempt
+def my_profile_update(request):
+    if not request.user.is_authenticated:
+        return redirect('/user-login/')
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            first_name = data.get('first_name', '')
+            last_name = data.get('last_name', '')
+            phone_number = data.get('phone_number', '')
+            # profile_image = request.FILES.get('profile_image', None)
+            # if profile_image:
+            #     file_name = profile_image.name.replace(" ", "_")
+            #     folder = "clients_data"
+                # file_url = upload_file_to_vps(profile_image, file_name, folder)
+                # profile_image = file_url
+
+            # Clients.objects.filter(user=request.user.id).update(first_name=first_name, last_name=last_name, phone_number=phone_number, profile_image=profile_image)
+            Clients.objects.filter(user=request.user.id).update(first_name=first_name, last_name=last_name, phone_number=phone_number)
+            return JsonResponse({'message': 'Profile updated successfully'}, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+
+
+
+
+# @csrf_exempt
+# def alexai_img_gen(request):
+#     if request.method == 'POST':
+#         try:
+#             data = json.loads(request.body)
+#             prompt = data.get('input', '')
+#             if not prompt:
+#                 return JsonResponse({'error': 'input is required'}, status=400)
+
+#             chat_client = OpenAIChatClient()
+#             conversation_history = request.session.get('conversation_history', [])
+#             chat_client.set_conversation_history(conversation_history)
+
+#             answer = chat_client.get_response(prompt)
+
+#             request.session['conversation_history'] = chat_client.get_conversation_history()
+#             return JsonResponse({
+#                 'answer': answer,
+#                 'conversation_history': request.session['conversation_history']
+#             }, status=200)
+
+#         except json.JSONDecodeError:
+#             return JsonResponse({'error': 'Invalid JSON'}, status=400)
+#         except Exception as e:
+#             return JsonResponse({'error': str(e)}, status=500)
+
+
+
+
+
+
+
+@csrf_exempt
+def explore(request):
+    if request.method == 'GET':
+        return TemplateResponse(request,'user_panel/explore.html', {})
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+    
+
+@csrf_exempt
+def assets(request):
+    if request.method == 'GET':
+        return TemplateResponse(request,'user_panel/assets.html', {})
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+    
+
+@csrf_exempt
+def alexai_img_gen(request):
+    if request.method == 'GET':
+        return TemplateResponse(request,'user_panel/image_generation.html', {})
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+    
+
+
+@csrf_exempt
+def gallery(request):
+    if request.method == 'GET':
+        return TemplateResponse(request,'user_panel/gallery.html', {})
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+    
+
+@csrf_exempt
+def alexai_video_gen(request):
+    if request.method == 'GET':
+        return TemplateResponse(request,'user_panel/video_generation.html', {})
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)

@@ -7,13 +7,6 @@ from .searilizers import *
 User = get_user_model()
 
 
-def user_login(request):
-    return render(request, "authentication/login.html") 
-
-
-def user_register(request):
-    return render(request, "authentication/signup.html") 
-
 
 
 class UserSignupView(generics.CreateAPIView):

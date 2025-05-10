@@ -11,24 +11,26 @@
           <table class="table table-striped project-orders-table">
             <thead>
               <tr>
-                <th class="ml-5">ID</th>
+                <th>Sr.No.</th>
+                <th class="text-center">ID</th>
                 <th>Name</th>
-                <th>Account Type</th>
-                <th>Last Login</th>
+                <th class="text-center">Email</th>
                 <th>Contact</th>
+                <th>Last Login</th>
                 <th>Created On</th>
-                <th>Action</th>
+                <th class="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
               {% for client in clients %}
               <tr>
-                <td>{{ client. }}</td>
-                <td>{{ client.name }}</td>
-                <td>{{ client.account_type }}</td>
-                <td>{{ client.last_login }}</td>
-                <td>{{ client.contact }}</td>
-                <td>{{ client.created_on }}</td>
+                <td>{{ forloop.counter }}</td>
+                <td>UID1000{{ client.id }}</td>
+                <td>{{ client.username }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.contact|default:"N/A" }}</td>
+                <td>{{ client.last_login|slice:":10" }}</td>
+                <td>{{ client.date_joined|slice:":10" }}</td>
                 <td>
                   <div class="d-flex align-items-center">
                     <button type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
