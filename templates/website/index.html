@@ -2,264 +2,312 @@
 {% load static %}
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Alex AI - Reimagine Intelligence</title>
-  <meta name="description" content="Deploy next-gen AI agents & assistants for business — Predictive insights, real-time automation & intelligent support by Alex AI.">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Alex-AI</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="description" content="Deploy next-gen AI agents & assistants for business — Predictive insights, real-time automation & intelligent support by Alex AI." />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'websiteassets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'websiteassets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'websiteassets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'websiteassets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'websiteassets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{% static 'websiteassets/css/main.css' %}" rel="stylesheet">
+
   <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    .hero {
-      background: #f8f9fa;
-      padding: 100px 0;
-      text-align: center;
-      animation: fadeIn 1.5s ease-in;
+    .btn-primary {
+      background-color: rgba(118, 21, 137, 0.8);
     }
-    .section-title {
-      margin-bottom: 40px;
-      animation: fadeUp 1s ease-in;
-    }
-    .pricing-table td, .pricing-table th {
-      vertical-align: middle;
-    }
-    .feature-icon {
-      font-size: 1.5rem;
-      margin-right: 10px;
-    }
-    footer {
-      background: #f1f1f1;
-      padding: 40px 0;
-      text-align: center;
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .animated-section {
-      animation: fadeUp 1s ease-in forwards;
-    }
-    .animated-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .animated-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    }
-
-    .pricing-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      transition: 0.3s ease;
-    }
-
-    .footer-links a {
-      color: #333;
-      text-decoration: none;
-      margin: 5px 0;
-      display: block;
-    }
-
-    .footer-links a:hover {
-      color: #007bff;
-    }
-
-    .footer-section {
-      background-color: #343a40;
-      color: #fff;
-      padding: 40px 0;
-    }
+  </style>
   </style>
 </head>
 <body>
 
-<!-- Hero Section -->
-<section class="hero">
+<!-- Navbar -->
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top" style="background-color: transparent;">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <!-- Uncomment the line below if you also wish to use an image logo 
+        <img src="{% static 'images/logo.png' %}" alt="" style="width: 70px; height: 70px"> -->
+        <h1>Alex AI</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="#hero" class="active">Home<br></a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <a href="/" class="btn-getstarted flex-md-shrink-0">🔗 APIs</a>
+      <a href="/" class="btn-getstarted outline-primary  flex-md-shrink-0">📚 Docs</a>
+    </div>
+  </header>
+
+
+<!-- Hero -->
+<section class="hero" id="home">
   <div class="container">
     <h1 class="display-4 fw-bold">Next-Gen AI Agents That Think, Learn & Elevate Your Business</h1>
     <p class="lead mt-3">Unlock smarter automation, real-time insights, and 24/7 intelligent support — all powered by the future of artificial intelligence.</p>
     <a href="#" class="btn btn-primary btn-lg me-3">Get Started Now</a>
-    <a href="#" class="btn btn-outline-secondary btn-lg">Explore Live Demo</a>
+    <a href="#about" class="btn btn-outline-secondary btn-lg">Learn More</a>
   </div>
 </section>
 
-<!-- About Section -->
-<section class="py-5 animated-section">
+<!-- About -->
+<section id="about" class="py-5">
   <div class="container">
     <div class="text-center section-title">
-      <h2>👋 About Alex AI — <em>Smarter AI, Simpler Future</em></h2>
+      <h2>👋 About Alex AI</h2>
       <p>We build <strong>custom AI agents and assistants</strong> that act, learn, and solve problems — just like a real team member.</p>
     </div>
     <div class="row text-center">
       <div class="col-md-4">✅ 100% Custom AI Models</div>
-      <div class="col-md-4">✅ Seamless Integration with Your Tools</div>
-      <div class="col-md-4">✅ Built for Businesses of Any Size</div>
+      <div class="col-md-4">✅ Seamless Integration</div>
+      <div class="col-md-4">✅ Scalable for All Sizes</div>
     </div>
-    <blockquote class="blockquote mt-4 text-center">
-      <p>“With Alex AI, we went from reactive to predictive. It's like having a digital brain embedded in our operations.”</p>
-      <footer class="blockquote-footer">Chief Strategy Officer, FinTech Co.</footer>
-    </blockquote>
   </div>
 </section>
 
-<!-- What We Do -->
-<section class="bg-light py-5 animated-section">
+<!-- Services -->
+<section id="services" class="bg-light py-5">
   <div class="container">
     <div class="text-center section-title">
-      <h2>🛠️ What We Do — <em>Built for Innovation</em></h2>
+      <h2>🛠 What We Do</h2>
     </div>
     <div class="row g-4">
-      <div class="col-md-6">
-        <h5>🚀 AI Agents & Assistants</h5>
-        <p>Chatbots, customer service agents, and internal process bots with real-time learning.</p>
-      </div>
-      <div class="col-md-6">
-        <h5>📊 Predictive Insights</h5>
-        <p>AI that analyzes your data and tells you what’s next—before it happens.</p>
-      </div>
-      <div class="col-md-6">
-        <h5>🎯 AI Strategy & Consulting</h5>
-        <p>End-to-end support to integrate AI across your business operations.</p>
-      </div>
-      <div class="col-md-6">
-        <h5>✍️ Content & Language AI</h5>
-        <p>Automated, human-like writing for marketing, blogs, support, and more.</p>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- Core Features -->
-<section class="py-5">
-  <div class="container">
-    <div class="text-center section-title">
-      <h2>🌟 Core Features — <em>Power Meets Precision</em></h2>
-    </div>
-    <div class="table-responsive">
-      <table class="table table-bordered text-center">
-        <thead class="table-light">
-          <tr>
-            <th>Feature</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>💬 <strong>Conversational AI</strong></td>
-            <td>Talk to Alex AI like a real expert—get instant, intelligent responses.</td>
-          </tr>
-          <tr>
-            <td>📈 <strong>Predictive Dashboards</strong></td>
-            <td>Make data-backed decisions with visual AI forecasting tools.</td>
-          </tr>
-          <tr>
-            <td>🔒 <strong>Enterprise-Grade Security</strong></td>
-            <td>End-to-end encryption with GDPR and HIPAA compliance.</td>
-          </tr>
-          <tr>
-            <td>🧠 <strong>Self-Learning Models</strong></td>
-            <td>Your AI gets smarter with every interaction.</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="col-md-6"><h5>🚀 AI Agents</h5><p>Smart bots that learn and serve in real-time.</p></div>
+      <div class="col-md-6"><h5>📊 Predictive Insights</h5><p>Understand trends and act before competitors.</p></div>
+      <div class="col-md-6"><h5>🎯 Consulting</h5><p>AI strategy for scalable success.</p></div>
+      <div class="col-md-6"><h5>✍ Content AI</h5><p>Automated, human-like writing & summarization.</p></div>
     </div>
   </div>
 </section>
 
-<!-- Use Cases -->
-<section class="bg-light py-5">
-  <div class="container">
-    <div class="text-center section-title">
-      <h2>💼 Use Cases — <em>Solutions That Scale</em></h2>
-    </div>
-    <ul class="list-unstyled text-center">
-      <li><strong>E-Commerce:</strong> Automate customer support & drive more sales</li>
-      <li><strong>Healthcare:</strong> Virtual assistants & patient intake agents</li>
-      <li><strong>Finance:</strong> Fraud detection, smart insights, and risk scoring</li>
-      <li><strong>Marketing:</strong> AI-generated ads, content, and A/B testing</li>
-    </ul>
-  </div>
-</section>
 
-<!-- Pricing Section -->
-<section class="py-5 animated-section">
-  <div class="container">
-    <div class="text-center section-title">
-      <h2>💰 Pricing Plans — <em>Simple & Scalable</em></h2>
-    </div>
-    <div class="row g-4">
-      <div class="col-md-3">
-        <div class="card pricing-card p-4">
-          <h5 class="card-title text-center">🌱 Starter</h5>
-          <p class="text-center">Personal Projects</p>
-          <h3 class="text-center">$0 / month</h3>
-          <a href="#" class="btn btn-primary w-100">Get Started</a>
+    <!-- Portfolio Section -->
+    <section id="features" class="portfolio section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Features</h2>
+        <p>Enhance your Ads &amp; Promotions with our features</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+            <li data-filter="*" class="filter-active">All</li>
+            <li data-filter=".filter-app">App</li>
+            <li data-filter=".filter-product">Product</li>
+            <li data-filter=".filter-branding">Branding</li>
+            <li data-filter=".filter-books">Books</li>
+          </ul><!-- End Portfolio Filters -->
+
+          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'websiteassets/img/portfolio/app-1.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>App 1</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'websiteassets/img/portfolio/app-1.jpg' %}" title="App 1" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'websiteassets/img/portfolio/product-1.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Product 1</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'websiteassets/img/portfolio/product-1.jpg' %}" title="Product 1" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'websiteassets/img/portfolio/branding-1.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Branding 1</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'websiteassets/img/portfolio/branding-1.jpg' %}" title="Branding 1" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'websiteassets/img/portfolio/books-1.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Books 1</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'websiteassets/img/portfolio/books-1.jpg' %}" title="Branding 1" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'websiteassets/img/portfolio/app-2.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>App 2</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'websiteassets/img/portfolio/app-2.jpg' %}" title="App 2" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'websiteassets/img/portfolio/product-2.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Product 2</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'websiteassets/img/portfolio/product-2.jpg' %}" title="Product 2" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'websiteassets/img/portfolio/branding-2.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Branding 2</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'websiteassets/img/portfolio/branding-2.jpg' %}" title="Branding 2" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'websiteassets/img/portfolio/books-2.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Books 2</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'websiteassets/img/portfolio/books-2.jpg' %}" title="Branding 2" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'websiteassets/img/portfolio/app-3.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>App 3</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'websiteassets/img/portfolio/app-3.jpg' %}" title="App 3" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'websiteassets/img/portfolio/product-3.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Product 3</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'websiteassets/img/portfolio/product-3.jpg' %}" title="Product 3" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'websiteassets/img/portfolio/branding-3.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Branding 3</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'websiteassets/img/portfolio/branding-3.jpg' %}" title="Branding 2" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'websiteassets/img/portfolio/books-3.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Books 3</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'websiteassets/img/portfolio/books-3.jpg' %}" title="Branding 3" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+          </div><!-- End Portfolio Container -->
+
         </div>
+
       </div>
-      <div class="col-md-3">
-        <div class="card pricing-card p-4">
-          <h5 class="card-title text-center">🚀 Pro</h5>
-          <p class="text-center">Small Teams & Startups</p>
-          <h3 class="text-center">$29 / month</h3>
-          <a href="#" class="btn btn-primary w-100">Get Started</a>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card pricing-card p-4">
-          <h5 class="card-title text-center">🏢 Business</h5>
-          <p class="text-center">Growing Businesses</p>
-          <h3 class="text-center">$79 / month</h3>
-          <a href="#" class="btn btn-primary w-100">Get Started</a>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card pricing-card p-4">
-          <h5 class
-```
 
+    </section><!-- /Portfolio Section -->
 
-\="card-title text-center">🔑 Enterprise</h5> <p class="text-center">Large Enterprises</p> <h3 class="text-center">\$199 / month</h3> <a href="#" class="btn btn-primary w-100">Get Started</a> </div> </div> </div>
-
-  </div>
-</section>
-
-  <!-- Blog Section -->
-<section class="bg-light py-5 animated-section">
+<!-- Blog -->
+<section id="blog" class="py-5">
   <div class="container">
     <div class="text-center section-title">
-      <h2>📰 Latest Blog Posts</h2>
+      <h2>📰 Blog</h2>
     </div>
     <div class="row">
       <div class="col-md-4">
-        <div class="card h-100 animated-card">
+        <div class="card animated-card h-100">
           <div class="card-body">
-            <h5 class="card-title">5 Ways AI is Revolutionizing Small Business</h5>
-            <p class="card-text">Discover how AI tools are helping startups automate operations and grow faster.</p>
-            <a href="#" class="btn btn-sm btn-outline-primary">Read More</a>
+            <h5>5 Ways AI is Transforming Small Business</h5>
+            <p>Startups are scaling faster with AI-driven tools.</p>
+            <a href="#" class="btn btn-sm btn-outline-primary">Read</a>
           </div>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card h-100 animated-card">
+        <div class="card animated-card h-100">
           <div class="card-body">
-            <h5 class="card-title">Top AI Trends to Watch in 2025</h5>
-            <p class="card-text">From self-learning models to autonomous agents, see what’s next in AI innovation.</p>
-            <a href="#" class="btn btn-sm btn-outline-primary">Read More</a>
+            <h5>Top AI Trends for 2025</h5>
+            <p>Discover what’s coming in the AI space next year.</p>
+            <a href="#" class="btn btn-sm btn-outline-primary">Read</a>
           </div>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card h-100 animated-card">
+        <div class="card animated-card h-100">
           <div class="card-body">
-            <h5 class="card-title">How to Train an AI Agent in 10 Minutes</h5>
-            <p class="card-text">Step-by-step guide to build and launch your own smart assistant quickly.</p>
-            <a href="#" class="btn btn-sm btn-outline-primary">Read More</a>
+            <h5>Training an AI Agent in 10 Minutes</h5>
+            <p>A simple step-by-step guide for beginners.</p>
+            <a href="#" class="btn btn-sm btn-outline-primary">Read</a>
           </div>
         </div>
       </div>
@@ -267,93 +315,279 @@
   </div>
 </section>
 
-  <!-- FAQ Section -->
-<section class="bg-light py-5">
-  <div class="container">
-    <div class="text-center section-title">
-      <h2>🙋 FAQs — <em>You Ask, Alex Answers</em></h2>
-    </div>
-    <div class="accordion" id="faqAccordion">
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="q1">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1">
-            Is Alex AI ready out of the box?
-          </button>
-        </h2>
-        <div id="a1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
-          <div class="accordion-body">
-            Yes! You can use our pre-trained agents or train your own with zero coding.
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Pricing</h2>
+        <p>Check Our Affordable Pricing<br></p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+            <div class="pricing-tem">
+              <h3 style="color: #20c997;">Free Plan</h3>
+              <div class="price"><sup>$</sup>0<span> / mo</span></div>
+              <div class="icon">
+                <i class="bi bi-box" style="color: #20c997;"></i>
+              </div>
+              <ul>
+                <li>Aida dere</li>
+                <li>Nec feugiat nisl</li>
+                <li>Nulla at volutpat dola</li>
+                <li class="na">Pharetra massa</li>
+                <li class="na">Massa ultricies mi</li>
+              </ul>
+              <a href="#" class="btn-buy">Buy Now</a>
+            </div>
+          </div><!-- End Pricing Item -->
+
+          <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+            <div class="pricing-tem">
+              <span class="featured">Featured</span>
+              <h3 style="color: #0dcaf0;">Starter Plan</h3>
+              <div class="price"><sup>$</sup>19<span> / mo</span></div>
+              <div class="icon">
+                <i class="bi bi-send" style="color: #0dcaf0;"></i>
+              </div>
+              <ul>
+                <li>Aida dere</li>
+                <li>Nec feugiat nisl</li>
+                <li>Nulla at volutpat dola</li>
+                <li>Pharetra massa</li>
+                <li class="na">Massa ultricies mi</li>
+              </ul>
+              <a href="#" class="btn-buy">Buy Now</a>
+            </div>
+          </div><!-- End Pricing Item -->
+
+          <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+            <div class="pricing-tem">
+              <h3 style="color: #fd7e14;">Business Plan</h3>
+              <div class="price"><sup>$</sup>29<span> / mo</span></div>
+              <div class="icon">
+                <i class="bi bi-airplane" style="color: #fd7e14;"></i>
+              </div>
+              <ul>
+                <li>Aida dere</li>
+                <li>Nec feugiat nisl</li>
+                <li>Nulla at volutpat dola</li>
+                <li>Pharetra massa</li>
+                <li>Massa ultricies mi</li>
+              </ul>
+              <a href="#" class="btn-buy">Buy Now</a>
+            </div>
+          </div><!-- End Pricing Item -->
+
+          <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="400">
+            <div class="pricing-tem">
+              <h3 style="color: #0d6efd;">Ultimate Plan</h3>
+              <div class="price"><sup>$</sup>49<span> / mo</span></div>
+              <div class="icon">
+                <i class="bi bi-rocket" style="color: #0d6efd;"></i>
+              </div>
+              <ul>
+                <li>Aida dere</li>
+                <li>Nec feugiat nisl</li>
+                <li>Nulla at volutpat dola</li>
+                <li>Pharetra massa</li>
+                <li>Massa ultricies mi</li>
+              </ul>
+              <a href="#" class="btn-buy">Buy Now</a>
+            </div>
+          </div><!-- End Pricing Item -->
+
+        </div><!-- End pricing row -->
+
+      </div>
+
+    </section><!-- /Pricing Section -->
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Contact</h2>
+        <p>Contact Us</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-6">
+
+            <div class="row gy-4">
+              <div class="col-md-6">
+                <div class="info-item" data-aos="fade" data-aos-delay="200">
+                  <i class="bi bi-geo-alt"></i>
+                  <h3>Address</h3>
+                  <p>A108 Adam Street</p>
+                  <p>New York, NY 535022</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="col-md-6">
+                <div class="info-item" data-aos="fade" data-aos-delay="300">
+                  <i class="bi bi-telephone"></i>
+                  <h3>Call Us</h3>
+                  <p>+1 5589 55488 55</p>
+                  <p>+1 6678 254445 41</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="col-md-6">
+                <div class="info-item" data-aos="fade" data-aos-delay="400">
+                  <i class="bi bi-envelope"></i>
+                  <h3>Email Us</h3>
+                  <p>info@example.com</p>
+                  <p>contact@example.com</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="col-md-6">
+                <div class="info-item" data-aos="fade" data-aos-delay="500">
+                  <i class="bi bi-clock"></i>
+                  <h3>Open Hours</h3>
+                  <p>Monday - Friday</p>
+                  <p>9:00AM - 05:00PM</p>
+                </div>
+              </div><!-- End Info Item -->
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-6">
+            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+              <div class="row gy-4">
+
+                <div class="col-md-6">
+                  <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+                </div>
+
+                <div class="col-md-6 ">
+                  <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+                </div>
+
+                <div class="col-12">
+                  <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+                </div>
+
+                <div class="col-12">
+                  <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                </div>
+
+                <div class="col-12 text-center">
+                  <div class="loading">Loading</div>
+                  <div class="error-message"></div>
+                  <div class="sent-message">Your message has been sent. Thank you!</div>
+
+                  <button type="submit">Send Message</button>
+                </div>
+
+              </div>
+            </form>
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Contact Section -->
+
+    <footer id="footer" class="footer">
+
+      <div class="footer-newsletter">
+        <div class="container">
+          <div class="row justify-content-center text-center">
+            <div class="col-lg-6">
+              <h4>Join Our Newsletter</h4>
+              <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
+              <form action="forms/newsletter.php" method="post" class="php-email-form">
+                <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="q2">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2">
-            How do I integrate it with my tools?
-          </button>
-        </h2>
-        <div id="a2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-          <div class="accordion-body">
-            We support Slack, Zapier, CRMs, eCommerce platforms, and more.
+  
+      <div class="container footer-top">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6 footer-about">
+            <a href="index.html" class="d-flex align-items-center">
+              <span class="sitename">Alex AI</span>
+            </a>
+            <div class="footer-contact pt-3">
+              <p>Mumbai</p>
+              <p>India</p>
+              <p class="mt-3"><strong>Phone:</strong> <span>+91 1234 567890</span></p>
+              <p><strong>Email:</strong> <span>info@alexai.com</span></p>
+            </div>
           </div>
+  
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">About us</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Services</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Terms of service</a></li>
+            </ul>
+          </div>
+  
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Web Design</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Web Development</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Product Management</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Marketing</a></li>
+            </ul>
+          </div>
+  
+          <div class="col-lg-4 col-md-12">
+            <h4>Follow Us</h4>
+            <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+            <div class="social-links d-flex">
+              <a href=""><i class="bi bi-twitter-x"></i></a>
+              <a href=""><i class="bi bi-facebook"></i></a>
+              <a href=""><i class="bi bi-instagram"></i></a>
+              <a href=""><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+  
         </div>
       </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="q3">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3">
-            Can I customize the AI's personality or tone?
-          </button>
-        </h2>
-        <div id="a3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-          <div class="accordion-body">
-            Absolutely. Alex AI adapts to your brand’s voice and behavior.
-          </div>
+  
+      <div class="container copyright text-center mt-4">
+        <p>© <span>All rights reserved to</span> <strong class="px-1 sitename">Alex AI</strong></p>
+        <div class="credits">
+          Maintained by <a href="https://cfcsoftware.com/">CFCSoftware</a>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+  
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 
+<!-- Vendor JS Files -->
+<script src="{% static 'websiteassets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'websiteassets/vendor/php-email-form/validate.js' %}"></script>
+<script src="{% static 'websiteassets/vendor/aos/aos.js' %}"></script>
+<script src="{% static 'websiteassets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+<script src="{% static 'websiteassets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+<script src="{% static 'websiteassets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+<script src="{% static 'websiteassets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'websiteassets/vendor/swiper/swiper-bundle.min.js' %}"></script>
 
-<!-- Footer Section -->
-
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3 footer-links">
-        <h5>About</h5>
-        <a href="#">Our Story</a>
-        <a href="#">Careers</a>
-        <a href="#">Contact Us</a>
-        <a href="#">Blog</a>
-      </div>
-      <div class="col-md-3 footer-links">
-        <h5>Solutions</h5>
-        <a href="#">AI Agents</a>
-        <a href="#">Predictive Insights</a>
-        <a href="#">Business Consulting</a>
-        <a href="#">Content AI</a>
-      </div>
-      <div class="col-md-3 footer-links">
-        <h5>Support</h5>
-        <a href="#">FAQs</a>
-        <a href="#">Help Center</a>
-        <a href="#">Community</a>
-        <a href="#">Tutorials</a>
-      </div>
-      <div class="col-md-3 footer-links">
-        <h5>Legal</h5>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-        <a href="#">GDPR Compliance</a>
-        <a href="#">Cookie Policy</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+<!-- Main JS File -->
+<script src="{% static 'websiteassets/js/main.js' %}"></script>
 </body>
 </html>
