@@ -286,6 +286,7 @@ USE_TZ = True
 
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+HF_API_KEY = os.getenv("HF_API_KEY")
 
 
 

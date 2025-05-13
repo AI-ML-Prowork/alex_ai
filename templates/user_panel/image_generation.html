@@ -1,10 +1,39 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-12">
-            <h1>Image Generation</h1>
+        <div class="col-md-8">
+            <h1 class="text-left mb-4">Image Generation</h1>
+
+            <!-- Display error message if exists -->
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <!-- Image generation form -->
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="prompt">Enter your prompt:</label>
+                    <input type="text" class="form-control" id="prompt" name="prompt"
+                           placeholder="Describe the image you want to generate"
+                           value="{{ prompt|default:'' }}" required>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Generate Image</button>
+            </form>
+
+            <!-- Display generated image if available -->
+            {% if image_url %}
+            <div class="mt-5 text-center">
+                <h2>Generated Image</h2>
+                <img src="{{ image_url }}" alt="Generated Image" class="img-fluid mt-3" style="max-width: 50%; height: 50%;">
+                <a href="{{ image_url }}" download class="btn btn-success mt-3">Download Image</a>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>

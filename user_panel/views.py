@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from .image_model import generate_image
+from .video_model import generate_video
 from xinfo_ai.utils import *
 
 User = get_user_model()
@@ -82,44 +83,6 @@ def register_user(request):
 
 
 
-@csrf_exempt
-def alex_ai(request):
-    if request.user.is_authenticated:
-        ic(request.user)
-        ic(request.user.is_authenticated)
-        ic(request.user.id)
-
-        if request.method == 'POST':
-            try:
-                data = json.loads(request.body)
-                prompt = data.get('input', '')
-                if not prompt:
-                    return JsonResponse({'error': 'input is required'}, status=400)
-
-                chat_client = OpenAIChatClient()
-                conversation_history = request.session.get('conversation_history', [])
-                chat_client.set_conversation_history(conversation_history)
-
-                answer = chat_client.get_response(prompt)
-
-                request.session['conversation_history'] = chat_client.get_conversation_history()
-                return JsonResponse({
-                    'answer': answer,
-                    'conversation_history': request.session['conversation_history']
-                }, status=200)
-
-            except json.JSONDecodeError:
-                return JsonResponse({'error': 'Invalid JSON'}, status=400)
-            except Exception as e:
-                return JsonResponse({'error': str(e)}, status=500)
-
-        return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-    return JsonResponse({'error': 'User is not authenticated'}, status=401)
-
-
-
-
 
 
 def my_profile(request):
@@ -170,34 +133,96 @@ def my_profile_update(request):
 
 
 
+@csrf_exempt
+def alex_ai(request):
+    if request.user.is_authenticated:
+        ic(request.user)
+        ic(request.user.is_authenticated)
+        ic(request.user.id)
 
-# @csrf_exempt
-# def alexai_img_gen(request):
-#     if request.method == 'POST':
-#         try:
-#             data = json.loads(request.body)
-#             prompt = data.get('input', '')
-#             if not prompt:
-#                 return JsonResponse({'error': 'input is required'}, status=400)
+        if request.method == 'POST':
+            try:
+                data = json.loads(request.body)
+                prompt = data.get('input', '')
+                if not prompt:
+                    return JsonResponse({'error': 'input is required'}, status=400)
 
-#             chat_client = OpenAIChatClient()
-#             conversation_history = request.session.get('conversation_history', [])
-#             chat_client.set_conversation_history(conversation_history)
+                chat_client = OpenAIChatClient()
+                conversation_history = request.session.get('conversation_history', [])
+                chat_client.set_conversation_history(conversation_history)
 
-#             answer = chat_client.get_response(prompt)
+                answer = chat_client.get_response(prompt)
 
-#             request.session['conversation_history'] = chat_client.get_conversation_history()
-#             return JsonResponse({
-#                 'answer': answer,
-#                 'conversation_history': request.session['conversation_history']
-#             }, status=200)
+                request.session['conversation_history'] = chat_client.get_conversation_history()
+                return JsonResponse({
+                    'answer': answer,
+                    'conversation_history': request.session['conversation_history']
+                }, status=200)
 
-#         except json.JSONDecodeError:
-#             return JsonResponse({'error': 'Invalid JSON'}, status=400)
-#         except Exception as e:
-#             return JsonResponse({'error': str(e)}, status=500)
+            except json.JSONDecodeError:
+                return JsonResponse({'error': 'Invalid JSON'}, status=400)
+            except Exception as e:
+                return JsonResponse({'error': str(e)}, status=500)
+
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+    return JsonResponse({'error': 'User is not authenticated'}, status=401)
 
 
+
+
+@csrf_exempt
+def alexai_img_gen(request):
+    if request.method == 'GET':
+        return render(request, 'user_panel/image_generation.html')
+
+    elif request.method == 'POST':
+        prompt = request.POST.get('prompt')
+        if not prompt:
+            return render(request, 'user_panel/image_generation.html', {
+                'error': 'Please enter a prompt.'
+            })
+
+        try:
+            image_url = generate_image(prompt)
+            return render(request, 'user_panel/image_generation.html', {
+                'image_url': image_url,
+                'prompt': prompt
+            })
+        except Exception as e:
+            return render(request, 'user_panel/image_generation.html', {
+                'error': f"Failed to generate image: {str(e)}"
+            })
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+    
+
+@csrf_exempt
+def alexai_video_gen(request):
+    if request.method == 'GET':
+        return TemplateResponse(request,'user_panel/video_generation.html', {})
+
+
+    elif request.method == 'POST':
+        prompt = request.POST.get('prompt')
+        if not prompt:
+            return render(request, 'user_panel/video_generation.html', {
+                'error': 'Please enter a prompt.'
+            })
+
+        try:
+            video_url = generate_video(prompt)
+            return render(request, 'user_panel/video_generation.html', {
+                'video_url': video_url,
+                'prompt': prompt
+            })
+        except Exception as e:
+            return render(request, 'user_panel/video_generation.html', {
+                'error': f"Failed to generate video: {str(e)}"
+            })
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
 
@@ -220,25 +245,16 @@ def assets(request):
     
 
 @csrf_exempt
-def alexai_img_gen(request):
-    if request.method == 'GET':
-        return TemplateResponse(request,'user_panel/image_generation.html', {})
-    else:
-        return JsonResponse({'error': 'Invalid request method'}, status=405)
-    
-
-
-@csrf_exempt
 def gallery(request):
     if request.method == 'GET':
         return TemplateResponse(request,'user_panel/gallery.html', {})
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+
     
 
-@csrf_exempt
-def alexai_video_gen(request):
-    if request.method == 'GET':
-        return TemplateResponse(request,'user_panel/video_generation.html', {})
-    else:
-        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+    

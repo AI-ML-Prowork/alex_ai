@@ -29,6 +29,7 @@ oauthlib==3.2.2
 openai==0.28.1
 packaging==25.0
 paramiko==3.5.1
+pillow==11.2.1
 propcache==0.3.1
 psycopg2-binary==2.9.10
 pycparser==2.22

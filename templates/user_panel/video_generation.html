@@ -1,10 +1,37 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-12">
-            <h1>Video Generation</h1>
+        <div class="col-md-8">
+            <h1 class="text-left mb-4">Video Generation</h1>
+
+            {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="prompt">Enter your prompt:</label>
+                    <input type="text" class="form-control" id="prompt" name="prompt"
+                           placeholder="Describe the video you want to generate"
+                           value="{{ prompt|default:'' }}" required>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Generate Video</button>
+            </form>
+
+            {% if video_url %}
+            <div class="mt-5 text-center">
+                <h2>Generated Video</h2>
+                <video controls autoplay class="img-fluid mt-3">
+                    <source src="{{ video_url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <a href="{{ video_url }}" download="generated_video.mp4" class="btn btn-success mt-3">Download Video</a>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
