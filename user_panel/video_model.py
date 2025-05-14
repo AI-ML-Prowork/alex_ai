@@ -11,14 +11,9 @@ client = InferenceClient(
 
 def generate_video(prompt):
     video = client.text_to_video(prompt, model="Lightricks/LTX-Video")
-
-    # Assume it's a file-like object or bytes; if it returns a file path, adjust accordingly
-    if hasattr(video, "read"):  # file-like
+    if hasattr(video, "read"):  
         video_bytes = video.read()
     else:
-        video_bytes = video  # If already bytes
-
+        video_bytes = video
     video_base64 = base64.b64encode(video_bytes).decode("utf-8")
-
-    # Use mp4 mimetype if format is mp4. Adjust if format is different.
     return f"data:video/mp4;base64,{video_base64}"

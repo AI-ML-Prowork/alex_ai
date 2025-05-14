@@ -12,10 +12,7 @@ from io import BytesIO
 
 def generate_image(prompt):
     image = client.text_to_image(prompt, model=model)
-
-    # Convert the PIL image to a base64-encoded string
     buffered = BytesIO()
-    image.save(buffered, format="PNG")  # You can keep WebP if you prefer
+    image.save(buffered, format="PNG") 
     image_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
-
     return f"data:image/png;base64,{image_base64}"

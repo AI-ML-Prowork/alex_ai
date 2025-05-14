@@ -41,12 +41,12 @@ class UserSignupView(generics.CreateAPIView):
 class UserLoginView(generics.GenericAPIView):
     serializer_class = UserLoginSerializer
     permission_classes = [AllowAny]
-    authentication_classes = []  # Disable CSRF check for this view
+    authentication_classes = [] 
 
     def get(self, request, *args, **kwargs):
         return TemplateResponse(request, "authentication/login.html", {"error": "Invalid Credentials"})
 
-    @csrf_exempt  # Exempt this view from CSRF verification
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         try:
@@ -56,7 +56,6 @@ class UserLoginView(generics.GenericAPIView):
             user = authenticate(request, email=email, password=password)
 
             if user:
-                # Log the user in (this attaches user to request.user)
                 login(request, user)
                 ic(user)
                 refresh = RefreshToken.for_user(user)
@@ -73,7 +72,7 @@ class UserLoginView(generics.GenericAPIView):
                     "is_staff": user.is_staff,
                     "is_superuser": user.is_superuser,
                 }
-                request.session.modified = True  # Ensure session is saved
+                request.session.modified = True 
                 ic(request.session)
                 if request.GET.get('api') == 'true':
                     return JsonResponse(
