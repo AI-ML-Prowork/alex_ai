@@ -96,7 +96,9 @@ def my_profile(request):
         # ic(dict(request.user))
         profile = Clients.objects.get(user=request.user.id)
         profile_data = ClientSerializer(profile).data
-        ic(profile_data)
+        # ic(profile_data)
+        if request.GET.get('api') == 'true':
+            return JsonResponse({"status": "success", "data": profile_data}, status=status.HTTP_200_OK)
         return TemplateResponse(request,'user_panel/profile/my_profile.html', {"profile": profile_data})
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
@@ -185,6 +187,8 @@ def alexai_img_gen(request):
 
         try:
             image_url = generate_image(prompt)
+            if request.GET.get('api') == 'true':
+                return JsonResponse({"status": "success", "data": image_url}, status=status.HTTP_200_OK)
             return render(request, 'user_panel/image_generation.html', {
                 'image_url': image_url,
                 'prompt': prompt
@@ -213,6 +217,8 @@ def alexai_video_gen(request):
 
         try:
             video_url = generate_video(prompt)
+            if request.GET.get('api') == 'true':
+                return JsonResponse({"status": "success", "data": video_url}, status=status.HTTP_200_OK)
             return render(request, 'user_panel/video_generation.html', {
                 'video_url': video_url,
                 'prompt': prompt
