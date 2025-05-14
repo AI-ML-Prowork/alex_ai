@@ -88,6 +88,11 @@ class UserLoginView(generics.GenericAPIView):
             return redirect("/", {"error": "Invalid Credentials"})
 
         except Exception as e:
+            if request.GET.get('api') == 'true':
+                return JsonResponse(
+                    {"error": f"Error during login: {e}"},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
             messages.error(request, f"Error during login: {e}")
             return redirect("/")
 

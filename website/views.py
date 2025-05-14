@@ -6,5 +6,5 @@ def index(request):
 
 
 
-def index1(request):
-    return render(request, 'website/index_test.html')
+# def index1(request):
+#     return render(request, 'website/index_test.html')
