@@ -180,12 +180,7 @@ STATICFILES_DIRS = [
 # blob storage configuration
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/opt/myproject/myproject/media/'
-
-
-# VPS_HOST = "148.72.247.27" 
-# VPS_USER = "discombadmin"    
-# VPS_PASSWORD = "Tomtom@#2025"    
-# DOCUMENTS_PATH = "/opt/myproject/myproject/media" 
+DOCUMENTS_PATH = "opt/myproject/myproject/media"
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
