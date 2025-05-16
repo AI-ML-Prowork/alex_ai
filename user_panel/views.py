@@ -119,8 +119,10 @@ def my_profile_update(request):
             if profile_img:
                 file_name = profile_img.name.replace(" ", "_")
                 folder = "clients_data"
-                # file_url = upload_file_to_vps(profile_img, file_name, folder)
-                # data['profile_image'] = file_url
+                file_url = upload_file_to_vps(profile_img, file_name, folder)
+                data['profile_img'] = file_url
+                ic(data)
+                ic(data['profile_img'])
 
             
             serializer = ClientSerializer(profile, data=data, partial=True)
@@ -312,9 +314,10 @@ def upload_file_view(request):
     if request.method == 'POST' and request.FILES.get('file'):
         file = request.FILES['file']
         ic(file)
-        file_name = file.name  # Keep original filename or modify as needed
+        file_name = file.name
+
         ic(file_name)
-        folder = "user_data"  # Ensure this matches your VPS folder
+        folder = "user_data" 
 
         file_url = upload_file_to_vps(file, file_name, folder)
         ic(file_url)
