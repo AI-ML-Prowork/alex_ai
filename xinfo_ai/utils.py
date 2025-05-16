@@ -18,7 +18,7 @@ from django.core.mail import EmailMessage
 from django.conf import settings
 from django.core.mail import send_mail
 from .openai_utils import *
-
+from .storage import *
 
 User = get_user_model()
 

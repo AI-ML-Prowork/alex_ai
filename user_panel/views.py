@@ -112,9 +112,17 @@ def my_profile_update(request):
         return redirect('/user-login/')
     if request.method == 'POST':
         try:
+            profile = Clients.objects.get(user=request.user.id)
             data = request.POST
             ic(data)
-            profile = Clients.objects.get(user=request.user.id)
+            profile_img = request.FILES.get('profile_img', None)
+            if profile_img:
+                file_name = profile_img.name.replace(" ", "_")
+                folder = "clients_data"
+                # file_url = upload_file_to_vps(profile_img, file_name, folder)
+                # data['profile_image'] = file_url
+
+            
             serializer = ClientSerializer(profile, data=data, partial=True)
             if serializer.is_valid():
                 serializer.save()
@@ -174,24 +182,57 @@ def alex_ai(request):
 
 
 @csrf_exempt
+def generate_image_view(request):
+    prompt = request.POST.get("prompt")
+    image_type = request.POST.get("image_type")
+    full_prompt = f"{prompt} and image should be {image_type}"
+    ic(full_prompt)
+    client = OpenAIChatClient()
+    image_url = client.generate_image(full_prompt)
+    return JsonResponse({"image_url": image_url})
+
+
+
+@csrf_exempt
+def edit_image_view(request):
+    prompt = request.POST.get("prompt")
+    image_file = request.FILES["image"]
+    mask_file = request.FILES["mask"]
+
+    with open("temp_image.png", "wb") as f:
+        f.write(image_file.read())
+    with open("temp_mask.png", "wb") as f:
+        f.write(mask_file.read())
+
+    client = OpenAIChatClient()
+    edited_url = client.edit_image("temp_image.png", "temp_mask.png", prompt)
+    return JsonResponse({"image_url": edited_url})
+
+
+
+
+@csrf_exempt
 def alexai_img_gen(request):
     if request.method == 'GET':
         return render(request, 'user_panel/image_generation.html')
 
     elif request.method == 'POST':
         prompt = request.POST.get('prompt')
+        image_type = request.POST.get('image_type')
+
+        final_prompt = f"{prompt} and image should be {image_type}"
         if not prompt:
             return render(request, 'user_panel/image_generation.html', {
                 'error': 'Please enter a prompt.'
             })
 
         try:
-            image_url = generate_image(prompt)
+            image_url = generate_image(final_prompt)
             if request.GET.get('api') == 'true':
                 return JsonResponse({"status": "success", "data": image_url}, status=status.HTTP_200_OK)
             return render(request, 'user_panel/image_generation.html', {
                 'image_url': image_url,
-                'prompt': prompt
+                'prompt': final_prompt
             })
         except Exception as e:
             return render(request, 'user_panel/image_generation.html', {
@@ -264,3 +305,19 @@ def gallery(request):
 
 
     
+from django.http import JsonResponse
+
+@csrf_exempt
+def upload_file_view(request):
+    if request.method == 'POST' and request.FILES.get('file'):
+        file = request.FILES['file']
+        ic(file)
+        file_name = file.name  # Keep original filename or modify as needed
+        ic(file_name)
+        folder = "user_data"  # Ensure this matches your VPS folder
+
+        file_url = upload_file_to_vps(file, file_name, folder)
+        ic(file_url)
+        return JsonResponse({'message': 'File uploaded successfully!', 'file_url': file_url})
+
+    return JsonResponse({'error': 'No file uploaded'}, status=400)
