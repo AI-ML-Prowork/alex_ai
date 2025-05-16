@@ -113,12 +113,12 @@ def my_profile_update(request):
     if request.method == 'POST':
         try:
             profile = Clients.objects.get(user=request.user.id)
-            data = request.POST
+            data = request.POST.copy()  # Make a mutable copy of the QueryDict
             ic(data)
             profile_img = request.FILES.get('profile_img', None)
             if profile_img:
                 file_name = profile_img.name.replace(" ", "_")
-                folder = "clients_data"
+                folder = "profile_images"
                 file_url = upload_file_to_vps(profile_img, file_name, folder)
                 data['profile_img'] = file_url
                 ic(data)
@@ -127,11 +127,19 @@ def my_profile_update(request):
             
             serializer = ClientSerializer(profile, data=data, partial=True)
             if serializer.is_valid():
-                serializer.save()
-                if request.GET.get('api') == 'true':
-                    return JsonResponse({'message': 'Profile updated successfully', 'data': serializer.data}, status=200)
+                try:
+                    serializer.save()
+                    if request.GET.get('api') == 'true':
+                        return JsonResponse({'message': 'Profile updated successfully', 'data': serializer.data}, status=200)
+                    else:
+                        messages.success(request, 'Profile updated successfully')
+                except Exception as e:
+                    return JsonResponse({'error': f"Failed to update profile: {str(e)}"}, status=500)
             else:
-                return redirect('/user/profile/')
+                return JsonResponse({'error': 'Invalid data', 'details': serializer.errors}, status=400)
+                    
+
+            return redirect('/user/profile/')
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON'}, status=400)
