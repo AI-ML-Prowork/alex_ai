@@ -28,7 +28,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/",include("authentication.urls")),
     path("",include("website.urls")),
-    path("admin_panel/",include("admin_panel.urls")),
+    path("user/",include("admin_panel.urls")),
     path("user/",include("user_panel.urls")),
     path('accounts/', include('allauth.urls')),  # for google auth
 

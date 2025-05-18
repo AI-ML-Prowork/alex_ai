@@ -8,6 +8,6 @@ urlpatterns = [
     path("user-logout/", user_logout, name="user_logout"),
 
     # Google login
-    path('google-login/', CustomGoogleLogin.as_view(), name='google_login'),
+    # path('google-login/', CustomGoogleLogin.as_view(), name='google_login'),
 
 ]

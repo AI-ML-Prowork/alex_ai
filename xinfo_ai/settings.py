@@ -130,7 +130,7 @@ SITE_ID = 1  # Required for django-allauth
 REST_USE_JWT = True
 
 # Redirect URL after login
-LOGIN_REDIRECT_URL = "/admin-panel/"
+LOGIN_REDIRECT_URL = "/user/dashboard/"
 
 # gogole oauth JWT settings
 REST_FRAMEWORK = {
@@ -199,24 +199,6 @@ DOCUMENTS_PATH = "/opt/myproject/myproject/media"
 #      }
 #  }
 
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'info_ai_db',
-#         'USER': 'postgres',
-#         'PASSWORD': '1234',
-#         'HOST': 'localhost',
-
-#         # 'NAME': 'info_ai_db',
-#         # 'USER': 'info_ai',
-#         # 'PASSWORD': 'info@#2025',
-#         # 'HOST': '97.74.83.234',
-
-#         'PORT': '5432',
-#         'ATOMIC_REQUESTS': True
-#     }
-# }
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
@@ -298,3 +280,10 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'cfctech07@gmail.com'
 EMAIL_HOST_PASSWORD = 'cmxj ergf yakb tush'
+
+
+
+# to ingnore warnings 
+
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning, module="dj_rest_auth.registration.serializers")

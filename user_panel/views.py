@@ -67,7 +67,7 @@ def register_user(request):
                             )
                         else:
                             messages.success(request, "Candidate added successfully.")
-                            return redirect('/user-login/')
+                            return redirect('/auth/user-login')
                     else:
                         user.delete() 
                         return JsonResponse({"error": clients_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
@@ -87,7 +87,7 @@ def register_user(request):
 
 def my_profile(request):
     if not request.user.is_authenticated:
-        return redirect('/user-login/')
+        return redirect('/auth/user-login')
     if request.method == 'GET':
         ic(request.session.get('user_info'))
         ic(request.user)
@@ -109,7 +109,7 @@ def my_profile(request):
 @csrf_exempt
 def my_profile_update(request):
     if not request.user.is_authenticated:
-        return redirect('/user-login/')
+        return redirect('/auth/user-login')
     if request.method == 'POST':
         try:
             profile = Clients.objects.get(user=request.user.id)

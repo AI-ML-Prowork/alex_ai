@@ -83,7 +83,7 @@ class UserLoginView(generics.GenericAPIView):
                         },
                         status=status.HTTP_200_OK,
                     )
-                return redirect("/admin_panel/dashboard/")
+                return redirect("/user/dashboard/")
             messages.error(request, "Invalid Credentials")
             return redirect("/", {"error": "Invalid Credentials"})
 
@@ -131,26 +131,31 @@ class CustomGoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
 
     def post(self, request, *args, **kwargs):
-        # Call parent to get tokens and user
         response = super().post(request, *args, **kwargs)
+        ic(response)
+        user = request.user
+        ic(user)
 
-        user = self.user  # this is the logged-in user
-        social_account = SocialAccount.objects.filter(user=user, provider="google").first()
+        try:
+            social_account = SocialAccount.objects.filter(user=user, provider="google").first()
 
-        if social_account:
-            extra_data = social_account.extra_data
-            user.email = user.email or extra_data.get("email")
-            user.username = user.username or extra_data.get("name") or extra_data.get("given_name")
-            user.full_name = user.full_name or extra_data.get("name")
-            user.profile_img = user.profile_img or extra_data.get("picture")
+            if social_account:
+                ic(social_account)
+                extra_data = social_account.extra_data
+                ic(extra_data)
+                user.email = user.email or extra_data.get("email")
+                user.username = user.username or extra_data.get("name") or extra_data.get("given_name"+""+extra_data.get("family_name"))
+                user.full_name = getattr(user, "full_name", None) or extra_data.get("name")
+                user.profile_img = getattr(user, "profile_img", None) or extra_data.get("picture")
+                if hasattr(user, "account_type") and not user.account_type:
+                    user.account_type = "Google"
+                user.save()
+                Clients.objects.update_or_create(user=user, defaults={"custom_id": social_account.uid, "email": user.email, "full_name": user.full_name, "profile_img": user.profile_img, "account_type": user.account_type})
+                ic(user)
 
-            # You can also set account_type or anything else here
-            if not user.account_type:
-                user.account_type = "Google"
+        except Exception as e:
+            return Response({"detail": f"Google login data processing error: {e}"}, status=status.HTTP_400_BAD_REQUEST)
 
-            user.save()
-
-        # Optional: attach custom user data to response
         return Response({
             "refresh": response.data.get("refresh"),
             "access": response.data.get("access"),
@@ -158,9 +163,9 @@ class CustomGoogleLogin(SocialLoginView):
                 "id": user.id,
                 "email": user.email,
                 "username": user.username,
-                "full_name": user.full_name,
-                "profile_img": user.profile_img,
-                "account_type": user.account_type,
+                "full_name": getattr(user, "full_name", None),
+                "profile_img": getattr(user, "profile_img", None),
+                "account_type": getattr(user, "account_type", None),
                 "is_active": user.is_active,
                 "is_staff": user.is_staff,
                 "is_superuser": user.is_superuser

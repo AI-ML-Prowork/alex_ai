@@ -19,7 +19,6 @@ def list_vps_documents():
 
         sftp = ssh.open_sftp()
         files = sftp.listdir(DOCUMENTS_PATH)
-
         sftp.close()
         ssh.close()
 
@@ -100,7 +99,7 @@ def upload_file_to_vps(file, file_name, folder=None):
     str
         The full public URL of the uploaded file.
     """
-    paramiko.util.log_to_file("paramiko_debug.log")  ##### Logs SSH activity for the paramiko library......
+    # paramiko.util.log_to_file("paramiko_debug.log")  ##### Logs SSH activity for the paramiko library......
 
     try:
         ssh = paramiko.SSHClient()

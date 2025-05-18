@@ -1,3 +1,5 @@
 infoenv
 .env
 env
+paramiko_debug.log
+paramiko_debug

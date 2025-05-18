@@ -217,8 +217,7 @@
     });
   
     function loginWithGoogle() {
-      // Replace with actual Google OAuth integration
-      alert('Google login functionality to be implemented.');
+      window.location.href = "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=860551308256-87t6227s1a06kslfe1vjadiacagmoa7p.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Faccounts%2Fgoogle%2Flogin%2Fcallback%2F&scope=email%20profile&response_type=code&state=fbWqLngXq2h0ioFO&access_type=online&service=lso&o2v=2&flowName=GeneralOAuthFlow";
     }
     function togglePasswordVisibility() {
       const passwordInput = document.getElementById('password');
