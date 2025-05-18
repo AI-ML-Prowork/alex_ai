@@ -1,4 +1,3 @@
-{% load socialaccount %}
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -137,6 +136,7 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
+  
 </head>
 
 <body class="light-mode">
@@ -154,10 +154,8 @@
               <div class="card-body p-5">
                 <h4 class="card-title text-center mb-4" style="color: #4A90E2;">Welcome to Alex-AI</h4>
                 <div class="d-flex justify-content-center mb-4">
-                    <!-- <button class="btn btn-google d-flex align-items-center shadow-sm" onclick="loginWithGoogle()">
-                    <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Logo" class="google-logo">
-                    <span class="ml-3">Login with Google</button> -->
-                    <a href="{% provider_login_url 'google' %}" <button class="btn btn-google d-flex align-items-center shadow-sm"><img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Logo" class="google-logo"><span class="ml-3">Login with Google</span></button></a>
+                  <button class="btn btn-google d-flex align-items-center shadow-sm" onclick="loginWithGoogle()">
+                    <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Logo" class="google-logo"></button>
                 </div>
                 <div class="text-center my-3">
                   <span class="text-muted">OR</span>
@@ -219,8 +217,7 @@
     });
   
     function loginWithGoogle() {
-      // Directly redirect to the Google OAuth2 verification screen (bypass allauth's intermediate "You are about to sign in..." page)
-      window.location.href = "/accounts/google/login/?process=login";
+      window.location.href = "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=860551308256-87t6227s1a06kslfe1vjadiacagmoa7p.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Faccounts%2Fgoogle%2Flogin%2Fcallback%2F&scope=email%20profile&response_type=code&state=fbWqLngXq2h0ioFO&access_type=online&service=lso&o2v=2&flowName=GeneralOAuthFlow";
     }
     function togglePasswordVisibility() {
       const passwordInput = document.getElementById('password');
@@ -236,9 +233,7 @@
     document.getElementById('togglePassword').addEventListener('click', togglePasswordVisibility);
     
   </script>
-
-  
-  
+    
 </body>
 
 </html>

@@ -24,6 +24,8 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/",include("authentication.urls")),
@@ -39,19 +41,5 @@ urlpatterns = [
 ]
 
 
-
-
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-
-# from dj_rest_auth.registration.views import SocialLoginView
-# from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-
-
-# class GoogleLogin(SocialLoginView):
-#     adapter_class = GoogleOAuth2Adapter
-
-# urlpatterns += [
-#     path("google-login/", GoogleLogin.as_view(), name="google_login"),
-# ]

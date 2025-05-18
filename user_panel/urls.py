@@ -25,9 +25,4 @@ urlpatterns = [
 
     path("upload", upload_file_view, name= "upload_file_view"),
 
-
-    
-    
-
-
 ]

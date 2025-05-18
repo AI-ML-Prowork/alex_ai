@@ -41,7 +41,7 @@ class UserSignupView(generics.CreateAPIView):
 class UserLoginView(generics.GenericAPIView):
     serializer_class = UserLoginSerializer
     permission_classes = [AllowAny]
-    authentication_classes = [] 
+    authentication_classes = []
 
     def get(self, request, *args, **kwargs):
         return TemplateResponse(request, "authentication/login.html", {"error": "Invalid Credentials"})
@@ -51,9 +51,7 @@ class UserLoginView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         try:
             serializer.is_valid(raise_exception=True)
-            email = serializer.validated_data["email"]
-            password = serializer.validated_data["password"]
-            user = authenticate(request, email=email, password=password)
+            user = serializer.validated_data.get("user") 
 
             if user:
                 login(request, user)
@@ -72,7 +70,7 @@ class UserLoginView(generics.GenericAPIView):
                     "is_staff": user.is_staff,
                     "is_superuser": user.is_superuser,
                 }
-                request.session.modified = True 
+                request.session.modified = True
                 ic(request.session)
                 if request.GET.get('api') == 'true':
                     return JsonResponse(
@@ -85,7 +83,7 @@ class UserLoginView(generics.GenericAPIView):
                     )
                 return redirect("/user/dashboard/")
             messages.error(request, "Invalid Credentials")
-            return redirect("/", {"error": "Invalid Credentials"})
+            return redirect("/auth/user-login", {"error": "Invalid Credentials"})
 
         except Exception as e:
             if request.GET.get('api') == 'true':
@@ -94,25 +92,40 @@ class UserLoginView(generics.GenericAPIView):
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 )
             messages.error(request, f"Error during login: {e}")
-            return redirect("/")
+            return redirect("/auth/user-login", {"error": f"Error during login: {e}", "error": "Invalid Credentials"})
+
 
 
 @csrf_exempt
 def user_logout(request):
+    from django.contrib.auth import logout
+    from django.shortcuts import redirect
+    from django.http import JsonResponse
+    from rest_framework import status
+    from icecream import ic
+
     ic(request.session)
     ic(dict(request.session))
     ic(request.session.get('user_info'))
     ic(request.session.get('access_token'))
     ic(request.session.get('refresh_token'))
-    logout(request)            
-    request.session.flush() 
+
+    logout(request)
+    request.session.flush()
     ic("logout success")
+
+    # Optional: Redirect to Google logout (client-side recommended instead)
+    if request.GET.get('google') == 'true':
+        ic("google logout")
+        return redirect("https://accounts.google.com/Logout")
+
     if request.GET.get('api') == 'true':
         return JsonResponse(
             {"status": "success", "message": "Logout successful"},
             status=status.HTTP_200_OK
         )
-    return redirect("/") 
+    
+    return redirect("/")
 
 
 
@@ -144,13 +157,12 @@ class CustomGoogleLogin(SocialLoginView):
                 extra_data = social_account.extra_data
                 ic(extra_data)
                 user.email = user.email or extra_data.get("email")
-                user.username = user.username or extra_data.get("name") or extra_data.get("given_name"+""+extra_data.get("family_name"))
+                user.username = user.username or extra_data.get("name") or extra_data.get("given_name")
                 user.full_name = getattr(user, "full_name", None) or extra_data.get("name")
                 user.profile_img = getattr(user, "profile_img", None) or extra_data.get("picture")
                 if hasattr(user, "account_type") and not user.account_type:
                     user.account_type = "Google"
                 user.save()
-                Clients.objects.update_or_create(user=user, defaults={"custom_id": social_account.uid, "email": user.email, "full_name": user.full_name, "profile_img": user.profile_img, "account_type": user.account_type})
                 ic(user)
 
         except Exception as e:

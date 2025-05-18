@@ -41,30 +41,23 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'django.contrib.sites',
     "authentication",
     "website",
     "admin_panel",
     "user_panel",
     'rest_framework',
-    # for google auth system 
     'rest_framework.authtoken',
-    'dj_rest_auth',
-    'social_django',
-    'dj_rest_auth.registration',
+    # for google auth system 
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'django.contrib.sites',
-    # 'django_filters',
-    # 'corsheaders',
-    # 'drf_yasg',
-    # 'django_extensions',
+    # 'allauth.socialaccount.providers.github',
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.twitter',
     # 'allauth.socialaccount.providers.linkedin',
     # 'allauth.socialaccount.providers.instagram',
-    # 'allauth.socialaccount.providers.github',
     # 'allauth.socialaccount.providers.pinterest',
     # 'allauth.socialaccount.providers.reddit',
     # 'allauth.socialaccount.providers.spotify',
@@ -99,57 +92,64 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# custom middleware for gogole auth 
+# custom middleware for google auth 
 MIDDLEWARE += [
-    'social_django.middleware.SocialAuthExceptionMiddleware',
     'allauth.account.middleware.AccountMiddleware',
 
 ]
 
-# custom auth_backend for gogole auth 
+# custom auth_backend for google auth 
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.google.GoogleOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 # google oauth config
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
+        'APP': {
+            'client_id': os.environ.get('GOOGLE_CLIENT_ID'),
+            'secret': os.environ.get('GOOGLE_CLIENT_SECRET'),
+            'key': ''
         },
-    }
+        'SCOPE': ['profile','email',],
+        'AUTH_PARAMS': {'access_type': 'online',},
+        'METHOD': 'oauth2',
+        'VERIFIED_EMAIL': True,
+    },
+    # 'github': {
+    #     'APP': {
+    #         'client_id': os.environ.get('GITHUB_CLIENT_ID'),
+    #         'secret': os.environ.get('GITHUB_CLIENT_SECRET'),
+    #         'key': ''
+    #     },
+    #     'SCOPE': ['user'],
+    #     'AUTH_PARAMS': {'access_type': 'online',},
+    #     'METHOD': 'oauth2',
+    #     'VERIFIED_EMAIL': True,
+    # }
 }
 
 SITE_ID = 1  # Required for django-allauth
-
 REST_USE_JWT = True
 
 # Redirect URL after login
 LOGIN_REDIRECT_URL = "/user/dashboard/"
 
-# gogole oauth JWT settings
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
-}
-# gogole oauth settings
-REST_AUTH = {
-    'SIGNUP_FIELDS': {
-        'email': {'required': True},
-        'username': {'required': False},
-    }
-}
+# Skip the "You are about to sign in..." screen
+SOCIALACCOUNT_LOGIN_ON_GET = True 
 
 
 AUTH_USER_MODEL = 'authentication.CustomUser'
 
 # JWT settings
+
+# Django JWT settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
 from datetime import timedelta
 
 SIMPLE_JWT = {
@@ -174,8 +174,6 @@ STATICFILES_DIRS = [
 ]
 
 
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = BASE_DIR / "media"
 
 # blob storage configuration
 MEDIA_URL = '/media/'
@@ -207,7 +205,7 @@ DEBUG = True
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": BASE_DIR / "alex_ai.db.sqlite3",
         "ATOMIC_REQUESTS": True
     }
 }
