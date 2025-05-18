@@ -100,6 +100,7 @@ MIDDLEWARE += [
 
 # custom auth_backend for google auth 
 AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
@@ -130,7 +131,6 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 SITE_ID = 1  # Required for django-allauth
-REST_USE_JWT = True
 
 # Redirect URL after login
 LOGIN_REDIRECT_URL = "/user/dashboard/"
@@ -185,30 +185,30 @@ DOCUMENTS_PATH = "/opt/myproject/myproject/media"
 
 
 
-# DATABASES = {
-#      'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         "NAME": os.getenv("DATABASE_NAME"),
-#         "USER": os.getenv("DATABASE_USER"),
-#         "PASSWORD": os.getenv("DATABASE_PASSWORD"), 
-#         "HOST": os.getenv("DATABASE_HOST"),
-#         "PORT": os.getenv("DATABASE_PORT"),
-#         'ATOMIC_REQUESTS': True
-#      }
-#  }
+DATABASES = {
+     'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        "NAME": os.getenv("DATABASE_NAME"),
+        "USER": os.getenv("DATABASE_USER"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD"), 
+        "HOST": os.getenv("DATABASE_HOST"),
+        "PORT": os.getenv("DATABASE_PORT"),
+        'ATOMIC_REQUESTS': True
+     }
+ }
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
 DEBUG = True
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "alex_ai.db.sqlite3",
-        "ATOMIC_REQUESTS": True
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "alex_ai.db.sqlite3",
+#         "ATOMIC_REQUESTS": True
+#     }
+# }
 
 
 

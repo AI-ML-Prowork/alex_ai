@@ -121,8 +121,9 @@ def my_profile_update(request):
                 folder = "profile_images"
                 file_url = upload_file_to_vps(profile_img, file_name, folder)
                 data['profile_img'] = file_url
-                ic(data)
-                ic(data['profile_img'])
+                # ic(data)
+            else:
+                data['profile_img'] = profile.profile_img
 
             
             serializer = ClientSerializer(profile, data=data, partial=True)

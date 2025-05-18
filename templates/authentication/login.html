@@ -218,10 +218,10 @@
       toggleBtn.textContent = newTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
     });
   
-    function loginWithGoogle() {
+   // function loginWithGoogle() {
       // Directly redirect to the Google OAuth2 verification screen (bypass allauth's intermediate "You are about to sign in..." page)
-      window.location.href = "/accounts/google/login/?process=login";
-    }
+  //    window.location.href = "/accounts/google/login/?process=login";
+  //  }
     function togglePasswordVisibility() {
       const passwordInput = document.getElementById('password');
       const toggleIcon = document.getElementById('togglePassword');

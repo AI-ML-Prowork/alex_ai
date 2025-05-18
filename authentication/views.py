@@ -131,55 +131,55 @@ def user_logout(request):
 
 
 
-from dj_rest_auth.registration.views import SocialLoginView
-from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-from allauth.socialaccount.models import SocialAccount
-from django.contrib.auth import get_user_model
-from rest_framework.response import Response
-from rest_framework import status
+# from dj_rest_auth.registration.views import SocialLoginView
+# from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+# from allauth.socialaccount.models import SocialAccount
+# from django.contrib.auth import get_user_model
+# from rest_framework.response import Response
+# from rest_framework import status
 
-User = get_user_model()
+# User = get_user_model()
 
-class CustomGoogleLogin(SocialLoginView):
-    adapter_class = GoogleOAuth2Adapter
+# class CustomGoogleLogin(SocialLoginView):
+#     adapter_class = GoogleOAuth2Adapter
 
-    def post(self, request, *args, **kwargs):
-        response = super().post(request, *args, **kwargs)
-        ic(response)
-        user = request.user
-        ic(user)
+#     def post(self, request, *args, **kwargs):
+#         response = super().post(request, *args, **kwargs)
+#         ic(response)
+#         user = request.user
+#         ic(user)
 
-        try:
-            social_account = SocialAccount.objects.filter(user=user, provider="google").first()
+#         try:
+#             social_account = SocialAccount.objects.filter(user=user, provider="google").first()
 
-            if social_account:
-                ic(social_account)
-                extra_data = social_account.extra_data
-                ic(extra_data)
-                user.email = user.email or extra_data.get("email")
-                user.username = user.username or extra_data.get("name") or extra_data.get("given_name")
-                user.full_name = getattr(user, "full_name", None) or extra_data.get("name")
-                user.profile_img = getattr(user, "profile_img", None) or extra_data.get("picture")
-                if hasattr(user, "account_type") and not user.account_type:
-                    user.account_type = "Google"
-                user.save()
-                ic(user)
+#             if social_account:
+#                 ic(social_account)
+#                 extra_data = social_account.extra_data
+#                 ic(extra_data)
+#                 user.email = user.email or extra_data.get("email")
+#                 user.username = user.username or extra_data.get("name") or extra_data.get("given_name")
+#                 user.full_name = getattr(user, "full_name", None) or extra_data.get("name")
+#                 user.profile_img = getattr(user, "profile_img", None) or extra_data.get("picture")
+#                 if hasattr(user, "account_type") and not user.account_type:
+#                     user.account_type = "Google"
+#                 user.save()
+#                 ic(user)
 
-        except Exception as e:
-            return Response({"detail": f"Google login data processing error: {e}"}, status=status.HTTP_400_BAD_REQUEST)
+#         except Exception as e:
+#             return Response({"detail": f"Google login data processing error: {e}"}, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({
-            "refresh": response.data.get("refresh"),
-            "access": response.data.get("access"),
-            "user": {
-                "id": user.id,
-                "email": user.email,
-                "username": user.username,
-                "full_name": getattr(user, "full_name", None),
-                "profile_img": getattr(user, "profile_img", None),
-                "account_type": getattr(user, "account_type", None),
-                "is_active": user.is_active,
-                "is_staff": user.is_staff,
-                "is_superuser": user.is_superuser
-            }
-        }, status=status.HTTP_200_OK)
+#         return Response({
+#             "refresh": response.data.get("refresh"),
+#             "access": response.data.get("access"),
+#             "user": {
+#                 "id": user.id,
+#                 "email": user.email,
+#                 "username": user.username,
+#                 "full_name": getattr(user, "full_name", None),
+#                 "profile_img": getattr(user, "profile_img", None),
+#                 "account_type": getattr(user, "account_type", None),
+#                 "is_active": user.is_active,
+#                 "is_staff": user.is_staff,
+#                 "is_superuser": user.is_superuser
+#             }
+#         }, status=status.HTTP_200_OK)
