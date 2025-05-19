@@ -132,6 +132,18 @@ SOCIALACCOUNT_PROVIDERS = {
 
 SITE_ID = 1  # Required for django-allauth
 
+DEBUG = os.environ.get("DEBUG")
+
+if not DEBUG:
+    # Forces django-allauth to use the correct domain in redirect URLs
+    SOCIALACCOUNT_CALLBACK_DOMAIN = 'alexai.store'
+    # Ensures HTTPS is used in account-related redirects (e.g., login, signup)
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+    # If you're behind a proxy (like Nginx), this ensures correct host detection
+    USE_X_FORWARDED_HOST = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
 # Redirect URL after login
 LOGIN_REDIRECT_URL = "/user/dashboard/"
 
@@ -200,7 +212,7 @@ DATABASES = {
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
-DEBUG = True
+
 
 # DATABASES = {
 #     "default": {
