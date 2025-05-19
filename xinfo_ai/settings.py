@@ -29,8 +29,8 @@ SECRET_KEY = "django-insecure-y^ei23wz$%cf04!xbg1x90v1t=+bxr*d9af=lh^vza9f#!eajn
 
 
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1','alexai.store','www.alexai.store','https://alexai.store','https://www.alexai.store']
+CSRF_TRUSTED_ORIGINS = ['https://alexai.store']
 
 # Application definition
 
