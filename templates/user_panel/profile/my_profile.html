@@ -37,8 +37,20 @@
 </div>
   
 <!-- Modal -->
+<style>
+  /* Custom modal width control */
+  .custom-modal-width {
+    max-width: 600px; /* Change this value as needed */
+    width: 100%;
+  }
+  @media (max-width: 700px) {
+    .custom-modal-width {
+      max-width: 95vw;
+    }
+  }
+</style>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog custom-modal-width" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Update User</h5>
@@ -51,43 +63,70 @@
           <div class="modal-body">
             <div class="container-fluid">
               <div class="row">
-                <div class="form-group col-md-6">
-                  <label for="full_name">Full Name</label>
-                  <input type="text" class="form-control" id="full_name" value="{{ profile.full_name }}" name="full_name" required>
+                <!-- Profile Image Preview (left) -->
+                <div class="col-md-4 d-flex flex-column align-items-center justify-content-center mb-4">
+                  <div class="profile-img-wrapper mb-2">
+                    <img 
+                      src="{{ profile.profile_img|default:'https://img.freepik.com/free-psd/contact-icon-illustration-isolated_23-2151903337.jpg?t=st=1745986690~exp=1745990290~hmac=e8ead49e66b05d3548c4753495720c210ea9b40870580e90211908df0684ab43&w=826' }}" 
+                      alt="Profile Image" 
+                      class="rounded-circle border shadow" 
+                      style="width: 120px; height: 120px; object-fit: cover;"
+                      id="profileImgPreview"
+                    >
+                  </div>
+                  <label class="btn btn-outline-primary btn-sm mt-2" for="profile_img">
+                    <i class="bi bi-upload"></i> Change Image
+                  </label>
+                  <input type="file" class="d-none" id="profile_img" name="profile_img" accept="image/*" onchange="previewProfileImg(event)">
                 </div>
-  
-                <div class="form-group col-md-6">
-                  <label for="phone">Phone</label>
-                  <input type="tel" class="form-control" id="phone" value="{{ profile.phone }}" name="phone">
-                </div>
-  
-                <div class="form-group col-md-6">
-                  <label for="profile_img">Profile Image</label>
-                  <input type="file" class="form-control-file" id="profile_img" name="profile_img">
-                  {% if profile.profile_img %}
-                  <img src="{{ profile.profile_img }}" alt="Profile Image" class="rounded-circle" style="width: 150px; height: 150px;">
-                  {% endif %}
-                </div>
-  
-                <div class="form-group col-md-6">
-                  <label for="gender">Gender</label>
-                  <select class="form-control" id="gender" name="gender">
-                    <option value="male" {% if profile.gender == "male" %}selected{% endif %}>Male</option>
-                    <option value="female" {% if profile.gender == "female" %}selected{% endif %}>Female</option>
-                    <option value="other" {% if profile.gender == "other" %}selected{% endif %}>Other</option>
-                  </select>
+                <!-- Profile Details (right) -->
+                <div class="col-md-8">
+                  <div class="form-row">
+                    <div class="form-group col-md-6 mb-3">
+                      <label for="full_name" class="font-weight-bold">Full Name</label>
+                      <input type="text" class="form-control" id="full_name" value="{{ profile.full_name }}" name="full_name" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group col-md-6 mb-3">
+                      <label for="username" class="font-weight-bold">Username</label>
+                      <input type="text" class="form-control" id="username" value="{{ profile.username }}" name="username" required placeholder="Enter your username">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6 mb-3">
+                      <label for="phone" class="font-weight-bold">Phone</label>
+                      <input type="tel" class="form-control" id="phone" value="{{ profile.phone }}" name="phone" placeholder="Enter your phone number">
+                    </div>
+                    <div class="form-group col-md-6 mb-3">
+                      <label for="gender" class="font-weight-bold">Gender</label>
+                      <select class="form-control" id="gender" name="gender">
+                        <option value="" {% if not profile.gender %}selected{% endif %} disabled>Select gender</option>
+                        <option value="male" {% if profile.gender == "male" %}selected{% endif %}>Male</option>
+                        <option value="female" {% if profile.gender == "female" %}selected{% endif %}>Female</option>
+                        <option value="other" {% if profile.gender == "other" %}selected{% endif %}>Other</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Update User</button>
+          <div class="modal-footer bg-light">
+            <button type="submit" class="btn btn-success">
+              <i class="bi bi-save mr-2 text-center"></i> Update Profile
+            </button>
           </div>
         </form>
+        <script>
+          function previewProfileImg(event) {
+            const [file] = event.target.files;
+            if (file) {
+              document.getElementById('profileImgPreview').src = URL.createObjectURL(file);
+            }
+          }
+        </script>
       </div>
     </div>
-  </div>
+</div>
   
   
 

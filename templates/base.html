@@ -48,7 +48,7 @@
         <ul class="navbar-nav mr-lg-2">
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link" href="#" data-toggle="dropdown" id="profileDropdown">
-              <img src="{{ user.profile.image|default:"https://img.freepik.com/free-psd/contact-icon-illustration-isolated_23-2151903337.jpg?t=st=1745986690~exp=1745990290~hmac=e8ead49e66b05d3548c4753495720c210ea9b40870580e90211908df0684ab43&w=826"}}" alt="profile"/>
+              <img src="{{ user.profile_img|default:"https://img.freepik.com/free-psd/contact-icon-illustration-isolated_23-2151903337.jpg?t=st=1745986690~exp=1745990290~hmac=e8ead49e66b05d3548c4753495720c210ea9b40870580e90211908df0684ab43&w=826"}}" alt="profile"/>
               <span class="nav-profile-name">{% if user.is_authenticated %}{{ user.username }}{% endif %}</span>
             </a>
           </li>

@@ -130,7 +130,7 @@ SOCIALACCOUNT_PROVIDERS = {
     # }
 }
 
-SITE_ID = 1  # Required for django-allauth
+SITE_ID = 1
 
 DEBUG = os.environ.get("DEBUG")
 
@@ -211,7 +211,6 @@ DATABASES = {
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
 
 
 # DATABASES = {
