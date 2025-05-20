@@ -32,8 +32,10 @@ jobs:
         source /opt/myproject/bin/activate
         python manage.py migrate
 
-        
+
     - name: Restart Gunicorn
       run: |
+        source /opt/myproject/bin/activate
         sudo pkill gunicorn || true
+        sudo systemctl restart nginx.service
         nohup gunicorn --chdir /opt/myproject/myproject/alex_ai xinfo_ai.wsgi:application --bind 0.0.0.0:8000 &
