@@ -38,4 +38,4 @@ jobs:
         source /opt/myproject/bin/activate
         sudo pkill gunicorn || true
         sudo systemctl restart nginx.service
-        nohup gunicorn --chdir /opt/myproject/myproject/alex_ai xinfo_ai.wsgi:application --bind 0.0.0.0:8000 &
+        nohup gunicorn --bind 0.0.0.0:8000 xinfo_ai.wsgi &
