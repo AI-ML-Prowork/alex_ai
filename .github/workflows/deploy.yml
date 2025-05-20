@@ -9,6 +9,10 @@ jobs:
   deploy:
     runs-on: self-hosted
 
+    defaults:
+      run:
+        working-directory: /opt/myproject/myproject/alex_ai
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -16,9 +20,9 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'  # Match your VPS Python version
+        python-version: '3.10'
 
-    - name: Install dependencies
+    - name: Activate virtual environment and install dependencies
       run: |
         source /opt/myproject/bin/activate
         pip install -r requirements.txt
@@ -35,7 +39,5 @@ jobs:
 
     - name: Restart Gunicorn
       run: |
-        source /opt/myproject/bin/activate
-        pkill gunicorn
-        sudo systemctl restart nginx.service
+        pkill gunicorn || true
         nohup gunicorn --chdir /opt/myproject/myproject/alex_ai xinfo_ai.wsgi:application --bind 0.0.0.0:8000 &
