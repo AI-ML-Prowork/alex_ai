@@ -17,25 +17,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Activate virtualenv and install dependencies
+    - name: Activate virtualenv, install dependencies, migration, restart server
       run: |
         source /opt/myproject/bin/activate
+        cd /opt/myproject/myproject/alex_ai/
+        git stash
+        git pull origin main
         pip install -r requirements.txt
-
-    - name: Collect static files
-      run: |
-        source /opt/myproject/bin/activate
         python manage.py collectstatic --noinput
-
-    - name: Run migrations
-      run: |
-        source /opt/myproject/bin/activate
         python manage.py migrate
-
-
-    - name: Restart Gunicorn
-      run: |
-        source /opt/myproject/bin/activate
         sudo pkill gunicorn || true
         sudo systemctl restart nginx.service
         nohup gunicorn --bind 0.0.0.0:8000 xinfo_ai.wsgi &
