@@ -1,0 +1,41 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'  # Match your VPS Python version
+
+    - name: Install dependencies
+      run: |
+        source /opt/myproject/bin/activate
+        pip install -r requirements.txt
+
+    - name: Collect static files
+      run: |
+        source /opt/myproject/bin/activate
+        python manage.py collectstatic --noinput
+
+    - name: Run migrations
+      run: |
+        source /opt/myproject/bin/activate
+        python manage.py migrate
+
+    - name: Restart Gunicorn
+      run: |
+        source /opt/myproject/bin/activate
+        pkill gunicorn
+        sudo systemctl restart nginx.service
+        nohup gunicorn --chdir /opt/myproject/myproject/alex_ai xinfo_ai.wsgi:application --bind 0.0.0.0:8000 &
