@@ -28,4 +28,5 @@ jobs:
         python manage.py migrate
         sudo pkill gunicorn || true
         sudo systemctl restart nginx.service
-        nohup gunicorn --bind 0.0.0.0:8000 xinfo_ai.wsgi &
+        sudo systemctl restart gunicorn_xinfo
+    
