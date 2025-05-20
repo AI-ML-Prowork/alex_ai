@@ -32,6 +32,7 @@ jobs:
         source /opt/myproject/bin/activate
         python manage.py migrate
 
+        
     - name: Restart Gunicorn
       run: |
         sudo pkill gunicorn || true
