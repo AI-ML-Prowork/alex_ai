@@ -34,5 +34,5 @@ jobs:
 
     - name: Restart Gunicorn
       run: |
-        pkill gunicorn || true
+        sudo pkill gunicorn || true
         nohup gunicorn --chdir /opt/myproject/myproject/alex_ai xinfo_ai.wsgi:application --bind 0.0.0.0:8000 &
