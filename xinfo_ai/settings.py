@@ -105,7 +105,7 @@ MIDDLEWARE += [
 # for the NextJS API
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "https://alexai-five.vercel.app/",
+    "https://alexai-five.vercel.app",
 ]
 
 
