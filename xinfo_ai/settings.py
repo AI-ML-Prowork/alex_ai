@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     "user_panel",
     'rest_framework',
     'rest_framework.authtoken',
+    # for the NextJS API
+    'corsheaders',
     # for google auth system 
     'allauth',
     'allauth.account',
@@ -95,8 +97,16 @@ MIDDLEWARE = [
 # custom middleware for google auth 
 MIDDLEWARE += [
     'allauth.account.middleware.AccountMiddleware',
+    # for the NextJS API
+    'corsheaders.middleware.CorsMiddleware',
 
 ]
+
+# for the NextJS API
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+
 
 # custom auth_backend for google auth 
 AUTHENTICATION_BACKENDS = (
